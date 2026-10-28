@@ -1,0 +1,6 @@
+@import "tailwindcss";
+
+@theme {
+  /* Độ rộng tối đa của nội dung trang: dùng bằng class max-w-trang */
+  --container-trang: 92rem;
+}

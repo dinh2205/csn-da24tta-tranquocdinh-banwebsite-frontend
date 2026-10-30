@@ -10,13 +10,13 @@ import DonHang from './pages/DonHang'
 function App() {
   return (
     <Routes>
-      <Route element={<MainLayout />}>
+
         <Route index element={<TrangChu />} />
         <Route path="gioi-thieu" element={<GioiThieu />} />
         <Route path="mau-website" element={<MauWebsite />} />
         <Route path="don-hang" element={<DonHang />} />
         <Route path="*" element={<Navigate to="/" replace />} />
-      </Route>
+      
     </Routes>
   )
 }

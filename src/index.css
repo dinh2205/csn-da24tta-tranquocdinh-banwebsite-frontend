@@ -4,3 +4,11 @@
   /* Độ rộng tối đa của nội dung trang: dùng bằng class max-w-trang */
   --container-trang: 92rem;
 }
+
+/* Tailwind v4 để chuột trên nút là mũi tên: đổi thành bàn tay cho mọi nút bấm được */
+@layer base {
+  button:not(:disabled),
+  [role="button"]:not(:disabled) {
+    cursor: pointer;
+  }
+}

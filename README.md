@@ -1,32 +1,149 @@
-# React + TypeScript + Vite
+# Website bán mẫu website – Frontend
 
-This template provides a minimal setup to get React working in Vite with HMR and some Oxlint rules.
+Đồ án **Cơ sở ngành** – Lớp **DA24TTA**
 
-Currently, two official plugins are available:
+Website giới thiệu và bán các mẫu website dựng sẵn (landing page, website giới thiệu, website bán hàng, tin tức, portfolio, admin dashboard). Người dùng có thể xem mẫu theo danh mục, tìm kiếm mẫu phù hợp và đặt mua mẫu.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+Đồ án chỉ gồm phần **giao diện (frontend)**, không có backend. Dữ liệu mẫu website được khai báo sẵn trong mã nguồn; dữ liệu phát sinh khi sử dụng (đơn hàng...) được lưu trên trình duyệt bằng **localStorage**.
 
-## React Compiler
+## Thông tin sinh viên
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+| | |
+|---|---|
+| Họ và tên | Trần Quốc Đỉnh|
+| MSSV | 110124033 |
+| Lớp | DA24TTA |
+| Email | 110124033@st.tvu.edu.vn |
+| GitHub | dinh2205 (https://github.com/dinh2205) |
 
-## Expanding the Oxlint configuration
+**Giảng viên hướng dẫn:** Phạm Minh Đương
 
-If you are developing a production application, we recommend enabling type-aware lint rules by installing `oxlint-tsgolint` and editing `.oxlintrc.json`:
+## Công nghệ sử dụng
 
-```json
-{
-  "$schema": "./node_modules/oxlint/configuration_schema.json",
-  "plugins": ["react", "typescript", "oxc"],
-  "options": {
-    "typeAware": true
-  },
-  "rules": {
-    "react/rules-of-hooks": "error",
-    "react/only-export-components": ["warn", { "allowConstantExport": true }]
-  }
-}
+- [React 19](https://react.dev/): xây dựng giao diện theo component
+- [Vite](https://vite.dev/): công cụ chạy và build dự án
+- [React Router](https://reactrouter.com/): điều hướng giữa các trang
+- [Tailwind CSS v4](https://tailwindcss.com/): định dạng giao diện, responsive cho điện thoại và máy tính
+- localStorage: lưu dữ liệu trên trình duyệt thay cho cơ sở dữ liệu
+- JavaScript / TypeScript
+
+## Chức năng
+
+Đã hoàn thành:
+
+- [x] Thanh menu đầu trang, có menu thu gọn trên điện thoại
+- [x] Trang chủ: banner, ô tìm kiếm mẫu, gợi ý từ khóa tìm nhiều
+- [x] Danh mục website kèm số lượng mẫu của từng danh mục
+- [x] Mẫu nổi bật theo từng danh mục, khung mẫu bán chạy
+- [x] Chân trang (footer)
+
+Đang thực hiện:
+
+- [ ] Trang danh sách mẫu website: lọc theo danh mục, tìm kiếm
+- [ ] Trang chi tiết mẫu: ảnh từng trang, xem demo
+- [ ] Trang giới thiệu
+- [ ] Trang đơn hàng: lưu và xem lại đơn hàng bằng localStorage
+
+## Cấu trúc thư mục
+
+```
+csn-da24tta-tranquocdinh-banwebsite-frontend/
+├── progress-report/                Báo cáo tiến độ
+├── setup/                          Hướng dẫn cài đặt
+├── soft/                           Phần mềm, công cụ sử dụng
+├── theirs/                         Báo cáo đồ án
+│   ├── abs/                        Tóm tắt
+│   ├── doc/                        Báo cáo dạng Word
+│   ├── pdf/                        Báo cáo dạng PDF
+│   └── refs/                       Tài liệu tham khảo
+│
+├── src/                            Mã nguồn website
+│   ├── assets/                     Hình ảnh
+│   │   ├── banner-trang-chinh.png  Ảnh banner trang chủ
+│   │   ├── danh-muc/               Ảnh minh họa 6 danh mục
+│   │   │   ├── admin-dashboard.webp
+│   │   │   ├── ban-hang.webp
+│   │   │   ├── gioi-thieu.webp
+│   │   │   ├── landing-page.webp
+│   │   │   ├── portfolio.webp
+│   │   │   └── tin-tuc.webp
+│   │   └── mau-noi-bat/            Ảnh xem trước từng mẫu (tên file trùng id mẫu)
+│   │       ├── BanCayXanh.webp
+│   │       ├── KhoaHocIelt.webp
+│   │       ├── LDBacSi.webp
+│   │       ├── LDBacSi1.webp
+│   │       ├── LDFashion.webp
+│   │       ├── LDNoiThat.webp
+│   │       ├── LDNuocNgot.webp
+│   │       ├── PL001.webp
+│   │       ├── TT001.webp
+│   │       ├── VanPhongPham.webp
+│   │       └── WSVanHoa.webp
+│   │
+│   ├── components/                 Component dùng lại nhiều nơi
+│   │   ├── chung/                  Dùng chung cho mọi trang
+│   │   │   ├── Header.jsx          Thanh menu đầu trang
+│   │   │   └── Footer.jsx          Chân trang
+│   │   └── sanpham/                Liên quan đến mẫu website
+│   │       ├── KhungBanChay.jsx    Khung mẫu bán chạy
+│   │       ├── TheMau.jsx          Thẻ hiển thị 1 mẫu (ảnh, tên, giá)
+│   │       └── TimKiem.jsx         Ô tìm kiếm mẫu
+│   │
+│   ├── context/                    Quản lý dữ liệu dùng chung (localStorage)
+│   │
+│   ├── data/                       Dữ liệu khai báo sẵn
+│   │   ├── danhmuc.js              Danh sách 6 danh mục website
+│   │   └── mauWeb.js               Danh sách mẫu website
+│   │
+│   ├── layout/
+│   │   └── MainLayout.jsx          Bố cục chung: Header + nội dung trang + Footer
+│   │
+│   ├── pages/                      Các trang của website
+│   │   ├── TrangChu.jsx            Trang chủ
+│   │   ├── MauWeb.jsx              Trang danh sách mẫu website
+│   │   ├── GioiThieu.jsx           Trang giới thiệu
+│   │   └── DonHang.jsx             Trang đơn hàng
+│   │
+│   ├── utils/
+│   │   └── chuyenDoi.js            Hàm tiện ích (định dạng giá tiền...)
+│   │
+│   ├── App.tsx                     Khai báo đường dẫn các trang
+│   ├── main.tsx                    Điểm khởi chạy ứng dụng
+│   └── index.css                   Cấu hình Tailwind CSS và CSS chung
+│
+├── index.html                      Trang HTML gốc
+├── package.json                    Thông tin dự án và danh sách thư viện
+├── tsconfig.json                   Cấu hình TypeScript
+├── vite.config.ts                  Cấu hình Vite
+└── README.md
 ```
 
-See the [Oxlint rules documentation](https://oxc.rs/docs/guide/usage/linter/rules) for the full list of rules and categories.
+## Cài đặt và chạy
+
+Yêu cầu: đã cài [Node.js](https://nodejs.org/) phiên bản 20 trở lên.
+
+```bash
+# 1. Tải mã nguồn
+git clone https://github.com/dinh2205/csn-da24tta-tranquocdinh-banwebsite-frontend.git
+cd csn-da24tta-tranquocdinh-banwebsite-frontend
+
+# 2. Cài thư viện
+npm install
+
+# 3. Chạy ở chế độ phát triển
+npm run dev
+```
+
+Sau đó mở trình duyệt tại địa chỉ hiện trong terminal (mặc định `http://localhost:5173`).
+
+Build bản chính thức:
+
+```bash
+npm run build
+```
+
+Kết quả nằm trong thư mục `dist/`.
+
+## Hình ảnh giao diện
+
+[Chèn ảnh chụp màn hình trang chủ, danh mục, mẫu nổi bật...]

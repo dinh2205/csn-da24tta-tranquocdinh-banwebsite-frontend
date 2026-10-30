@@ -1,9 +1,11 @@
 import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 
 // Ô tìm kiếm dùng chung: gõ từ khoá rồi bấm "Tìm kiếm" (hoặc Enter) để sang trang Mẫu website
 function TimKiem({ placeholder = 'Tìm mẫu website...' }) {
-  const [tuKhoa, setTuKhoa] = useState('');
+  // Đang ở /mau-website?tim=... thì điền sẵn từ khoá đó vào ô, để người dùng thấy mình vừa tìm gì
+  const [searchParams] = useSearchParams();
+  const [tuKhoa, setTuKhoa] = useState(searchParams.get('tim') ?? '');
   const navigate = useNavigate();
 
   const xuLyTim = (e) => {

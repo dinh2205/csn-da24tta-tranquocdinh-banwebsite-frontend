@@ -6,7 +6,7 @@ const MENU = [
   { to: '/', ten: 'Trang chủ', end: true },
   { to: '/mau-website', ten: 'Mẫu website' },
   { to: '/gioi-thieu', ten: 'Giới thiệu' },
-  { to: '/don-hang', ten: 'Đơn hàng' },
+  { to: '/khach-hang', ten: 'Đơn hàng' },
 ];
 
 

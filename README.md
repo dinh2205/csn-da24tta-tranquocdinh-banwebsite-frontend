@@ -60,6 +60,7 @@ csn-da24tta-tranquocdinh-banwebsite-frontend/
 ├── src/                            Mã nguồn website
 │   ├── assets/                     Hình ảnh
 │   │   ├── banner-trang-chinh.png  Ảnh banner trang chủ
+│   │   ├── gioi-thieu/             Ảnh banner và 4 ảnh lý do của trang Giới thiệu
 │   │   ├── danh-muc/               Ảnh minh họa 6 danh mục
 │   │   │   ├── admin-dashboard.webp
 │   │   │   ├── ban-hang.webp
@@ -83,9 +84,11 @@ csn-da24tta-tranquocdinh-banwebsite-frontend/
 │   ├── components/                 Component dùng lại nhiều nơi
 │   │   ├── chung/                  Dùng chung cho mọi trang
 │   │   │   ├── Header.jsx          Thanh menu đầu trang
-│   │   │   └── Footer.jsx          Chân trang
+│   │   │   ├── Footer.jsx          Chân trang
+│   │   │   └── Icon.jsx            Icon nét mảnh dùng lại nhiều nơi
 │   │   └── sanpham/                Liên quan đến mẫu website
 │   │       ├── KhungBanChay.jsx    Khung mẫu bán chạy
+│   │       ├── KhungTimKiem.jsx    Dải tìm kiếm (tiêu đề, ô tìm kiếm, từ khóa gợi ý)
 │   │       ├── TheMau.jsx          Thẻ hiển thị 1 mẫu (ảnh, tên, giá)
 │   │       └── TimKiem.jsx         Ô tìm kiếm mẫu
 │   │
@@ -93,15 +96,30 @@ csn-da24tta-tranquocdinh-banwebsite-frontend/
 │   │
 │   ├── data/                       Dữ liệu khai báo sẵn
 │   │   ├── danhmuc.js              Danh sách 6 danh mục website
+│   │   ├── gioiThieu.js            Nội dung trang Giới thiệu (lý do, quy trình, liên hệ)
+│   │   ├── timKiem.js              Từ khóa gợi ý dưới ô tìm kiếm
+│   │   ├── trangChu.js             Ảnh và mô tả 6 danh mục ở trang chủ
 │   │   └── mauWeb.js               Danh sách mẫu website
 │   │
 │   ├── layout/
 │   │   └── MainLayout.jsx          Bố cục chung: Header + nội dung trang + Footer
 │   │
 │   ├── pages/                      Các trang của website
-│   │   ├── TrangChu.jsx            Trang chủ
+│   │   ├── TrangChu/               Trang chủ (chia thành nhiều phần)
+│   │   │   ├── TrangChu.jsx        File chính, ghép các phần bên dưới
+│   │   │   ├── BannerTrangChu.jsx  Banner đầu trang
+│   │   │   ├── DanhMucChinh.jsx    6 danh mục website
+│   │   │   └── MauNoiBat.jsx       Mẫu nổi bật theo từng danh mục
 │   │   ├── MauWeb.jsx              Trang danh sách mẫu website
-│   │   ├── GioiThieu.jsx           Trang giới thiệu
+│   │   ├── GioiThieu/              Trang giới thiệu (trang dài nên chia thành nhiều phần)
+│   │   │   ├── GioiThieu.jsx       File chính, ghép các phần bên dưới
+│   │   │   ├── BannerGioiThieu.jsx Banner đầu trang
+│   │   │   ├── ChungToiLaAi.jsx    Chúng tôi là ai
+│   │   │   ├── SoLieu.jsx          Số liệu (tự tính từ danh sách mẫu)
+│   │   │   ├── LyDo.jsx            Vì sao chọn Website Design
+│   │   │   ├── QuyTrinh.jsx        Quy trình mua mẫu 4 bước
+│   │   │   ├── LienHe.jsx          Thông tin liên hệ
+│   │   │   └── BatDau.jsx          Khung "Sẵn sàng bắt đầu"
 │   │   └── DonHang.jsx             Trang đơn hàng
 │   │
 │   ├── utils/

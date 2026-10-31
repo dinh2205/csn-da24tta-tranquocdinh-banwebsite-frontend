@@ -10,7 +10,7 @@ function LyDo() {
                     <h2 className="mx-auto w-fit bg-gradient-to-r from-[#0b3393] via-blue-700 to-cyan-500 bg-clip-text pb-1 text-3xl font-extrabold tracking-tight text-transparent sm:text-4xl">
                         Vì sao chọn Website Design?
                     </h2>
-                    <p className="mx-auto mt-3 max-w-xl text-slate-500">
+                    <p className="mx-auto mt-3 max-w-2xl text-balance text-slate-500">
                         Những điều làm nên trải nghiệm mua mẫu website đơn giản và đáng tin cậy.
                     </p>
                 </div>

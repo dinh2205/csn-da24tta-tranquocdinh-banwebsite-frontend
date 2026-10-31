@@ -9,7 +9,6 @@ function TrangChu() {
     return (
         <div>
             <BannerTrangChu />
-            {/* Dải tìm kiếm dùng chung, trang chủ có thêm khung Mẫu bán chạy bên phải */}
             <KhungTimKiem>
                 <KhungBanChay />
             </KhungTimKiem>

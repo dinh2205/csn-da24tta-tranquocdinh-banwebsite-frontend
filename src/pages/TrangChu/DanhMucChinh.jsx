@@ -12,7 +12,7 @@ function DanhMucChinh() {
                 <h2 className="mx-auto w-fit bg-gradient-to-r from-[#0b3393] via-blue-700 to-cyan-500 bg-clip-text pb-1 text-center text-3xl font-extrabold tracking-tight text-transparent sm:text-4xl">
                     Danh mục chính
                 </h2>
-                <p className="mx-auto mt-3 max-w-xl text-center text-slate-500">
+                <p className="mx-auto mt-3 max-w-2xl text-balance text-center text-slate-500">
                     Chọn đúng loại website bạn cần, xem danh sách mẫu phù hợp ngay.
                 </p>
 
@@ -59,8 +59,9 @@ function DanhMucChinh() {
                 </div>
 
                 <div className="mt-10 text-center">
+                    {/* #danh-sach: sang trang Mẫu website thì cuộn xuống khung tìm kiếm + danh sách, giống nút "Xem thêm" */}
                     <Link
-                        to="/mau-website"
+                        to="/mau-website#danh-sach"
                         className="inline-block rounded-xl bg-cyan-400 px-6 py-3 text-sm font-bold text-blue-950 shadow-md transition hover:bg-cyan-300 active:scale-95"
                     >
                         Xem Tất Cả

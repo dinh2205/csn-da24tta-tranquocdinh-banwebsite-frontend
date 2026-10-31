@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { Link, NavLink } from 'react-router-dom';
+import logo from '../../assets/logo-website-design.webp';
 
 // Danh sách mục menu: muốn thêm mục mới chỉ cần thêm 1 dòng vào mảng này
 const MENU = [
@@ -11,7 +12,7 @@ const MENU = [
 
 
 const kieuMenu = ({ isActive }) =>
-  `whitespace-nowrap border-b-2 pb-1 text-base font-medium transition-colors ${
+  `whitespace-nowrap border-b-2 pb-1 text-[15px] font-medium transition-colors ${
     isActive ? 'border-cyan-400 text-white' : 'border-transparent text-blue-200 hover:text-white'
   }`;
 
@@ -24,8 +25,8 @@ function Header() {
   return (
     <header className="sticky top-0 z-40 bg-[#0b1f4d] shadow-md">
       <div className="mx-auto flex max-w-trang items-center gap-8 px-4 py-4 sm:px-6">
-        <Link to="/" className="text-xl font-extrabold text-white">
-          Logo
+        <Link to="/" className="flex-none">
+          <img src={logo} alt="Website Design" width="480" height="199" className="h-9 w-auto sm:h-11" />
         </Link>
 
         {/* Máy tính bảng trở lên: menu nằm ngang */}

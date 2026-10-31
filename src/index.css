@@ -1,8 +1,46 @@
 @import "tailwindcss";
 
+/* Không quét class trong public/ (code các mẫu demo): web này không dùng, quét vào chỉ làm file CSS phình to */
+@source not "../public";
+
 @theme {
   /* Độ rộng tối đa của nội dung trang: dùng bằng class max-w-trang */
   --container-trang: 92rem;
+  /* Font mặc định của cả trang (class font-sans), tải ở index.html */
+  --font-sans: "Be Vietnam Pro", ui-sans-serif, system-ui, sans-serif;
+}
+
+/* Thanh kéo 2 nút (Khoảng giá ở trang Mẫu website): 2 input range chồng lên nhau,
+   thanh của input trong suốt và không nhận chuột, chỉ nút tròn nhận chuột để kéo được cả 2 nút */
+.thanh-keo {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  margin: 0;
+  appearance: none;
+  background: transparent;
+  pointer-events: none;
+}
+.thanh-keo::-webkit-slider-thumb {
+  appearance: none;
+  width: 18px;
+  height: 18px;
+  border-radius: 9999px;
+  border: 3px solid #fff;
+  background: #2563eb;
+  box-shadow: 0 1px 4px rgb(15 23 42 / 0.35);
+  cursor: pointer;
+  pointer-events: auto;
+}
+.thanh-keo::-moz-range-thumb {
+  width: 18px;
+  height: 18px;
+  border-radius: 9999px;
+  border: 3px solid #fff;
+  background: #2563eb;
+  box-shadow: 0 1px 4px rgb(15 23 42 / 0.35);
+  cursor: pointer;
+  pointer-events: auto;
 }
 
 /* Tailwind v4 để chuột trên nút là mũi tên: đổi thành bàn tay cho mọi nút bấm được */

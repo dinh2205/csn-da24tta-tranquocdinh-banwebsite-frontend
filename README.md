@@ -85,12 +85,12 @@ csn-da24tta-tranquocdinh-banwebsite-frontend/
 │   │   ├── chung/                  Dùng chung cho mọi trang
 │   │   │   ├── Header.jsx          Thanh menu đầu trang
 │   │   │   ├── Footer.jsx          Chân trang
-│   │   │   └── Icon.jsx            Icon nét mảnh dùng lại nhiều nơi
+│   │   │   ├── Icon.jsx            Icon nét mảnh dùng lại nhiều nơi
+│   │   │   └── CuonTrang.jsx       Đổi trang thì cuộn lên đầu trang
 │   │   └── sanpham/                Liên quan đến mẫu website
 │   │       ├── KhungBanChay.jsx    Khung mẫu bán chạy
 │   │       ├── KhungTimKiem.jsx    Dải tìm kiếm (tiêu đề, ô tìm kiếm, từ khóa gợi ý)
-│   │       ├── TheMau.jsx          Thẻ hiển thị 1 mẫu (ảnh, tên, giá)
-│   │       └── TimKiem.jsx         Ô tìm kiếm mẫu
+│   │       └── TheMau.jsx          Thẻ hiển thị 1 mẫu (ảnh, tên, giá)
 │   │
 │   ├── context/                    Quản lý dữ liệu dùng chung (localStorage)
 │   │
@@ -110,7 +110,15 @@ csn-da24tta-tranquocdinh-banwebsite-frontend/
 │   │   │   ├── BannerTrangChu.jsx  Banner đầu trang
 │   │   │   ├── DanhMucChinh.jsx    6 danh mục website
 │   │   │   └── MauNoiBat.jsx       Mẫu nổi bật theo từng danh mục
-│   │   ├── MauWeb.jsx              Trang danh sách mẫu website
+│   │   ├── MauWeb/                 Trang danh sách mẫu website (chia thành nhiều phần)
+│   │   │   ├── MauWeb.jsx          File chính, ghép các phần bên dưới
+│   │   │   ├── BannerMauWeb.jsx    Banner đầu trang
+│   │   │   ├── KhuLocMau.jsx       Ghép tab danh mục + bộ lọc + danh sách mẫu
+│   │   │   ├── TabDanhMuc.jsx      Tab chọn danh mục
+│   │   │   ├── BoLoc.jsx           Bộ lọc: danh mục, lĩnh vực, màu sắc, khoảng giá
+│   │   │   ├── DanhSachMau.jsx     Sắp xếp và lưới thẻ mẫu
+│   │   │   ├── useLocMau.js        Xử lý bộ lọc và sắp xếp
+│   │   │   └── timKiemMau.js       Tìm theo từ khóa (hiểu câu gõ tự nhiên, chấm điểm)
 │   │   ├── GioiThieu/              Trang giới thiệu (trang dài nên chia thành nhiều phần)
 │   │   │   ├── GioiThieu.jsx       File chính, ghép các phần bên dưới
 │   │   │   ├── BannerGioiThieu.jsx Banner đầu trang

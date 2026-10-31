@@ -14,7 +14,7 @@ function KhungBanChay({ soLuong = 4 }) {
         <h2 className="flex items-center gap-2 text-base font-bold text-slate-900">
           <span aria-hidden="true">🔥</span> Mẫu bán chạy
         </h2>
-        <Link to="/mau-website" className="inline-block rounded-xl bg-cyan-400 px-6 py-3 text-sm font-bold text-blue-950 shadow-md transition hover:bg-cyan-300 active:scale-95">
+        <Link to="/mau-website#danh-sach" className="inline-block rounded-xl bg-cyan-400 px-6 py-3 text-sm font-bold text-blue-950 shadow-md transition hover:bg-cyan-300 active:scale-95">
           Xem Tất Cả
         </Link>
       </div>

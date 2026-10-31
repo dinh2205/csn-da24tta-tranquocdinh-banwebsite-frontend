@@ -1,7 +1,7 @@
 import { GIA_TOI_DA, mauList, nganhList, loaiList } from '../../data/danhmuc';
 import mauWeb from '../../data/mauWeb';
 import { dinhDangGia } from '../../utils/chuyenDoi';
-import { GIAM_BLACK_FRIDAY, laBlackFriday, laKhuyenMaiThuong, laMoi } from '../../utils/nhanMau';
+import { GIAM_DAC_BIET, laDacBiet, laKhuyenMaiThuong, laMoi } from '../../utils/nhanMau';
 
 // Mỗi lần kéo thanh giá tăng / giảm 50.000 đ
 const BUOC_GIA = 50000;
@@ -9,7 +9,7 @@ const BUOC_GIA = 50000;
 // Các ô của mục Ưu đãi: id trùng tên trường trong boLoc, nhan + mau (màu nền + màu chữ) giống nhãn trên thẻ mẫu,
 // kiemTra để đếm số mẫu thỏa điều kiện
 const uuDaiList = [
-    { id: 'blackFriday', nhan: `-${GIAM_BLACK_FRIDAY}%`, mau: 'bg-cyan-400 text-blue-950', ten: 'Black Friday', kiemTra: laBlackFriday },
+    { id: 'dacBiet', nhan: `-${GIAM_DAC_BIET}%`, mau: 'bg-cyan-400 text-blue-950', ten: 'Đặc biệt', kiemTra: laDacBiet },
     { id: 'khuyenMai', nhan: '%', mau: 'bg-red-500 text-white', ten: 'Khuyến mãi', kiemTra: laKhuyenMaiThuong },
     { id: 'moi', nhan: 'MỚI', mau: 'bg-emerald-500 text-white', ten: 'Mẫu mới', kiemTra: laMoi },
 ];

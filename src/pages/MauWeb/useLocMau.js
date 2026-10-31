@@ -3,11 +3,11 @@ import { useSearchParams } from 'react-router-dom';
 import mauWeb from '../../data/mauWeb';
 import { GIA_TOI_DA } from '../../data/danhmuc';
 import { locTheoTuKhoa } from './timKiemMau';
-import { laBlackFriday, laKhuyenMaiThuong, laMoi } from '../../utils/nhanMau';
+import { laDacBiet, laKhuyenMaiThuong, laMoi } from '../../utils/nhanMau';
 
 // giaToiThieu / giaToiDa: khoảng giá "từ ... đến ...", mặc định là cả thanh (0 → GIA_TOI_DA)
-// blackFriday / khuyenMai / moi: ô "Black Friday" / "Đang khuyến mãi" / "Mẫu mới ra mắt" ở mục Ưu đãi, mặc định không tích
-const boLocBanDau = { nganh: '', mau: '', giaToiThieu: 0, giaToiDa: GIA_TOI_DA, blackFriday: false, khuyenMai: false, moi: false };
+// dacBiet / khuyenMai / moi: ô "Đặc biệt" / "Đang khuyến mãi" / "Mẫu mới ra mắt" ở mục Ưu đãi, mặc định không tích
+const boLocBanDau = { nganh: '', mau: '', giaToiThieu: 0, giaToiDa: GIA_TOI_DA, dacBiet: false, khuyenMai: false, moi: false };
 
 // Hàm so sánh cho từng cách sắp xếp (id khớp với sapXepList trong danhmuc.js).
 // 'phu-hop' không có ở đây: giữ nguyên thứ tự điểm khớp mà locTheoTuKhoa đã xếp
@@ -54,8 +54,8 @@ function useLocMau() {
         if (loai && m.loai !== loai) return false;
         if (boLoc.nganh && m.nganh !== boLoc.nganh) return false;
         if (boLoc.mau && m.mau !== boLoc.mau) return false;
-        if (boLoc.blackFriday && !laBlackFriday(m)) return false;
-        if (boLoc.khuyenMai && !laKhuyenMaiThuong(m)) return false; // không gồm mẫu Black Friday
+        if (boLoc.dacBiet && !laDacBiet(m)) return false;
+        if (boLoc.khuyenMai && !laKhuyenMaiThuong(m)) return false; // không gồm mẫu sự kiện đặc biệt
         if (boLoc.moi && !laMoi(m)) return false;
         return m.gia >= boLoc.giaToiThieu && m.gia <= boLoc.giaToiDa;
     });
@@ -64,7 +64,7 @@ function useLocMau() {
     const ketQua = cachSapXep[sapXep] ? [...timDuoc].sort(cachSapXep[sapXep]) : timDuoc;
 
     // Số bộ lọc đang bật, hiện trên nút "Bộ lọc" ở điện thoại
-    const soLocDangBat = (loai ? 1 : 0) + (boLoc.nganh ? 1 : 0) + (boLoc.mau ? 1 : 0) + (boLoc.giaToiThieu > 0 || boLoc.giaToiDa < GIA_TOI_DA ? 1 : 0) + (boLoc.blackFriday ? 1 : 0) + (boLoc.khuyenMai ? 1 : 0) + (boLoc.moi ? 1 : 0);
+    const soLocDangBat = (loai ? 1 : 0) + (boLoc.nganh ? 1 : 0) + (boLoc.mau ? 1 : 0) + (boLoc.giaToiThieu > 0 || boLoc.giaToiDa < GIA_TOI_DA ? 1 : 0) + (boLoc.dacBiet ? 1 : 0) + (boLoc.khuyenMai ? 1 : 0) + (boLoc.moi ? 1 : 0);
 
     return {
         loai, tuKhoa, ketQua, soLocDangBat,

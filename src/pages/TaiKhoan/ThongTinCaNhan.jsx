@@ -9,8 +9,9 @@ import TieuDeTrang from './TieuDeTrang';
 const ICON_NGUOI = 'M16 8a4 4 0 1 1-8 0 4 4 0 0 1 8 0ZM4.5 20a7.5 7.5 0 0 1 15 0';
 const ICON_MAY_ANH = 'M4 8h3l2-3h6l2 3h3v11H4V8ZM12 16a3 3 0 1 0 0-6 3 3 0 0 0 0 6Z';
 
-// Ảnh đại diện lưu thẳng vào localStorage (giới hạn ~5MB cho cả trang) nên chỉ nhận ảnh nhỏ
-const ANH_TOI_DA = 1024 * 1024; // 1MB
+// Ảnh đại diện lưu vào localStorage (giới hạn ~5MB cho cả trang): nhận mọi loại, mọi cỡ ảnh,
+// sau đó thu nhỏ còn tối đa 400px và nén WebP (~20-40KB) rồi mới lưu
+const CANH_TOI_DA = 400;
 const matKhauBanDau = { cu: '', moi: '', xacNhan: '' };
 
 // Dòng báo xanh sau khi bấm lưu
@@ -18,8 +19,17 @@ const matKhauBanDau = { cu: '', moi: '', xacNhan: '' };
 // [&_label] ...: đổi màu nhãn, chữ phụ, chữ báo lỗi của TruongNhap / TruongMatKhau / DoManhMatKhau (dùng chung) chỉ trong khung này
 const KHUNG_NAVY = 'rounded-2xl bg-gradient-to-r from-[#0b1f4d] to-[#14317a] p-5 text-white shadow-lg shadow-blue-950/20 sm:p-6 [&_p.text-red-500]:text-red-300 [&_p.text-slate-500]:text-blue-200 [&_label]:text-blue-100';
 
+// Nền xanh lá trong suốt hợp với khung navy, có dấu tích và hiệu ứng trượt xuống (tb-truot trong index.css)
 function BaoThanhCong({ chu }) {
-    return chu ? <p className="rounded-lg bg-emerald-50 px-3.5 py-2.5 text-sm text-emerald-700">{chu}</p> : null;
+    if (!chu) return null;
+    return (
+        <p role="status" className="tb-truot flex items-center gap-3 rounded-xl border border-emerald-300/30 bg-emerald-400/15 px-4 py-3 text-sm font-semibold text-emerald-100 shadow-sm shadow-emerald-500/10">
+            <span className="flex h-6 w-6 flex-none items-center justify-center rounded-full bg-emerald-400 text-blue-950">
+                <Icon d="M5 12.5l4.5 4.5L19 7.5" className="h-3.5 w-3.5" strokeWidth={3} />
+            </span>
+            {chu}
+        </p>
+    );
 }
 
 // Tài khoản → Thông tin cá nhân (/tai-khoan/thong-tin): ảnh đại diện, hồ sơ, đổi mật khẩu
@@ -53,22 +63,30 @@ function ThongTinCaNhan() {
         setBaoMatKhau('');
     };
 
-    // Chọn ảnh: đọc file thành chuỗi data:image/... (FileReader) để vừa xem trước vừa lưu được.
+    // Chọn ảnh: vẽ ảnh lên canvas thu nhỏ rồi xuất chuỗi data:image/... để vừa xem trước vừa lưu được.
     // Bấm "Lưu thay đổi" mới lưu thật
     const chonAnh = (e) => {
         const file = e.target.files[0];
+        e.target.value = ''; // chọn lại đúng ảnh cũ vẫn chạy onChange
         if (!file) return;
-        if (file.size > ANH_TOI_DA) {
-            setLoiHoSo({ ...loiHoSo, anh: 'Ảnh quá lớn, vui lòng chọn ảnh dưới 1MB' });
-            return;
-        }
-        const doc = new FileReader();
-        doc.onload = () => {
-            setAnh(doc.result);
+        const url = URL.createObjectURL(file);
+        const hinh = new Image();
+        hinh.onload = () => {
+            const tiLe = Math.min(1, CANH_TOI_DA / Math.max(hinh.width, hinh.height));
+            const canvas = document.createElement('canvas');
+            canvas.width = Math.round(hinh.width * tiLe);
+            canvas.height = Math.round(hinh.height * tiLe);
+            canvas.getContext('2d').drawImage(hinh, 0, 0, canvas.width, canvas.height);
+            URL.revokeObjectURL(url);
+            setAnh(canvas.toDataURL('image/webp', 0.85));
             setLoiHoSo({ ...loiHoSo, anh: '' });
             setBaoHoSo('');
         };
-        doc.readAsDataURL(file);
+        hinh.onerror = () => {
+            URL.revokeObjectURL(url);
+            setLoiHoSo({ ...loiHoSo, anh: 'Không đọc được ảnh này, vui lòng chọn ảnh khác' });
+        };
+        hinh.src = url;
     };
 
     const luuHoSo = (e) => {
@@ -119,7 +137,6 @@ function ThongTinCaNhan() {
                         Chọn ảnh
                         <input type="file" accept="image/*" onChange={chonAnh} className="hidden" />
                     </label>
-                    <p className="text-xs text-blue-300/80">JPG, PNG · tối đa 1MB</p>
                     {loiHoSo.anh && <p className="text-xs text-red-300">{loiHoSo.anh}</p>}
                 </div>
 

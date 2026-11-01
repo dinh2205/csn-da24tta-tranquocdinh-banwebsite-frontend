@@ -16,6 +16,7 @@ const KIEU = {
   'da-them': { icon: ICON.tick, mau: 'bg-emerald-500', tieuDe: 'Đã thêm vào giỏ hàng', link: '/gio-hang', chuLink: 'Xem giỏ hàng' },
   'da-trong-gio': { icon: ICON.canhBao, mau: 'bg-amber-500', tieuDe: 'Mẫu này đã có trong giỏ', link: '/gio-hang', chuLink: 'Xem giỏ hàng' },
   'da-mua': { icon: ICON.canhBao, mau: 'bg-amber-500', tieuDe: 'Bạn đã mua mẫu này rồi', link: '/tai-khoan/don-hang', chuLink: 'Xem đơn hàng' },
+  'bo-da-mua': { icon: ICON.canhBao, mau: 'bg-amber-500', tieuDe: 'Đã bỏ khỏi giỏ vì bạn đã mua mẫu này', link: '/tai-khoan/don-hang', chuLink: 'Xem đơn hàng' },
   'da-thich': { icon: ICON.tim, dac: true, mau: 'bg-red-500', tieuDe: 'Đã thêm vào yêu thích', link: '/tai-khoan/yeu-thich', chuLink: 'Xem mẫu yêu thích' },
   'bo-thich': { icon: ICON.tim, mau: 'bg-slate-400', tieuDe: 'Đã bỏ khỏi yêu thích' },
   'da-danh-gia': { icon: ICON.tick, mau: 'bg-amber-500', tieuDe: 'Đã gửi đánh giá, cảm ơn bạn' },

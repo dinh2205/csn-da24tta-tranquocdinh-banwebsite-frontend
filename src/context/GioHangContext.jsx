@@ -1,4 +1,4 @@
-import { createContext, useCallback, useContext, useState } from 'react';
+import { createContext, useCallback, useContext, useEffect, useState } from 'react';
 import mauWeb from '../data/mauWeb';
 import { doc, ghi } from '../utils/luuTru';
 import { useDonHang } from './DonHangContext';
@@ -22,6 +22,17 @@ export function GioHangProvider({ children }) {
         setDsId(ds);
         ghi(KHOA_GIO, ds);
     };
+
+    // Chưa đăng nhập vẫn thêm được mẫu mà tài khoản đã mua → đăng nhập xong tự bỏ các mẫu đó khỏi giỏ
+    // (tránh thanh toán 2 lần cùng 1 mẫu) và báo cho người dùng biết
+    useEffect(() => {
+        const trung = dsId.filter((id) => daMua(id));
+        if (trung.length === 0) return;
+        luuGio(dsId.filter((id) => !daMua(id)));
+        const mau = mauWeb.find((m) => m.id === trung[0]);
+        if (mau) baoThongBao('bo-da-mua', { ...mau, ten: trung.length > 1 ? `${mau.ten} và ${trung.length - 1} mẫu khác` : mau.ten });
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [daMua]);
 
     // Ghép id với dữ liệu mẫu; mẫu đã bị xóa khỏi mauWeb.js thì bỏ qua
     const items = dsId.map((id) => mauWeb.find((m) => m.id === id)).filter(Boolean);

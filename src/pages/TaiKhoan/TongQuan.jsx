@@ -9,7 +9,6 @@ import { tinhTienDon } from '../../data/donHang';
 import { dinhDangGia, dinhDangNgay } from '../../utils/chuyenDoi';
 import nenLoiChao from '../../assets/nen-loi-chao.webp';
 import bannerUuDai from '../../assets/banner-uu-dai.webp';
-import bannerUuDaiNho from '../../assets/banner-uu-dai-480.webp';
 
 const ICON = {
     muiTen: 'M5 12h14M13 6l6 6-6 6',
@@ -179,8 +178,6 @@ function TongQuan() {
             >
                 <img
                     src={bannerUuDai}
-                    srcSet={`${bannerUuDaiNho} 480w, ${bannerUuDai} 960w`}
-                    sizes="(min-width: 1280px) 17rem, 20rem" // cột phải rộng 17rem, màn nhỏ rộng tối đa 20rem
                     alt="Siêu giảm giá mẫu website, ưu đãi đến 50%"
                     width={960}
                     height={1358}

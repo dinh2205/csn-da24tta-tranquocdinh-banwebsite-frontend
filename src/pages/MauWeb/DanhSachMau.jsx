@@ -2,10 +2,10 @@ import TheMau from '../../components/sanpham/TheMau';
 import { sapXepList } from '../../data/danhmuc';
 import mauWeb from '../../data/mauWeb';
 
-// Không có kết quả thì gợi ý 3 mẫu bán chạy nhất thay vì để trang trống
+// Không có kết quả thì gợi ý 3 mẫu bán chạy
 const goiY = [...mauWeb].sort((a, b) => b.luotBan - a.luotBan).slice(0, 3);
 
-// 5. DANH SÁCH MẪU: thanh trên (số mẫu, từ khóa, nút Bộ lọc, sắp xếp) + lưới thẻ mẫu
+// 5. DANH SÁCH MẪU
 function DanhSachMau({ ketQua, tuKhoa, onXoaTuKhoa, sapXep, setSapXep, soLocDangBat, onBatTatBoLoc, onXoaTatCa }) {
     return (
         <div className="min-w-0">
@@ -15,7 +15,7 @@ function DanhSachMau({ ketQua, tuKhoa, onXoaTuKhoa, sapXep, setSapXep, soLocDang
                     <span>
                         Hiển thị <strong className="text-slate-900">{ketQua.length}</strong> mẫu website
                     </span>
-                    {/* Đang tìm theo từ khóa thì hiện nhãn, bấm để bỏ từ khóa */}
+                    {/* Nhãn từ khóa, bấm để bỏ */}
                     {tuKhoa && (
                         <button
                             type="button"
@@ -28,7 +28,7 @@ function DanhSachMau({ ketQua, tuKhoa, onXoaTuKhoa, sapXep, setSapXep, soLocDang
                 </div>
 
                 <div className="flex w-full items-center gap-2 sm:w-auto">
-                    {/* Nút Bộ lọc chỉ có ở điện thoại / máy tính bảng */}
+                    {/* Nút Bộ lọc (điện thoại, máy tính bảng) */}
                     <button
                         type="button"
                         onClick={onBatTatBoLoc}
@@ -49,7 +49,6 @@ function DanhSachMau({ ketQua, tuKhoa, onXoaTuKhoa, sapXep, setSapXep, soLocDang
                             onChange={(e) => setSapXep(e.target.value)}
                             className="rounded-lg border border-slate-300 bg-white px-3 py-2 text-sm text-slate-700 outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-200"
                         >
-                            {/* "Phù hợp nhất" chỉ có nghĩa khi đang tìm theo từ khóa */}
                             {sapXepList.filter((s) => tuKhoa || s.id !== 'phu-hop').map((s) => (
                                 <option key={s.id} value={s.id}>
                                     {s.ten}
@@ -69,7 +68,7 @@ function DanhSachMau({ ketQua, tuKhoa, onXoaTuKhoa, sapXep, setSapXep, soLocDang
                         <button
                             type="button"
                             onClick={onXoaTatCa}
-                            className="mt-4 rounded-lg bg-blue-600 px-4 py-2 text-sm font-semibold text-white transition hover:bg-blue-700"
+                            className="mt-4 rounded-lg bg-cyan-400 px-4 py-2 text-sm font-bold text-blue-950 transition hover:bg-cyan-300"
                         >
                             Xóa tất cả bộ lọc
                         </button>

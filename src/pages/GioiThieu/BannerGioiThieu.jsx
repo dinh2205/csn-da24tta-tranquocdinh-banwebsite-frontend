@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom';
 import banner from '../../assets/gioi-thieu/banner.webp';
 
-// 1. BANNER trang Giới thiệu
+// 1. BANNER
 function BannerGioiThieu() {
     return (
         <section

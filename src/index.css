@@ -1,17 +1,16 @@
 @import "tailwindcss";
 
-/* Không quét class trong public/ (code các mẫu demo): web này không dùng, quét vào chỉ làm file CSS phình to */
+/* Không quét class trong public/ (code các mẫu demo) */
 @source not "../public";
 
 @theme {
-  /* Độ rộng tối đa của nội dung trang: dùng bằng class max-w-trang */
+  /* Độ rộng nội dung trang (max-w-trang) */
   --container-trang: 92rem;
-  /* Font mặc định của cả trang (class font-sans), tải ở index.html */
+  /* Font chung (tải ở index.html) */
   --font-sans: "Be Vietnam Pro", ui-sans-serif, system-ui, sans-serif;
 }
 
-/* Thanh kéo 2 nút (Khoảng giá ở trang Mẫu website): 2 input range chồng lên nhau,
-   thanh của input trong suốt và không nhận chuột, chỉ nút tròn nhận chuột để kéo được cả 2 nút */
+/* Thanh kéo 2 nút (Khoảng giá): chỉ nút tròn nhận chuột */
 .thanh-keo {
   position: absolute;
   inset: 0;
@@ -43,7 +42,7 @@
   pointer-events: auto;
 }
 
-/* Tailwind v4 để chuột trên nút là mũi tên: đổi thành bàn tay cho mọi nút bấm được */
+/* Con trỏ bàn tay cho nút bấm */
 @layer base {
   button:not(:disabled),
   [role="button"]:not(:disabled) {

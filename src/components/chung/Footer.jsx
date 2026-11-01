@@ -35,14 +35,11 @@ const cot = [
 
 const mangXaHoi = ['f', '▶', '♪', 'IG', '…'];
 
-// Kiểu chữ chung cho mọi tiêu đề trong footer (3 tiêu đề cột + "Kết nối với chúng tôi")
+// Kiểu chữ tiêu đề footer
 const TIEU_DE = 'text-sm font-bold uppercase tracking-wide text-white';
 
 const Footer = () => {
   return (
-    // Cả footer thống nhất 2 kiểu chữ:
-    //   - tiêu đề cột: text-sm, đậm, viết hoa, màu trắng (kiểu TIEU_DE ở trên)
-    //   - nội dung (mô tả, liên hệ, link, bản quyền): text-sm, màu slate-400
     <footer className="bg-slate-900 text-sm leading-relaxed text-slate-400">
       <div className="mx-auto max-w-trang px-4 py-12 sm:px-6">
         <div className="grid gap-10 md:grid-cols-2 lg:grid-cols-[1.6fr_1fr_1fr_1fr]">
@@ -81,7 +78,7 @@ const Footer = () => {
                   <p className={TIEU_DE}>Kết nối với chúng tôi</p>
                   <div className="mt-3 flex gap-2">
                     {mangXaHoi.map((m) => (
-                      // Chưa có trang mạng xã hội thật: để biểu tượng, không gắn link "#" (bấm sẽ nhảy lên đầu trang)
+                      // Chưa có link mạng xã hội nên chỉ để icon
                       <span
                         key={m}
                         title="Đang cập nhật"

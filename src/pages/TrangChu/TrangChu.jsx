@@ -4,7 +4,7 @@ import BannerTrangChu from './BannerTrangChu';
 import DanhMucChinh from './DanhMucChinh';
 import MauNoiBat from './MauNoiBat';
 
-// Trang chủ: mỗi phần là 1 file nằm cùng thư mục này, dữ liệu nằm ở src/data/trangChu.js
+// Trang chủ: mỗi phần 1 file, dữ liệu ở data/trangChu.js
 function TrangChu() {
     return (
         <div>

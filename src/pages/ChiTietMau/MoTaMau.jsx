@@ -1,7 +1,7 @@
 import { nganhList } from '../../data/danhmuc';
 import { tinhNang } from '../../data/chiTietMau';
 
-// 2. MÔ TẢ TỔNG QUAN: mô tả riêng của mẫu + danh sách tính năng chung
+// Mô tả tổng quan
 function MoTaMau({ mau }) {
     const tenNganh = nganhList.find((n) => n.id === mau.nganh)?.ten ?? 'Khác';
 

@@ -6,7 +6,7 @@ import QuyTrinh from './QuyTrinh';
 import LienHe from './LienHe';
 import BatDau from './BatDau';
 
-// Trang Giới thiệu: mỗi phần là 1 file nằm cùng thư mục này, dữ liệu nằm ở src/data/gioiThieu.js
+// Trang Giới thiệu: mỗi phần 1 file, dữ liệu ở data/gioiThieu.js
 function GioiThieu() {
     return (
         <div>

@@ -6,20 +6,17 @@ import TruongMatKhau from '../../components/bieumau/TruongMatKhau';
 import DoManhMatKhau from '../../components/bieumau/DoManhMatKhau';
 import NutGoogle from '../../components/bieumau/NutGoogle';
 
-// Giá trị ban đầu của form: tất cả ô đều rỗng
 const formBanDau = { hoTen: '', email: '', sdt: '', matKhau: '', xacNhan: '' };
 
 // Trang Đăng ký (/dang-ky)
 function DangKy() {
     const navigate = useNavigate();
 
-    // Gom 5 ô vào 1 object cho gọn, thay vì 5 cái useState
     const [f, setF] = useState(formBanDau);
     const [dongY, setDongY] = useState(false);
     const [loi, setLoi] = useState({});
 
-    // doi('email') trả về hàm onChange cho ô email: chỉ sửa đúng ô đó, giữ nguyên các ô khác,
-    // đồng thời xóa câu báo lỗi của ô đó (đang sửa rồi thì không báo đỏ nữa)
+    // Trả về onChange cho 1 ô, đồng thời xóa lỗi của ô đó
     const doi = (truong) => (e) => {
         setF({ ...f, [truong]: e.target.value });
         setLoi({ ...loi, [truong]: '' });
@@ -39,19 +36,15 @@ function DangKy() {
         setLoi(l);
         if (Object.keys(l).length > 0) return;
 
-        // 2. Hợp lệ thì sang trang Đăng nhập, gửi kèm email để điền sẵn + câu thông báo.
-        // Chưa lưu tài khoản, sẽ lưu vào localStorage ở bước sau
+        // 2. Hợp lệ thì sang Đăng nhập (chưa lưu tài khoản)
         navigate('/dang-nhap', { state: { email: f.email, thongBao: 'Đăng ký thành công! Mời bạn đăng nhập.' } });
     };
 
     return (
-        <KhungXacThuc
-            tieuDeAnh="Tạo tài khoản miễn phí"
-            moTaAnh="Lưu mẫu yêu thích · Theo dõi đơn hàng · Đánh giá mẫu đã mua"
-        >
+        <KhungXacThuc>
             {/* 1. TIÊU ĐỀ */}
-            <h1 className="text-3xl font-extrabold text-slate-900">Đăng ký</h1>
-            <p className="mt-1 text-slate-500">Chỉ mất 1 phút để bắt đầu mua mẫu website</p>
+            <h1 className="text-center text-3xl font-extrabold text-slate-900">Đăng ký</h1>
+            <p className="mt-1 text-center text-slate-500">Chỉ mất 1 phút để bắt đầu mua mẫu website</p>
 
             {/* 2. FORM */}
             <form onSubmit={gui} className="mt-6 space-y-4" noValidate>
@@ -65,7 +58,7 @@ function DangKy() {
                     autoComplete="name"
                 />
 
-                {/* 2.1 Email + số điện thoại: máy tính nằm 2 cột, điện thoại xếp dọc */}
+                {/* Email + số điện thoại: 2 cột trên máy tính */}
                 <div className="grid gap-4 sm:grid-cols-2">
                     <TruongNhap
                         id="email"
@@ -133,7 +126,7 @@ function DangKy() {
 
                 <button
                     type="submit"
-                    className="w-full rounded-xl bg-blue-600 py-3 text-sm font-semibold text-white shadow-sm transition hover:bg-blue-700"
+                    className="w-full rounded-xl bg-cyan-400 py-3 text-sm font-bold text-blue-950 shadow-sm transition hover:bg-cyan-300"
                 >
                     Tạo tài khoản
                 </button>

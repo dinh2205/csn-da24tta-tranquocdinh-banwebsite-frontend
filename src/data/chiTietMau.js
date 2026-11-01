@@ -1,6 +1,6 @@
-// Dữ liệu cho trang CHI TIẾT MẪU
+// Dữ liệu trang chi tiết mẫu
 
-// Khung MÔ TẢ TỔNG QUAN: tính năng chung, mẫu nào cũng có
+// Tính năng chung của mọi mẫu
 export const tinhNang = [
     'Giao diện hiện đại, tương thích mọi kích thước màn hình.',
     'Cấu trúc component rõ ràng, dễ chỉnh sửa nội dung.',
@@ -8,8 +8,7 @@ export const tinhNang = [
     'Kèm tài liệu hướng dẫn cài đặt và video minh họa.',
 ];
 
-// Bảng THÔNG SỐ KỸ THUẬT: nhóm "Tổng quan" lấy từ dữ liệu của mẫu, các nhóm sau giống nhau cho mọi mẫu.
-// Mỗi dòng là [tên, giá trị]
+// Bảng thông số kỹ thuật, mỗi dòng [tên, giá trị]
 export const taoThongSo = (mau) => [
     {
         nhom: 'Tổng quan',
@@ -49,7 +48,7 @@ export const taoThongSo = (mau) => [
     },
 ];
 
-// Khung ĐÁNH GIÁ: đánh giá mẫu (chưa có backend), mẫu nào cũng hiện 3 đánh giá này
+// Đánh giá mẫu (dữ liệu giả)
 export const danhGiaMau = [
     { id: 1, hoTen: 'Phạm Quốc Bảo', sao: 4, ngay: '2026-10-30', noiDung: 'Mẫu đẹp, bố cục hợp lý. Mong có thêm vài biến thể màu để chọn.' },
     { id: 2, hoTen: 'Bùi Thanh Tâm', sao: 5, ngay: '2026-10-26', noiDung: 'Mẫu chạy mượt trên điện thoại, khách hàng của mình khen giao diện chuyên nghiệp.' },

@@ -4,7 +4,7 @@ import anhNhanMauNhanh from '../assets/gioi-thieu/ly-do-nhan-mau-nhanh.webp';
 import anhHoTro from '../assets/gioi-thieu/ly-do-ho-tro.webp';
 
 
-// Dữ liệu cho khung VÌ SAO CHỌN: mỗi lý do 1 ảnh, nền nhạt sau ảnh và màu chữ tiêu đề riêng
+// Khung Vì sao chọn
 export const lyDo = [
     {
         anh: anhDaDangMau,
@@ -37,7 +37,7 @@ export const lyDo = [
 ];
 
 
-// Dữ liệu cho khung QUY TRÌNH MUA MẪU: icon là đường vẽ SVG (thuộc tính d của thẻ <path>)
+// Khung Quy trình mua mẫu
 export const cacBuoc = [
     {
         ten: 'Chọn mẫu',
@@ -62,7 +62,7 @@ export const cacBuoc = [
 ];
 
 
-// Đường vẽ các icon nét mảnh dùng ở khung LIÊN HỆ
+// Icon khung Liên hệ
 export const ICON = {
     dienThoai: 'M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1.9.4 1.8.7 2.7a2 2 0 0 1-.5 2.1L8 9.8a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 2.1-.4c.9.3 1.8.6 2.7.7a2 2 0 0 1 1.7 2Z',
     thu: 'M4 4h16a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2ZM22 6l-10 7L2 6',
@@ -73,7 +73,7 @@ export const ICON = {
 };
 
 
-// Dữ liệu cho khung LIÊN HỆ: 3 kênh, mỗi kênh 1 màu riêng, 3 dòng thông tin và 1 nút bấm
+// Khung Liên hệ
 export const cacKenh = [
     {
         nhan: 'Tư vấn chọn mẫu',
@@ -85,7 +85,6 @@ export const cacKenh = [
             { icon: ICON.dongHo, tieuDe: 'Thời gian', giaTri: '8:00 – 22:00 mỗi ngày' },
             { icon: ICON.tiaChop, tieuDe: 'Phản hồi', giaTri: 'Ngay lập tức', noiBat: true },
         ],
-        // tel: mở ứng dụng gọi điện trên điện thoại
         nut: { chu: 'Gọi ngay', href: 'tel:19006868' },
         huyHieu: ICON.dienThoai,
     },
@@ -99,7 +98,6 @@ export const cacKenh = [
             { icon: ICON.dongHo, tieuDe: 'Thời gian', giaTri: 'Thứ 2 – Thứ 7' },
             { icon: ICON.tiaChop, tieuDe: 'Phản hồi', giaTri: 'Trong vòng 24 giờ', noiBat: true },
         ],
-        // mailto: mở ứng dụng email, điền sẵn người nhận
         nut: { chu: 'Gửi email', href: 'mailto:hotro@websitedesign.vn' },
         huyHieu: ICON.thu,
     },
@@ -113,7 +111,6 @@ export const cacKenh = [
             { icon: ICON.dongHo, tieuDe: 'Giờ làm việc', giaTri: 'Thứ 2 – Thứ 6 (8:00 – 17:00)' },
             { icon: ICON.tiaChop, tieuDe: 'Đặt lịch', giaTri: 'Gọi trước để được đón tiếp', noiBat: true },
         ],
-        // ngoai: true → mở Google Maps ở tab mới
         nut: {
             chu: 'Xem bản đồ',
             href: 'https://www.google.com/maps/search/?api=1&query=126+Nguy%E1%BB%85n+Thi%E1%BB%87n+Th%C3%A0nh+Tr%C3%A0+Vinh',

@@ -1,7 +1,7 @@
 import { useRef } from 'react';
 import Icon from '../../components/chung/Icon';
 
-// Nút mũi tên tròn để trượt hàng ảnh sang trái / phải
+// Nút mũi tên trượt ảnh
 function NutMuiTen({ huong, onClick }) {
     return (
         <button
@@ -15,19 +15,16 @@ function NutMuiTen({ huong, onClick }) {
     );
 }
 
-// 2. CÁC TRANG CỦA MẪU: ảnh từng trang xếp 1 hàng, máy tính thấy 4 ô, điện thoại 2 ô, vuốt ngang được.
-// dsTrang: [{ ten, anh }]. Trang chưa có ảnh (anh = '#') thì hiện ô xám có chữ "Đang cập nhật ảnh"
+// Các trang của mẫu: 1 hàng ảnh, vuốt ngang
 function CacTrangMau({ dsTrang }) {
     const hang = useRef(null);
 
     if (dsTrang.length === 0) return null;
 
-    // Trượt đúng 1 bề ngang khung (4 ô) mỗi lần bấm
     const truot = (huong) => hang.current.scrollBy({ left: huong * hang.current.clientWidth, behavior: 'smooth' });
 
     return (
         <section className="mt-6">
-            {/* 2.1 Tiêu đề + 2 nút mũi tên (chỉ hiện khi có hơn 4 trang) */}
             <div className="mb-3 flex items-center justify-between gap-4">
                 <h2 className="text-lg font-bold text-slate-900">
                     Các trang của mẫu <span className="text-sm font-medium text-slate-400">({dsTrang.length})</span>
@@ -40,7 +37,6 @@ function CacTrangMau({ dsTrang }) {
                 )}
             </div>
 
-            {/* 2.2 Hàng ảnh: mỗi ô rộng 1/2 (điện thoại) hoặc 1/4 (máy tính bảng trở lên) trừ khoảng cách */}
             <div ref={hang} className="flex snap-x snap-mandatory gap-3 overflow-x-auto pb-1 [scrollbar-width:none]">
                 {dsTrang.map((t) => (
                     <figure

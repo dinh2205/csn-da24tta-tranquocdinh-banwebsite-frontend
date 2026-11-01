@@ -1,16 +1,14 @@
 import { useRef } from 'react';
 
-// 1. ẢNH XEM TRƯỚC: ảnh chụp toàn trang của mẫu đặt trong khung giả cửa sổ trình duyệt,
-// cuộn chuột hoặc giữ chuột kéo lên xuống để xem hết trang
+// Ảnh xem trước toàn trang, cuộn hoặc kéo chuột để xem
 function KhungXemTruoc({ mau }) {
     const khungCuon = useRef(null);
-    const keo = useRef(null); // đang giữ chuột: { y: vị trí chuột lúc bấm, top: vị trí cuộn lúc bấm }
+    const keo = useRef(null); // vị trí lúc bắt đầu kéo
 
-    // Có ảnh toàn trang thì dùng, chưa có (còn '#') thì dùng ảnh đại diện
     const anhToanTrang = mau.anhToanTrang?.['may-tinh'];
     const anh = anhToanTrang && anhToanTrang !== '#' ? anhToanTrang : mau.anh[0];
 
-    // Giữ chuột trái rồi kéo: cuộn khung ngược chiều kéo, giống vuốt trên điện thoại
+    // Kéo chuột để cuộn
     const batDauKeo = (e) => {
         if (e.pointerType !== 'mouse' || e.button !== 0) return;
         keo.current = { y: e.clientY, top: khungCuon.current.scrollTop };
@@ -27,7 +25,6 @@ function KhungXemTruoc({ mau }) {
     return (
         <section className="rounded-2xl bg-slate-200/70 p-4 sm:p-6">
             <div className="overflow-hidden rounded-xl border border-slate-300 bg-white shadow-xl">
-                {/* 1.1 Thanh trên của cửa sổ: 3 chấm tròn + ô địa chỉ giả */}
                 <div className="flex items-center gap-2 border-b border-slate-200 bg-slate-100 px-3 py-2">
                     <span className="h-2.5 w-2.5 rounded-full bg-red-400" />
                     <span className="h-2.5 w-2.5 rounded-full bg-amber-400" />
@@ -37,7 +34,6 @@ function KhungXemTruoc({ mau }) {
                     </span>
                 </div>
 
-                {/* 1.2 Khung cuộn: điện thoại cao 320px, máy tính bảng trở lên theo tỉ lệ màn hình 16:10 */}
                 <div className="relative">
                     <div
                         ref={khungCuon}

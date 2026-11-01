@@ -3,7 +3,7 @@ import { lyDo } from '../../data/gioiThieu';
 // 4. VÌ SAO CHỌN WEBSITE DESIGN
 function LyDo() {
     return (
-        // scroll-mt-24: chừa chỗ cho thanh đầu trang khi bấm nút "Vì sao chọn chúng tôi?" cuộn xuống đây
+        // scroll-mt-24: chừa chỗ thanh menu khi cuộn tới
         <section id="ly-do" className="scroll-mt-24 bg-gradient-to-br from-[#f1f6fe] via-white to-[#eef6fd]">
             <div className="mx-auto max-w-[76rem] px-4 py-14 sm:px-6">
                 <div className="text-center">
@@ -18,7 +18,6 @@ function LyDo() {
                 <div className="mt-10 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
                     {lyDo.map((l) => (
                         <div key={l.tieuDe} className="overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm">
-                            {/* Ảnh: tỉ lệ 5/6 chung cho cả 4 thẻ để cao bằng nhau, object-bottom giữ phần người ở đáy ảnh */}
                             <div className={`aspect-[5/6] w-full overflow-hidden bg-gradient-to-b ${l.mauNhat}`}>
                                 <img
                                     src={l.anh}

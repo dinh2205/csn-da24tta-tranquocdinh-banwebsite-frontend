@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import TruongNhap from './TruongNhap';
 
-// Ô mật khẩu: giống TruongNhap nhưng có nút "Hiện / Ẩn" ở mép phải để xem lại mật khẩu vừa gõ
+// Ô mật khẩu có nút Hiện / Ẩn
 function TruongMatKhau(props) {
   const [hien, setHien] = useState(false);
 

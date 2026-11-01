@@ -1,7 +1,6 @@
 import { useState } from 'react';
 
-// Dòng "hoặc" + nút Google. Chưa kết nối Google (cần backend) nên bấm vào chỉ hiện câu thông báo.
-// chu: chữ trên nút, baoLoi: câu hiện ra khi bấm
+// Dòng "hoặc" + nút Google (chưa kết nối, bấm chỉ hiện thông báo)
 function NutGoogle({ chu, baoLoi }) {
   const [daBam, setDaBam] = useState(false);
 

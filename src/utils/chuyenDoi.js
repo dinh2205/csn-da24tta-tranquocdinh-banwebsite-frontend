@@ -1,9 +1,9 @@
-// hiển thị ngày, tiền,...
+// Hàm định dạng ngày, tiền, chữ
 
 // 450000 → "450.000 đ"
 export const dinhDangGia = (so) => `${so.toLocaleString('vi-VN')} đ`;
 
-// "Bán Hàng" → "ban hang": bỏ dấu + viết thường, để tìm kiếm gõ có dấu hay không dấu đều ra
+// "Bán Hàng" → "ban hang"
 export const boDau = (chu) =>
   chu.toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, '').replace(/đ/g, 'd');
 

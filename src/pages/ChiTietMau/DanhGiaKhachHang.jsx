@@ -1,7 +1,6 @@
 import { danhGiaMau } from '../../data/chiTietMau';
 import { dinhDangNgay } from '../../utils/chuyenDoi';
 
-// Hàng 5 ngôi sao: sao thứ i tô vàng nếu i < số sao, còn lại tô xám
 function Sao({ diem, className = 'h-4 w-4' }) {
     return (
         <div className="flex gap-0.5">
@@ -14,9 +13,8 @@ function Sao({ diem, className = 'h-4 w-4' }) {
     );
 }
 
-// 4. ĐÁNH GIÁ CỦA KHÁCH HÀNG: điểm trung bình + danh sách bình luận (dữ liệu mẫu trong data/chiTietMau.js)
+// Đánh giá của khách hàng
 function DanhGiaKhachHang() {
-    // Điểm trung bình = tổng số sao / số đánh giá, làm tròn 1 chữ số thập phân
     const diem = danhGiaMau.reduce((tong, d) => tong + d.sao, 0) / danhGiaMau.length;
 
     return (
@@ -36,7 +34,7 @@ function DanhGiaKhachHang() {
             <ul className="mt-4 divide-y divide-slate-100 rounded-2xl border border-slate-200 bg-white px-5 shadow-sm">
                 {danhGiaMau.map((d) => (
                     <li key={d.id} className="flex gap-3 py-4">
-                        {/* Ảnh đại diện: chữ cái đầu của tên (chữ cuối trong họ tên) */}
+                        {/* Ảnh đại diện: chữ cái đầu của tên */}
                         <span className="flex h-10 w-10 flex-none items-center justify-center rounded-full bg-gradient-to-br from-blue-500 to-indigo-500 text-sm font-bold text-white">
                             {d.hoTen.split(' ').pop().charAt(0)}
                         </span>

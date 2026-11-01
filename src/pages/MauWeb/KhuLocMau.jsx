@@ -1,18 +1,17 @@
 import useLocMau from './useLocMau';
-import TabDanhMuc from './TabDanhMuc';
+import TabLinhVuc from './TabLinhVuc';
 import BoLoc from './BoLoc';
 import DanhSachMau from './DanhSachMau';
 
-// 3–5. KHU LỌC MẪU: tab danh mục ở trên, bên dưới là cột Bộ lọc (trái) + Danh sách mẫu (phải).
-// 3 phần dùng chung trạng thái lọc nên ghép ở đây, phần xử lý nằm trong useLocMau.js
+// 3–5. KHU LỌC MẪU: tab lĩnh vực + bộ lọc + danh sách, xử lý ở useLocMau.js
 function KhuLocMau() {
     const loc = useLocMau();
 
     return (
         <section className="bg-slate-50">
             <div className="mx-auto max-w-trang px-4 py-8 sm:px-6">
-                {/* 3. TAB DANH MỤC: dùng chung giá trị loai với ô Danh mục ở Bộ lọc, chọn bên nào thì bên kia sáng theo */}
-                <TabDanhMuc loai={loc.loai} onChon={(id) => loc.doiThamSo('loai', id)} />
+                {/* 3. TAB LĨNH VỰC */}
+                <TabLinhVuc nganh={loc.boLoc.nganh} onChon={(id) => loc.setBoLoc({ ...loc.boLoc, nganh: id })} />
 
                 <div className="mt-6 grid gap-8 lg:grid-cols-[250px_1fr]">
                     {/* 4. BỘ LỌC */}

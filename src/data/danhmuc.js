@@ -7,8 +7,9 @@ export const loaiList = [
   { id: 'admin-dashboard', ten: 'Admin Dashboard' },
 ];
 
-// Lọc phụ ở trang Mẫu website: lĩnh vực (trường "nganh" của mẫu)
+// Lĩnh vực (trường nganh)
 export const nganhList = [
+  { id: 'doanh-nghiep', ten: 'Doanh nghiệp' },
   { id: 'giao-duc', ten: 'Giáo dục' },
   { id: 'y-te', ten: 'Y tế' },
   { id: 'nha-hang', ten: 'Nhà hàng' },
@@ -20,9 +21,11 @@ export const nganhList = [
   { id: 'xay-dung', ten: 'Xây dựng' },
   { id: 'du-lich', ten: 'Du lịch' },
   { id: 'thuc-pham', ten: 'Thực phẩm' },
+  // Mẫu không thuộc lĩnh vực nào ở trên, luôn để cuối
+  { id: 'khac', ten: 'Khác' },
 ];
 
-// Màu chủ đạo (trường "mau" của mẫu), swatch là màu chấm tròn trong bộ lọc
+// Màu chủ đạo (trường mau)
 export const mauList = [
   { id: 'xanh-duong', ten: 'Xanh dương', swatch: 'bg-blue-600' },
   { id: 'xanh-dam', ten: 'Xanh đậm', swatch: 'bg-blue-900' },
@@ -33,11 +36,11 @@ export const mauList = [
   { id: 'toi', ten: 'Tối', swatch: 'bg-slate-900' },
 ];
 
-// Giá cao nhất của thanh kéo "Khoảng giá"
+// Giá cao nhất của thanh "Khoảng giá"
 export const GIA_TOI_DA = 2000000;
 
 export const sapXepList = [
-  // Chỉ hiện khi đang tìm theo từ khóa: giữ thứ tự độ khớp do timKiemMau.js chấm điểm
+  // Chỉ hiện khi có từ khóa
   { id: 'phu-hop', ten: 'Phù hợp nhất' },
   { id: 'moi-nhat', ten: 'Mới nhất' },
   { id: 'ban-chay', ten: 'Bán chạy' },

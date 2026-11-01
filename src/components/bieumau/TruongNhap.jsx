@@ -1,6 +1,4 @@
-// 1 ô nhập có nhãn ở trên và dòng báo lỗi đỏ ở dưới.
-// nhan: chữ trên ô, loi: câu báo lỗi (không có thì không hiện), phai: nội dung đặt ở mép phải trong ô (vd nút Hiện/Ẩn).
-// Các thuộc tính còn lại (type, value, onChange, placeholder...) truyền thẳng vào thẻ <input>
+// Ô nhập có nhãn và dòng báo lỗi; phai: nội dung ở mép phải ô
 function TruongNhap({ nhan, loi, id, phai, ...props }) {
   return (
     <div>

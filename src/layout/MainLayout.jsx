@@ -6,7 +6,7 @@ import CuonTrang from '../components/chung/CuonTrang'
 function MainLayout() {
   return (
     <div className="flex min-h-screen flex-col overflow-x-clip">
-      {/* Đặt trước nội dung trang: cuộn lên đầu chạy trước, nên trang Mẫu website vẫn tự cuộn tới khung tìm kiếm được */}
+      {/* Đặt trước nội dung trang để chạy trước */}
       <CuonTrang />
       <Header />
 

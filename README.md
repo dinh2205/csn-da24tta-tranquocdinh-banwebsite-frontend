@@ -113,9 +113,9 @@ csn-da24tta-tranquocdinh-banwebsite-frontend/
 │   │   ├── MauWeb/                 Trang danh sách mẫu website (chia thành nhiều phần)
 │   │   │   ├── MauWeb.jsx          File chính, ghép các phần bên dưới
 │   │   │   ├── BannerMauWeb.jsx    Banner đầu trang
-│   │   │   ├── KhuLocMau.jsx       Ghép tab danh mục + bộ lọc + danh sách mẫu
-│   │   │   ├── TabDanhMuc.jsx      Tab chọn danh mục
-│   │   │   ├── BoLoc.jsx           Bộ lọc: danh mục, lĩnh vực, màu sắc, khoảng giá
+│   │   │   ├── KhuLocMau.jsx       Ghép tab lĩnh vực + bộ lọc + danh sách mẫu
+│   │   │   ├── TabLinhVuc.jsx      Hàng nút chọn lĩnh vực
+│   │   │   ├── BoLoc.jsx           Bộ lọc: danh mục, ưu đãi, màu sắc, khoảng giá
 │   │   │   ├── DanhSachMau.jsx     Sắp xếp và lưới thẻ mẫu
 │   │   │   ├── useLocMau.js        Xử lý bộ lọc và sắp xếp
 │   │   │   └── timKiemMau.js       Tìm theo từ khóa (hiểu câu gõ tự nhiên, chấm điểm)

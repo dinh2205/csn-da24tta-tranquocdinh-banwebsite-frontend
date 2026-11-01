@@ -1,15 +1,15 @@
-// Màu thanh theo số điểm (1 → 4), điểm 0 không tô thanh nào
+// Màu thanh theo điểm 1 → 4
 const mauDoan = ['', 'bg-red-400', 'bg-amber-400', 'bg-lime-500', 'bg-emerald-500'];
 const nhanDoManh = ['Rất yếu', 'Yếu', 'Trung bình', 'Khá', 'Mạnh'];
 
-// Chấm điểm mật khẩu 0 → 4: đủ 8 ký tự, có cả chữ hoa và thường, có số, có ký tự đặc biệt (mỗi ý +1)
+// Điểm mật khẩu 0 → 4: đủ 8 ký tự, có hoa + thường, có số, có ký tự đặc biệt
 const chamDiem = (matKhau) =>
   (matKhau.length >= 8 ? 1 : 0) +
   (/[a-z]/.test(matKhau) && /[A-Z]/.test(matKhau) ? 1 : 0) +
   (/\d/.test(matKhau) ? 1 : 0) +
   (/[^A-Za-z0-9]/.test(matKhau) ? 1 : 0);
 
-// 4 thanh ngang dưới ô mật khẩu ở trang Đăng ký, tô màu theo độ mạnh. Chưa gõ gì thì ẩn
+// Thanh độ mạnh mật khẩu (trang Đăng ký)
 function DoManhMatKhau({ matKhau }) {
   if (!matKhau) return null;
   const diem = chamDiem(matKhau);

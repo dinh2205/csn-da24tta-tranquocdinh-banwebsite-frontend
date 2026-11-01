@@ -8,7 +8,7 @@ import NutGoogle from '../../components/bieumau/NutGoogle';
 // Trang Đăng nhập (/dang-nhap)
 function DangNhap() {
     const navigate = useNavigate();
-    // Vừa đăng ký xong thì trang Đăng ký gửi sang email + câu thông báo, điền sẵn email cho người dùng
+    // Vừa đăng ký xong thì điền sẵn email
     const { state } = useLocation();
 
     const [email, setEmail] = useState(state?.email ?? '');
@@ -18,30 +18,26 @@ function DangNhap() {
     const [baoQuenMatKhau, setBaoQuenMatKhau] = useState(false);
 
     const gui = (e) => {
-        e.preventDefault(); // chặn trình duyệt tải lại trang khi gửi form
+        e.preventDefault();
 
-        // 1. Kiểm tra từng ô, ô nào sai thì ghi câu báo lỗi
+        // 1. Kiểm tra từng ô
         const l = {};
         if (!/^\S+@\S+\.\S+$/.test(email)) l.email = 'Email không hợp lệ';
         if (!matKhau) l.matKhau = 'Vui lòng nhập mật khẩu';
         setLoi(l);
         if (Object.keys(l).length > 0) return;
 
-        // 2. Hợp lệ thì về Trang chủ.
-        // Chưa lưu tài khoản nên chưa so được email + mật khẩu, sẽ thêm bước này khi làm localStorage
+        // 2. Hợp lệ thì về Trang chủ (chưa kiểm tra tài khoản)
         navigate('/', { replace: true });
     };
 
     return (
-        <KhungXacThuc
-            tieuDeAnh="Mẫu website sẵn sàng cho mọi lĩnh vực"
-            moTaAnh="Xem trước toàn trang · Xem demo trên mọi thiết bị · Mua là dùng được ngay"
-        >
+        <KhungXacThuc>
             {/* 1. TIÊU ĐỀ */}
-            <h1 className="text-3xl font-extrabold text-slate-900">Đăng nhập</h1>
-            <p className="mt-1 text-slate-500">Chào mừng bạn quay lại Website Design</p>
+            <h1 className="text-center text-3xl font-extrabold text-slate-900">Đăng nhập</h1>
+            <p className="mt-1 text-center text-slate-500">Chào mừng bạn quay lại Website Design</p>
 
-            {/* 2. FORM. noValidate: tắt báo lỗi mặc định của trình duyệt, dùng câu báo lỗi của mình */}
+            {/* 2. FORM (noValidate: dùng báo lỗi riêng) */}
             <form onSubmit={gui} className="mt-7 space-y-4" noValidate>
                 {state?.thongBao && (
                     <p className="rounded-lg bg-emerald-50 px-3.5 py-2.5 text-sm text-emerald-700">{state.thongBao}</p>
@@ -54,7 +50,7 @@ function DangNhap() {
                     value={email}
                     onChange={(e) => {
                         setEmail(e.target.value);
-                        setLoi({ ...loi, email: '' }); // đang sửa thì bỏ báo lỗi của ô này
+                        setLoi({ ...loi, email: '' });
                     }}
                     loi={loi.email}
                     placeholder="Nhập email của bạn"
@@ -73,7 +69,7 @@ function DangNhap() {
                     autoComplete="current-password"
                 />
 
-                {/* 2.1 Ghi nhớ + quên mật khẩu (chưa có trang Quên mật khẩu nên bấm chỉ hiện thông báo) */}
+                {/* 2.1 Ghi nhớ + quên mật khẩu (chưa có trang Quên mật khẩu) */}
                 <div className="flex items-center justify-between text-sm">
                     <label className="flex cursor-pointer items-center gap-2 text-slate-600">
                         <input
@@ -94,7 +90,7 @@ function DangNhap() {
 
                 <button
                     type="submit"
-                    className="w-full rounded-xl bg-blue-600 py-3 text-sm font-semibold text-white shadow-sm transition hover:bg-blue-700"
+                    className="w-full rounded-xl bg-cyan-400 py-3 text-sm font-bold text-blue-950 shadow-sm transition hover:bg-cyan-300"
                 >
                     Đăng nhập
                 </button>

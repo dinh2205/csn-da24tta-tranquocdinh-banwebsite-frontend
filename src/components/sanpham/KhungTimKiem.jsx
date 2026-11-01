@@ -2,13 +2,10 @@ import { useEffect, useState } from 'react';
 import { Link, useLocation, useNavigate, useSearchParams } from 'react-router-dom';
 import { tuKhoaTimNhieu } from '../../data/timKiem';
 
-// Thời gian chờ người dùng ngừng gõ rồi mới lọc (mili giây), để không lọc lại sau từng chữ cái
+// Chờ ngừng gõ (ms) rồi mới lọc
 const CHO_GO = 300;
 
-// Dải tìm kiếm dùng chung: tiêu đề + ô tìm kiếm + từ khóa gợi ý trên nền xanh.
-// - Trang khác (vd Trang chủ): gõ rồi bấm "Tìm kiếm" (hoặc Enter) để sang trang Mẫu website.
-// - Trang Mẫu website: gõ tới đâu lọc tới đó, xóa trống ô thì bỏ luôn từ khóa (?tim=) để bộ lọc chạy bình thường.
-// children (không bắt buộc): nội dung đặt bên phải, vd. <KhungBanChay />. Không truyền thì ô tìm kiếm nằm giữa.
+// Dải tìm kiếm dùng chung. Trang Mẫu website: gõ tới đâu lọc tới đó; trang khác: bấm Tìm kiếm để chuyển trang. children: nội dung bên phải
 function KhungTimKiem({
   tieuDe = 'Bạn đang tìm mẫu website nào?',
   moTa = 'Gõ lĩnh vực, loại website hoặc màu sắc, ví dụ "bán hàng", "y tế", "màu cam".',
@@ -21,11 +18,11 @@ function KhungTimKiem({
   const navigate = useNavigate();
   const oTrangMau = pathname === '/mau-website';
 
-  // Từ khóa đang có trên URL. Đang ở /mau-website?tim=... thì điền sẵn vào ô, để người dùng thấy mình vừa tìm gì
+  // Điền sẵn từ khóa đang có trên URL
   const tuKhoaUrl = searchParams.get('tim') ?? '';
   const [dangGo, setDangGo] = useState(tuKhoaUrl);
 
-  // Ghi từ khóa lên URL, giữ nguyên các tham số khác (vd ?loai=); rỗng thì xóa ?tim=
+  // Ghi ?tim= lên URL, giữ các tham số khác
   const ghiTuKhoa = (chu) =>
     setSearchParams(
       (cu) => {
@@ -37,27 +34,26 @@ function KhungTimKiem({
       { replace: true },
     );
 
-  // Từ khóa trên URL bị đổi từ chỗ khác (bấm "Tìm nhiều", bấm ✕ trên nhãn từ khóa, "Xóa bộ lọc") → điền lại ô cho khớp
+  // URL đổi từ chỗ khác thì điền lại ô
   useEffect(() => {
     setDangGo((cu) => (cu.trim() === tuKhoaUrl ? cu : tuKhoaUrl));
   }, [tuKhoaUrl]);
 
-  // Trang Mẫu website: ngừng gõ CHO_GO mili giây thì lọc; xóa trống thì bỏ từ khóa ngay, không chờ
+  // Trang Mẫu website: ngừng gõ thì lọc, ô trống thì bỏ từ khóa ngay
   useEffect(() => {
     if (!oTrangMau) return;
     const chu = dangGo.trim();
     if (chu === tuKhoaUrl) return;
     const hen = setTimeout(() => ghiTuKhoa(chu), chu ? CHO_GO : 0);
-    return () => clearTimeout(hen); // gõ tiếp trước khi hết giờ chờ thì hủy lần lọc cũ
+    return () => clearTimeout(hen);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [dangGo]);
 
   const xuLyTim = (e) => {
-    e.preventDefault(); // chặn trình duyệt tải lại trang khi gửi form
+    e.preventDefault();
     const chu = dangGo.trim();
-    // Đang ở trang Mẫu website: lọc ngay, không chờ (bấm Tìm kiếm khi ô trống cũng là bỏ từ khóa)
     if (oTrangMau) return ghiTuKhoa(chu);
-    if (!chu) return; // trang khác: chưa gõ gì thì không tìm
+    if (!chu) return;
     navigate(`/mau-website?tim=${encodeURIComponent(chu)}`);
   };
 
@@ -68,7 +64,7 @@ function KhungTimKiem({
         <div className="absolute -right-16 -top-20 h-56 w-56 rounded-full bg-cyan-400/20 blur-3xl" />
       </div>
 
-      {/* Có children: chia 2 cột trên máy tính. Không có: 1 cột, giới hạn độ rộng cho ô tìm kiếm nằm giữa */}
+      {/* Có children: 2 cột, không có: 1 cột ở giữa */}
       <div
         className={`relative mx-auto grid grid-cols-1 items-center gap-8 px-4 py-10 sm:px-6 ${
           children ? 'max-w-trang lg:grid-cols-[minmax(0,1.35fr)_minmax(0,1fr)] lg:gap-10' : 'max-w-4xl'
@@ -78,7 +74,6 @@ function KhungTimKiem({
           <h2 className="text-2xl font-extrabold text-white sm:text-3xl">{tieuDe}</h2>
           {moTa && <p className="mt-2 text-sm text-blue-100 sm:text-base">{moTa}</p>}
 
-          {/* Ô tìm kiếm: nút "Tìm kiếm" nằm đè bên phải ô nhập (absolute), nên form cần relative */}
           <form onSubmit={xuLyTim} className="relative mx-auto mt-6 max-w-2xl">
             <input
               type="text"
@@ -87,7 +82,7 @@ function KhungTimKiem({
               placeholder={placeholder}
               className="w-full rounded-2xl border-0 bg-white py-[1.1rem] pl-14 pr-40 text-base text-slate-800 shadow-xl shadow-blue-950/30 outline-none ring-1 ring-white/60 transition placeholder:text-slate-400 focus:ring-4 focus:ring-cyan-300/60"
             />
-            {/* Nút ✕ xóa chữ, chỉ hiện khi ô có chữ; nằm bên trái nút "Tìm kiếm" */}
+            {/* Nút ✕ xóa chữ */}
             {dangGo && (
               <button
                 type="button"

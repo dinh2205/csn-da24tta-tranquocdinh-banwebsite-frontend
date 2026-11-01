@@ -11,7 +11,7 @@ const mauWeb = [
     nganh: 'thuc-pham',
     mau: 'xanh-la',
     gia: 500000,
-    giaGoc: 650000, // giá trước khi giảm, có trường này = đang khuyến mãi
+    giaGoc: 650000, // giá gốc (có = đang khuyến mãi)
     moTa: 'Website bán cây xanh: giới thiệu, thực đơn, hệ thống cửa hàng, khuyến mãi, giỏ hàng và đặt bàn.',
     luotBan: 12,
     ngayTao: '2026-09-25',
@@ -39,7 +39,7 @@ const mauWeb = [
     nganh: 'giao-duc',
     mau: 'xanh-la',
     gia: 400000,
-    giaGoc: 800000, // giá trước khi giảm, có trường này = đang khuyến mãi
+    giaGoc: 800000, // giá gốc (có = đang khuyến mãi)
     moTa: 'Landing page trung tâm luyện thi IELTS phong cách trẻ trung (sticker, doodle, giấy xé): khóa học, lộ trình học, giảng viên, cảm nhận học viên và form đăng ký tư vấn.',
     luotBan: 12,
     ngayTao: '2026-10-15',
@@ -65,7 +65,7 @@ const mauWeb = [
     nganh: 'y-te',
     mau: 'xanh-duong',
     gia: 300000,
-    giaGoc: 400000, // giá trước khi giảm, có trường này = đang khuyến mãi
+    giaGoc: 400000, // giá gốc (có = đang khuyến mãi)
     moTa: 'Landing page phòng khám đa khoa: giới thiệu dịch vụ, đội ngũ bác sĩ, đặt lịch khám trực tuyến, tra cứu lịch hẹn và cảm nhận bệnh nhân.',
     luotBan: 12,
     ngayTao: '2026-10-15',
@@ -170,7 +170,7 @@ const mauWeb = [
     moTa: 'Landing page thương hiệu nước trái cây thiên nhiên phong cách tươi mát: giới thiệu thương hiệu, sản phẩm theo vị, khuyến mãi, lợi ích, cảm nhận khách hàng, giỏ hàng và đăng ký nhận tin.',
     luotBan: 12,
     ngayTao: '2026-10-17',
-    moi: true, // hiện nhãn "Mới" và lọt vào bộ lọc "Mẫu mới ra mắt"
+    moi: true, // nhãn "Mới"
     boCuc: 'Landing page một trang cuộn dọc, có giỏ hàng',
     soTrang: '1 trang, 5 mục (Trang chủ, Về chúng tôi, Sản phẩm, Lợi ích, Liên hệ) + giỏ hàng',
     bienThe: 'Xanh lá, cam tươi',
@@ -196,7 +196,7 @@ const mauWeb = [
     moTa: 'Portfolio cá nhân cho nhà thiết kế UI/UX: giới thiệu, dự án tiêu biểu (xem chi tiết từng dự án), dịch vụ, kỹ năng, cảm nhận khách hàng, đặt lịch tư vấn và liên hệ; nền xanh navy hiện đại.',
     luotBan: 12,
     ngayTao: '2026-10-17',
-    moi: true, // hiện nhãn "Mới" và lọt vào bộ lọc "Mẫu mới ra mắt"
+    moi: true, // nhãn "Mới"
     boCuc: 'Một trang cuộn dọc, nền tối, có hộp xem chi tiết dự án',
     soTrang: '1 trang, 5 mục (Trang chủ, Giới thiệu, Dự án, Dịch vụ, Liên hệ) + hộp dự án, đặt lịch',
     bienThe: 'Xanh navy, xanh dương sáng',
@@ -222,7 +222,7 @@ const mauWeb = [
     moTa: 'Website báo điện tử tin tức: trang chủ tin nổi bật, 11 chuyên mục (thời sự, công nghệ, giáo dục, thể thao, kinh tế, sức khỏe, du lịch...), xem chi tiết bài viết và bình luận, tìm kiếm, lưu bài viết.',
     luotBan: 12,
     ngayTao: '2026-10-18',
-    moi: true, // hiện nhãn "Mới" và lọt vào bộ lọc "Mẫu mới ra mắt"
+    moi: true, // nhãn "Mới"
     boCuc: 'Báo điện tử nhiều chuyên mục, có cột tin bên phải',
     soTrang: 'Trang chủ + 11 chuyên mục + chi tiết bài viết',
     bienThe: 'Xanh navy, đỏ báo chí',
@@ -274,7 +274,7 @@ const mauWeb = [
     nganh: 'du-lich',
     mau: 'xanh-dam',
     gia: 100000,
-    giaGoc: 200000, // giá trước khi giảm, có trường này = đang khuyến mãi
+    giaGoc: 200000, // giá gốc (có = đang khuyến mãi)
     moTa: 'Website giới thiệu làng nghề và di sản thủ công truyền thống Việt Nam: nghệ nhân, di sản, sự kiện, tin tức, bản đồ làng nghề và trang liên hệ, có tìm kiếm và xem ảnh lớn.',
     luotBan: 12,
     ngayTao: '2026-10-16',
@@ -295,6 +295,69 @@ const mauWeb = [
     ],
     demo: '/mau-web/WSVanHoa/ban-build/index.html',
     nguonZip: '/mau-web/WSVanHoa/nguon.zip',
+  },
+  {
+    id: 'DBclb',
+    ten: 'TVU CLUB – Quản lý CLB Sinh viên',
+    loai: 'admin-dashboard',
+    nganh: 'giao-duc',
+    mau: 'xanh-duong',
+    gia: 400000,
+    moTa: 'Hệ thống quản lý câu lạc bộ sinh viên Trường Đại học Trà Vinh: sinh viên xem CLB, đăng ký hoạt động, theo dõi điểm rèn luyện; ban chủ nhiệm quản lý thành viên, hoạt động, điểm danh QR; ban quản lý trường duyệt hoạt động và xem báo cáo thống kê; quản trị viên phân quyền tài khoản.',
+    luotBan: 0,
+    ngayTao: '2026-10-31',
+    moi: true, // nhãn "Mới"
+    boCuc: 'Trang công khai + khu làm việc có thanh menu bên trái, đổi giao diện theo 5 vai trò',
+    soTrang: '20+ trang cho 5 vai trò (khách, sinh viên, ban chủ nhiệm, ban quản lý trường, quản trị viên)',
+    bienThe: 'Xanh dương',
+    anh: [layAnh('DBclb')],
+    anhToanTrang: { 'may-tinh': '/mau-web/DBclb/toan-trang/may-tinh.webp' },
+    anhTrang: [
+      { ten: 'Trang chủ', anh: '/mau-web/DBclb/anh-trang-tu-dong/01-Trang chủ.webp' },
+      { ten: 'Danh sách CLB', anh: '/mau-web/DBclb/anh-trang-tu-dong/02-Danh sách CLB.webp' },
+      { ten: 'Chi tiết CLB', anh: '/mau-web/DBclb/anh-trang-tu-dong/03-Chi tiết CLB.webp' },
+      { ten: 'Danh sách hoạt động', anh: '/mau-web/DBclb/anh-trang-tu-dong/04-Danh sách hoạt động.webp' },
+      { ten: 'Chi tiết hoạt động', anh: '/mau-web/DBclb/anh-trang-tu-dong/05-Chi tiết hoạt động.webp' },
+      { ten: 'Tin tức', anh: '/mau-web/DBclb/anh-trang-tu-dong/06-Tin tức.webp' },
+      { ten: 'Đăng nhập', anh: '/mau-web/DBclb/anh-trang-tu-dong/07-Đăng nhập.webp' },
+      { ten: 'Trang cá nhân sinh viên', anh: '/mau-web/DBclb/anh-trang-tu-dong/08-Trang cá nhân sinh viên.webp' },
+      { ten: 'Quản lý thành viên', anh: '/mau-web/DBclb/anh-trang-tu-dong/09-Quản lý thành viên.webp' },
+      { ten: 'Quản lý hoạt động', anh: '/mau-web/DBclb/anh-trang-tu-dong/10-Quản lý hoạt động.webp' },
+      { ten: 'Điểm danh QR', anh: '/mau-web/DBclb/anh-trang-tu-dong/11-Điểm danh QR.webp' },
+      { ten: 'Duyệt hoạt động', anh: '/mau-web/DBclb/anh-trang-tu-dong/12-Duyệt hoạt động.webp' },
+      { ten: 'Báo cáo thống kê', anh: '/mau-web/DBclb/anh-trang-tu-dong/13-Báo cáo thống kê.webp' },
+      { ten: 'Quản lý tài khoản', anh: '/mau-web/DBclb/anh-trang-tu-dong/14-Quản lý tài khoản.webp' },
+    ],
+    demo: '/mau-web/DBclb/ban-build/index.html',
+    nguonZip: '/mau-web/DBclb/nguon.zip',
+  },
+  {
+    id: 'GTcar',
+    ten: 'AutoVela – Showroom Ô tô',
+    loai: 'gioi-thieu',
+    nganh: 'doanh-nghiep',
+    mau: 'toi',
+    gia: 350000,
+    moTa: 'Website giới thiệu showroom ô tô giao diện tối hiện đại: danh sách xe có lọc theo dòng xe, hãng, khoảng giá; trang chi tiết xe chọn màu, thông số; dịch vụ bảo dưỡng, tin tức, liên hệ và đặt lịch lái thử lưu lại trên trình duyệt.',
+    luotBan: 0,
+    ngayTao: '2026-10-31',
+    moi: true, // nhãn "Mới"
+    boCuc: 'Nhiều trang, menu trên cùng, có trang chi tiết cho từng xe và hộp tìm kiếm nhanh',
+    soTrang: '7 trang (Trang chủ, Sản phẩm, Chi tiết xe, Dịch vụ, Tin tức, Liên hệ, Đặt lịch lái thử)',
+    bienThe: 'Nền tối, xanh ngọc',
+    anh: [layAnh('GTcar')],
+    anhToanTrang: { 'may-tinh': '/mau-web/GTcar/toan-trang/may-tinh.webp' },
+    anhTrang: [
+      { ten: 'Trang chủ', anh: '/mau-web/GTcar/anh-trang-tu-dong/01-Trang chủ.webp' },
+      { ten: 'Danh sách xe', anh: '/mau-web/GTcar/anh-trang-tu-dong/02-Danh sách xe.webp' },
+      { ten: 'Chi tiết xe', anh: '/mau-web/GTcar/anh-trang-tu-dong/03-Chi tiết xe.webp' },
+      { ten: 'Dịch vụ', anh: '/mau-web/GTcar/anh-trang-tu-dong/04-Dịch vụ.webp' },
+      { ten: 'Tin tức', anh: '/mau-web/GTcar/anh-trang-tu-dong/05-Tin tức.webp' },
+      { ten: 'Liên hệ', anh: '/mau-web/GTcar/anh-trang-tu-dong/06-Liên hệ.webp' },
+      { ten: 'Đặt lịch lái thử', anh: '/mau-web/GTcar/anh-trang-tu-dong/07-Đặt lịch lái thử.webp' },
+    ],
+    demo: '/mau-web/GTcar/ban-build/index.html',
+    nguonZip: '/mau-web/GTcar/nguon.zip',
   },
 ];
 

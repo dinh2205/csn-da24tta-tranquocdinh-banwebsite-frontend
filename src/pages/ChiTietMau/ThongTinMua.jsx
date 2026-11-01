@@ -5,7 +5,6 @@ import { taoThongSo } from '../../data/chiTietMau';
 import { dinhDangGia } from '../../utils/chuyenDoi';
 import { laKhuyenMai, phanTramGiam } from '../../utils/nhanMau';
 
-// Icon trái tim: đã yêu thích thì tô đặc, chưa thì chỉ có viền
 function TraiTim({ dac }) {
     return (
         <svg viewBox="0 0 24 24" fill={dac ? 'currentColor' : 'none'} stroke="currentColor" strokeWidth="1.8" strokeLinejoin="round" className="h-5 w-5" aria-hidden="true">
@@ -14,20 +13,19 @@ function TraiTim({ dac }) {
     );
 }
 
-// 5. THÔNG TIN MUA: tên, giá, các nút, bảng thông số kỹ thuật
+// Thông tin mua
 function ThongTinMua({ mau }) {
-    // Tạm nhớ bằng state (tải lại trang là mất), sẽ lưu localStorage khi làm trang Yêu thích
+    // Tạm lưu bằng state, chưa lưu localStorage
     const [yeuThich, setYeuThich] = useState(false);
     const tenLoai = loaiList.find((l) => l.id === mau.loai)?.ten;
     const coDemo = mau.demo && mau.demo !== '#';
 
     return (
         <aside className="lg:self-start">
-            {/* 5.1 Tên + mô tả ngắn + giá */}
+            {/* Tên + giá */}
             <span className="rounded-md bg-blue-50 px-2.5 py-1 text-xs font-semibold text-blue-700">{tenLoai}</span>
             <h1 className="mt-3 text-3xl font-extrabold tracking-tight text-slate-900">{mau.ten}</h1>
             <p className="mt-2 text-slate-500">{mau.moTa}</p>
-            {/* Giá bán. Đang khuyến mãi thì thêm giá gốc gạch ngang + nhãn phần trăm giảm */}
             <div className="mt-4 flex flex-wrap items-baseline gap-x-3 gap-y-1">
                 <p className="text-3xl font-bold text-blue-600">{dinhDangGia(mau.gia)}</p>
                 {laKhuyenMai(mau) && (
@@ -38,16 +36,16 @@ function ThongTinMua({ mau }) {
                 )}
             </div>
 
-            {/* 5.2 Các nút. "Thêm vào giỏ" chưa làm gì, sẽ nối khi làm giỏ hàng */}
+            {/* "Thêm vào giỏ" chưa làm */}
             <div className="mt-5 space-y-3">
                 <button
                     type="button"
-                    className="w-full rounded-xl bg-blue-600 py-3 text-sm font-semibold text-white shadow-sm transition hover:bg-blue-700 active:scale-95"
+                    className="w-full rounded-xl bg-cyan-400 py-3 text-sm font-bold text-blue-950 shadow-sm transition hover:bg-cyan-300 active:scale-95"
                 >
                     Thêm vào giỏ
                 </button>
 
-                {/* Mở trang Xem demo. Chưa có link demo (còn '#') thì nút mờ đi, không bấm được */}
+                {/* Chưa có link demo thì nút mờ */}
                 {coDemo ? (
                     <Link
                         to={`/mau-website/${mau.id}/demo`}
@@ -78,7 +76,7 @@ function ThongTinMua({ mau }) {
                 </button>
             </div>
 
-            {/* 5.3 Bảng thông số kỹ thuật: 4 nhóm, mỗi nhóm nhiều dòng [tên, giá trị] */}
+            {/* Bảng thông số kỹ thuật */}
             <div className="mt-6 overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm">
                 <h2 className="border-b border-slate-200 bg-slate-50 px-5 py-3 text-sm font-bold text-slate-900">
                     Thông số kỹ thuật

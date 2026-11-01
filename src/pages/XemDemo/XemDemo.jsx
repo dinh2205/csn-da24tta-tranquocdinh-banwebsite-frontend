@@ -7,21 +7,19 @@ import { thietBiList } from '../../data/xemDemo';
 import { dinhDangGia } from '../../utils/chuyenDoi';
 import ManHinhDemo from './ManHinhDemo';
 
-// Trang Xem demo (/mau-website/:id/demo): toàn màn hình, không có header / footer chung của site.
-// Trên là thanh công cụ riêng, dưới là trang thật của mẫu chạy trong khung máy
+// Trang Xem demo: toàn màn hình, không header / footer
 function XemDemo() {
     const { id } = useParams();
     const mau = mauWeb.find((m) => m.id === id);
     const [thietBiId, setThietBiId] = useState('may-tinh');
 
-    // Sai id hoặc mẫu chưa có bản demo
     if (!mau || !mau.demo || mau.demo === '#') {
         return (
             <div className="flex h-dvh flex-col items-center justify-center gap-4 bg-slate-50 px-4 text-center">
                 <h1 className="text-2xl font-bold text-slate-900">{mau ? 'Mẫu này chưa có bản demo' : 'Không tìm thấy mẫu website'}</h1>
                 <Link
                     to={mau ? `/mau-website/${mau.id}` : '/mau-website'}
-                    className="rounded-lg bg-blue-600 px-4 py-2 text-sm font-semibold text-white transition hover:bg-blue-700"
+                    className="rounded-lg bg-cyan-400 px-4 py-2 text-sm font-bold text-blue-950 transition hover:bg-cyan-300"
                 >
                     {mau ? 'Quay lại trang mẫu' : 'Quay lại danh sách'}
                 </Link>
@@ -30,11 +28,11 @@ function XemDemo() {
     }
 
     return (
-        // h-dvh + overflow-hidden: trang cao đúng bằng màn hình, chỉ trang demo bên trong được cuộn
+        // h-dvh: cao bằng màn hình, chỉ trang demo được cuộn
         <div className="flex h-dvh flex-col overflow-hidden bg-slate-100">
             {/* 1. THANH CÔNG CỤ */}
             <header className="z-20 flex flex-none flex-wrap items-center gap-x-3 gap-y-2 bg-[#0b1f4d] px-3 py-2 shadow-md sm:px-5">
-                {/* 1.1 Quay lại trang chi tiết + logo */}
+                {/* 1.1 Quay lại + logo */}
                 <Link
                     to={`/mau-website/${mau.id}`}
                     aria-label="Quay lại trang chi tiết mẫu"
@@ -47,17 +45,17 @@ function XemDemo() {
                     <img src={logo} alt="Website Design" width="480" height="199" className="h-9 w-auto" />
                 </Link>
 
-                {/* Menu ngắn: chỉ hiện trên máy tính (lg), màn hẹp không đủ chỗ */}
+                {/* Menu ngắn (chỉ máy tính) */}
                 <nav className="ml-2 hidden items-center gap-5 text-sm font-medium text-blue-200 lg:flex">
                     <Link to="/mau-website" className="transition hover:text-white">
                         Mẫu website
                     </Link>
-                    <Link to="/khach-hang" className="transition hover:text-white">
+                    <Link to="/tai-khoan/don-hang" className="transition hover:text-white">
                         Đơn hàng
                     </Link>
                 </nav>
 
-                {/* 1.2 Chọn thiết bị. Điện thoại: xuống 1 hàng riêng (order-last + w-full) */}
+                {/* 1.2 Chọn thiết bị */}
                 <div className="order-last flex w-full justify-center sm:order-none sm:w-auto sm:flex-1">
                     <div className="flex rounded-xl bg-white/10 p-1">
                         {thietBiList.map((t) => (
@@ -74,7 +72,7 @@ function XemDemo() {
                     </div>
                 </div>
 
-                {/* 1.3 Tên mẫu + giỏ hàng + nút mua (chưa có giỏ hàng nên số luôn là 0, nút chưa làm gì) */}
+                {/* 1.3 Tên mẫu + giỏ hàng + nút mua (chưa làm) */}
                 <div className="ml-auto flex items-center gap-2 sm:ml-0 sm:gap-3">
                     <span className="hidden truncate text-sm font-semibold text-white xl:block">{mau.ten}</span>
                     <Link
@@ -93,10 +91,11 @@ function XemDemo() {
                     </Link>
                     <button
                         type="button"
-                        className="rounded-lg bg-blue-500 px-3 py-2 text-sm font-semibold text-white shadow-sm transition hover:bg-blue-400 active:scale-95 sm:px-4"
+                        className="rounded-lg bg-blue-700 px-3 py-2 text-sm font-bold text-white shadow-sm transition hover:bg-blue-600 active:scale-95 sm:px-4"
                     >
+                        {/* Nền trắng cho giá đỏ nổi rõ trên thanh navy */}
                         Thêm vào giỏ
-                        <span className="ml-1.5 hidden font-medium text-blue-100 md:inline">· {dinhDangGia(mau.gia)}</span>
+                        <span className="ml-1.5 hidden font-extrabold text-white md:inline"> {dinhDangGia(mau.gia)}</span>
                     </button>
                 </div>
             </header>

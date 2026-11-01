@@ -6,7 +6,7 @@ import anhPortfolio from '../assets/danh-muc/portfolio.webp';
 import anhAdminDashboard from '../assets/danh-muc/admin-dashboard.webp';
 
 
-// Dữ liệu cho khung DANH MỤC CHÍNH: ảnh và mô tả của từng danh mục, tìm theo id trong danhmuc.js
+// Ảnh + mô tả từng danh mục
 export const moTaDanhMuc = {
     'landing-page': {
         anh: anhLandingPage,

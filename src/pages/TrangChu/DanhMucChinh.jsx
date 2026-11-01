@@ -38,7 +38,6 @@ function DanhMucChinh() {
                                     {l.ten}
                                 </p>
 
-                                {/* Đếm số mẫu thuộc danh mục này */}
 
                                 <p className="pb-2 text-sm text-slate-400">
                                     {mauWeb.filter((m) => m.loai === l.id).length} mẫu
@@ -47,7 +46,7 @@ function DanhMucChinh() {
 
 
 
-                            {/* Chú thích phía trên*/}
+                            {/* Chú thích hiện khi rê chuột */}
                             <div className="pointer-events-none absolute bottom-full left-1/2 z-20 mb-2 w-60 -translate-x-1/2 rounded-lg bg-slate-900 px-3 py-2 text-left text-xs leading-relaxed text-white opacity-0 shadow-lg transition duration-150 group-hover:opacity-100">
                                 <span className="mb-0.5 block font-semibold text-cyan-300">{l.ten}</span>
                                 {moTaDanhMuc[l.id]?.moTa}
@@ -59,7 +58,7 @@ function DanhMucChinh() {
                 </div>
 
                 <div className="mt-10 text-center">
-                    {/* #danh-sach: sang trang Mẫu website thì cuộn xuống khung tìm kiếm + danh sách, giống nút "Xem thêm" */}
+                    {/* #danh-sach: cuộn tới khung tìm kiếm */}
                     <Link
                         to="/mau-website#danh-sach"
                         className="inline-block rounded-xl bg-cyan-400 px-6 py-3 text-sm font-bold text-blue-950 shadow-md transition hover:bg-cyan-300 active:scale-95"

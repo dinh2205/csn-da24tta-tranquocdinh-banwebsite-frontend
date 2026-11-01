@@ -2,12 +2,11 @@ import { useState } from 'react';
 import { Link, NavLink } from 'react-router-dom';
 import logo from '../../assets/logo-website-design.webp';
 
-// Danh sách mục menu: muốn thêm mục mới chỉ cần thêm 1 dòng vào mảng này
 const MENU = [
   { to: '/', ten: 'Trang chủ', end: true },
   { to: '/mau-website', ten: 'Mẫu website' },
   { to: '/gioi-thieu', ten: 'Giới thiệu' },
-  { to: '/khach-hang', ten: 'Đơn hàng' },
+  { to: '/tai-khoan/don-hang', ten: 'Đơn hàng' },
 ];
 
 
@@ -17,7 +16,6 @@ const kieuMenu = ({ isActive }) =>
   }`;
 
 function Header() {
-  // Điện thoại: bấm ☰ để mở / đóng menu
   const [moMenu, setMoMenu] = useState(false);
 
   const soLuongGio = 0;
@@ -29,7 +27,7 @@ function Header() {
           <img src={logo} alt="Website Design" width="480" height="199" className="h-9 w-auto sm:h-11" />
         </Link>
 
-        {/* Máy tính bảng trở lên: menu nằm ngang */}
+        {/* Menu ngang (từ máy tính bảng) */}
         <nav className="hidden items-center gap-6 md:flex">
           {MENU.map((m) => (
             <NavLink key={m.to} to={m.to} end={m.end} className={kieuMenu}>
@@ -56,7 +54,6 @@ function Header() {
             </span>
           </Link>
 
-          {/* Điện thoại: Đăng nhập / Đăng ký nằm trong menu ☰ cho gọn */}
           <Link
             to="/dang-nhap"
             className="hidden rounded-lg px-3 py-2 text-sm font-medium text-blue-100 transition hover:bg-white/10 hover:text-white sm:block"
@@ -65,12 +62,12 @@ function Header() {
           </Link>
           <Link
             to="/dang-ky"
-            className="hidden rounded-lg bg-blue-500 px-3.5 py-2 text-sm font-semibold text-white shadow-sm transition hover:bg-blue-400 sm:block"
+            className="hidden rounded-lg bg-cyan-400 px-3.5 py-2 text-sm font-bold text-blue-950 shadow-sm transition hover:bg-cyan-300 sm:block"
           >
             Đăng ký
           </Link>
 
-          {/* Điện thoại: nút ☰ */}
+          {/* Nút ☰ (điện thoại) */}
           <button
             type="button"
             onClick={() => setMoMenu(!moMenu)}
@@ -82,7 +79,7 @@ function Header() {
         </div>
       </div>
 
-      {/* Điện thoại: danh sách menu xổ xuống dưới thanh đầu trang */}
+      {/* Menu xổ xuống (điện thoại) */}
       {moMenu && (
         <nav className="border-t border-white/10 px-4 pb-3 sm:px-6 md:hidden">
           {MENU.map((m) => (
@@ -102,7 +99,7 @@ function Header() {
             <Link to="/dang-nhap" onClick={() => setMoMenu(false)} className="rounded-lg border border-white/20 py-2.5 text-center text-sm font-semibold text-white">
               Đăng nhập
             </Link>
-            <Link to="/dang-ky" onClick={() => setMoMenu(false)} className="rounded-lg bg-blue-500 py-2.5 text-center text-sm font-semibold text-white">
+            <Link to="/dang-ky" onClick={() => setMoMenu(false)} className="rounded-lg bg-cyan-400 py-2.5 text-center text-sm font-bold text-blue-950">
               Đăng ký
             </Link>
           </div>

@@ -10,12 +10,11 @@ import ThongTinMua from './ThongTinMua';
 import ThanhMuaDienThoai from './ThanhMuaDienThoai';
 import MauLienQuan from './MauLienQuan';
 
-// Nút "Quay lại danh sách": nền xanh, mũi tên trái
 function NutQuayLai() {
     return (
         <Link
             to="/mau-website"
-            className="inline-flex items-center gap-2 rounded-lg bg-blue-600 px-4 py-2 text-sm font-semibold text-white shadow-sm transition hover:bg-blue-50 hover:text-blue-600 active:scale-95"
+            className="inline-flex items-center gap-2 rounded-lg bg-cyan-400 px-4 py-2 text-sm font-bold text-blue-950 shadow-sm transition hover:bg-cyan-300 active:scale-95"
         >
             <Icon d="M19 12H5M12 19l-7-7 7-7" strokeWidth={2.2} />
             Quay lại danh sách
@@ -23,18 +22,16 @@ function NutQuayLai() {
     );
 }
 
-// Trang chi tiết 1 mẫu (/mau-website/:id): mỗi phần là 1 file nằm cùng thư mục này
+// Trang chi tiết mẫu (/mau-website/:id)
 function ChiTietMau() {
-    // Lấy id trên URL, vd /mau-website/LDBacSi → id = 'LDBacSi'
     const { id } = useParams();
     const mau = mauWeb.find((m) => m.id === id);
 
-    // Bấm từ danh sách sang (hoặc bấm 1 mẫu liên quan) thì cuộn lên đầu, không đứng giữa trang
+    // Mở mẫu khác thì cuộn lên đầu
     useEffect(() => {
         window.scrollTo(0, 0);
     }, [id]);
 
-    // Gõ sai id hoặc mẫu đã bị xóa
     if (!mau) {
         return (
             <div className="mx-auto max-w-trang px-4 py-20 text-center sm:px-6">
@@ -47,11 +44,11 @@ function ChiTietMau() {
     }
 
     return (
-        // pb-28: chừa chỗ cho thanh mua dính ở đáy màn hình điện thoại
+        // pb-28: chừa chỗ thanh mua ở đáy (điện thoại)
         <div className="mx-auto max-w-trang px-4 pb-28 pt-8 sm:px-6 lg:pb-8">
             <NutQuayLai />
 
-            {/* Máy tính: 2 cột, bên trái ảnh + mô tả, bên phải thông tin mua. Điện thoại: xếp dọc */}
+            {/* Máy tính 2 cột, điện thoại xếp dọc */}
             <div className="mt-5 grid gap-8 lg:grid-cols-[minmax(0,1fr)_380px] xl:grid-cols-[minmax(0,1fr)_460px]">
                 <div className="min-w-0">
                     {/* 1. ẢNH XEM TRƯỚC */}

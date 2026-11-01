@@ -1,7 +1,4 @@
-// Giả lập màn hình cảm ứng cho iframe cùng origin (điện thoại, máy tính bảng):
-//   - ẩn thanh cuộn (vẫn lăn chuột được);
-//   - giữ chuột trái rồi kéo để cuộn, giống vuốt bằng ngón tay; kéo xong không kích hoạt nhầm liên kết/nút.
-// Trả về hàm bật/tắt (bat: boolean). Gọi lại khi iframe tải trang mới.
+// Giả lập cảm ứng cho iframe: ẩn thanh cuộn, kéo chuột để cuộn. Trả về hàm bật / tắt
 const KIEU = `
 html.wm-cam-ung{scrollbar-width:none!important;-ms-overflow-style:none!important}
 html.wm-cam-ung::-webkit-scrollbar,html.wm-cam-ung body::-webkit-scrollbar,html.wm-cam-ung *::-webkit-scrollbar{display:none!important;width:0!important;height:0!important}
@@ -64,7 +61,7 @@ export const giaLapCamUng = (iframe) => {
   doc.addEventListener('mouseup', ketThuc);
   goc.addEventListener('mouseleave', ketThuc);
   win.addEventListener('blur', ketThuc);
-  // Sau khi kéo, chặn cú click sinh ra ở cuối thao tác để không bấm nhầm
+  // Kéo xong thì chặn click để không bấm nhầm
   doc.addEventListener(
     'click',
     (e) => {

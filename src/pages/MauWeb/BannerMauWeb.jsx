@@ -5,7 +5,7 @@ import banner2 from '../../assets/banner-mau-website1.webp';
 import banner3 from '../../assets/banner-mau-website2.webp';
 
 const bannerList = [
-    { src: banner3, alt: 'Hỗ trợ tận tâm, đồng hành cùng bạn', nut: { chu: 'Liên hệ ngay', den: '/gioi-thieu#lien-he', viTri: 'left-[6.3%] top-[66%]' } },
+    { src: banner3, alt: 'Hỗ trợ tận tâm, đồng hành cùng bạn', nut: { chu: 'Liên hệ ngay', den: '/gioi-thieu#lien-he', viTri: 'left-[7.4%] top-[66%]' } },
     // uuDai: bấm vào ảnh thì chọn sẵn ưu đãi đó trong bộ lọc bên dưới (không đổi trang)
     { src: banner1, alt: 'Siêu giảm giá mẫu website, xem các mẫu Siêu sale', uuDai: 'dacBiet' },
     { src: banner2, alt: 'Mẫu website tương thích trên mọi thiết bị' },

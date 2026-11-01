@@ -17,6 +17,7 @@ function TheMau({ mau, nho = false }) {
   const { laYeuThich, batTatYeuThich } = useYeuThich();
   const { baoThongBao } = useGioHang();
   const yeuThich = laYeuThich(mau.id);
+  const coDemo = mau.demo && mau.demo !== '#';
   // Sao = điểm có sẵn gộp với đánh giá người dùng (giống trang chi tiết)
   const { danhGiaCuaMau } = useDonHang();
   const danhGia = tongHopDanhGia(mau, danhGiaCuaMau(mau.id));
@@ -35,40 +36,60 @@ function TheMau({ mau, nho = false }) {
         dacBiet ? 'shadow-md shadow-sky-400/30' : 'shadow-sm'
       }`}
     >
-      <Link to={`/mau-website/${mau.id}`} className="relative block overflow-hidden">
-        <img
-          src={mau.anh[0]}
-          alt={mau.ten}
-          loading="lazy"
-          className="aspect-[16/10] w-full object-cover object-top transition duration-300 group-hover:scale-105"
-        />
+      <div className="relative overflow-hidden">
+        <Link to={`/mau-website/${mau.id}`} className="block">
+          <img
+            src={mau.anh[0]}
+            alt={mau.ten}
+            loading="lazy"
+            className="aspect-[16/10] w-full object-cover object-top transition duration-300 group-hover:scale-105"
+          />
 
-        {/* Nhãn góc trái: % giảm, Mới */}
-        {(khuyenMai || laMoi(mau)) && (
-          <div className={`absolute flex gap-1.5 ${nho ? 'left-2 top-2' : 'left-3 top-3'}`}>
-            {khuyenMai && (
-              <span className={`rounded-md bg-red-500 px-2 py-0.5 font-bold text-white shadow ${nho ? 'text-[10px]' : 'text-xs'}`}>
-                -{phanTramGiam(mau)}%
-              </span>
-            )}
-            {laMoi(mau) && (
-              <span className={`rounded-md bg-emerald-500 px-2 py-0.5 font-bold uppercase text-white shadow ${nho ? 'text-[10px]' : 'text-xs'}`}>Mới</span>
-            )}
-          </div>
-        )}
-
-        {/* Nhãn "Siêu sale" góc phải (hình thẻ treo giá) */}
-        {dacBiet && (
-          <div className={`pointer-events-none absolute drop-shadow-[0_4px_10px_rgba(8,20,60,0.45)] ${nho ? 'right-2 top-2 origin-top-right scale-75' : 'right-3 top-3'}`}>
-            <div className="flex items-center gap-1.5 bg-gradient-to-r from-cyan-300 to-cyan-400 py-1.5 pl-5 pr-3 [clip-path:polygon(12px_0,100%_0,100%_100%,12px_100%,0_50%)]">
-              <svg viewBox="0 0 24 24" className="h-3.5 w-3.5 fill-[#0b1f4d]" aria-hidden="true">
-                <path d="M13 2 3 14h9l-1 8 10-12h-9l1-8Z" />
-              </svg>
-              <span className="text-[11px] font-extrabold uppercase leading-none tracking-[0.18em] text-[#0b1f4d]">Siêu sale</span>
+          {/* Nhãn góc trái: % giảm, Mới */}
+          {(khuyenMai || laMoi(mau)) && (
+            <div className={`absolute flex gap-1.5 ${nho ? 'left-2 top-2' : 'left-3 top-3'}`}>
+              {khuyenMai && (
+                <span className={`rounded-md bg-red-500 px-2 py-0.5 font-bold text-white shadow ${nho ? 'text-[10px]' : 'text-xs'}`}>
+                  -{phanTramGiam(mau)}%
+                </span>
+              )}
+              {laMoi(mau) && (
+                <span className={`rounded-md bg-emerald-500 px-2 py-0.5 font-bold uppercase text-white shadow ${nho ? 'text-[10px]' : 'text-xs'}`}>Mới</span>
+              )}
             </div>
-          </div>
-        )}
-      </Link>
+          )}
+
+          {/* Nhãn "Siêu sale" góc phải (hình thẻ treo giá) */}
+          {dacBiet && (
+            <div className={`pointer-events-none absolute drop-shadow-[0_4px_10px_rgba(8,20,60,0.45)] ${nho ? 'right-2 top-2 origin-top-right scale-75' : 'right-3 top-3'}`}>
+              <div className="flex items-center gap-1.5 bg-gradient-to-r from-cyan-300 to-cyan-400 py-1.5 pl-5 pr-3 [clip-path:polygon(12px_0,100%_0,100%_100%,12px_100%,0_50%)]">
+                <svg viewBox="0 0 24 24" className="h-3.5 w-3.5 fill-[#0b1f4d]" aria-hidden="true">
+                  <path d="M13 2 3 14h9l-1 8 10-12h-9l1-8Z" />
+                </svg>
+                <span className="text-[11px] font-extrabold uppercase leading-none tracking-[0.18em] text-[#0b1f4d]">Siêu sale</span>
+              </div>
+            </div>
+          )}
+        </Link>
+
+        {/* Rê chuột lên ảnh: lớp tối + 2 nút Xem demo / Chi tiết (máy cảm ứng không có hover nên không hiện) */}
+        <div className="pointer-events-none absolute inset-0 flex items-center justify-center gap-2 bg-[#0b1f4d]/40 opacity-0 transition duration-300 group-hover:opacity-100">
+          {coDemo && (
+            <Link
+              to={`/mau-website/${mau.id}/demo`}
+              className={`translate-y-3 rounded-full bg-blue-600 font-semibold text-white shadow-lg transition duration-300 hover:bg-blue-500 group-hover:pointer-events-auto group-hover:translate-y-0 ${nho ? 'px-3 py-1.5 text-xs' : 'px-5 py-2.5 text-sm'}`}
+            >
+              Xem demo
+            </Link>
+          )}
+          <Link
+            to={`/mau-website/${mau.id}`}
+            className={`translate-y-3 rounded-full border border-white bg-white font-semibold text-slate-900 shadow-lg transition delay-75 duration-300 hover:bg-slate-100 group-hover:pointer-events-auto group-hover:translate-y-0 ${nho ? 'px-3 py-1.5 text-xs' : 'px-5 py-2.5 text-sm'}`}
+          >
+            Chi tiết
+          </Link>
+        </div>
+      </div>
       {/* Mẫu Siêu sale: thân thẻ nền xanh ngọc */}
       <div className={`flex flex-1 flex-col ${nho ? 'p-3' : 'p-4'} ${dacBiet ? 'bg-gradient-to-br from-cyan-300 to-cyan-400' : ''}`}>
         {/* Tên mẫu + nút trái tim (yêu thích) */}

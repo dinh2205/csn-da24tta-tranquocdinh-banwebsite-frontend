@@ -9,7 +9,7 @@ import mauWeb from '../../data/mauWeb';
 import { tinhTienDon } from '../../data/donHang';
 import { dinhDangGia, dinhDangNgay } from '../../utils/chuyenDoi';
 import MauDaMua from './MauDaMua';
-import nenLoiChao from '../../assets/nen-loi-chao.webp';
+import nenBien from '../../assets/nen-mau-noi-bat.webp';
 import bannerUuDai from '../../assets/banner-uu-dai.webp';
 
 const ICON = {
@@ -70,8 +70,8 @@ function TongQuan() {
                 {/* 1. LỜI CHÀO: nền xanh đậm có hình minh họa (tai nghe bên phải) → chữ trắng.
                     bg-[#0a2a86]: màu nền tạm trong lúc ảnh đang tải */}
                 <section
-                    className="relative overflow-hidden rounded-2xl bg-[#0a2a86] bg-cover bg-center bg-no-repeat p-6 shadow-lg shadow-blue-900/20 sm:p-10"
-                    style={{ backgroundImage: `url(${nenLoiChao})` }}
+                    className="relative overflow-hidden rounded-2xl bg-[#0a2a86] bg-cover bg-bottom bg-no-repeat p-6 shadow-lg shadow-blue-900/20 sm:p-10"
+                    style={{ backgroundImage: `url(${nenBien})` }}
                 >
                     {/* Phủ tối dần từ trái sang để chữ nổi trên các đường sáng của ảnh (điện thoại phủ đậm hơn) */}
                     <div className="pointer-events-none absolute inset-0 bg-gradient-to-r from-[#061a5c]/80 via-[#061a5c]/50 to-transparent sm:from-[#061a5c]/60 sm:via-[#061a5c]/20" aria-hidden="true" />

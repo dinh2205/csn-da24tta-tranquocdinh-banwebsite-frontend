@@ -10,7 +10,7 @@ import anhAdminDashboard from '../assets/danh-muc/admin-dashboard.webp';
 export const moTaDanhMuc = {
     'landing-page': {
         anh: anhLandingPage,
-        moTa: 'Chỉ 1 trang, giới thiệu nhanh và kêu gọi hành động như đăng ký, mua hàng, tải app.',
+        moTa: 'Chỉ 1 trang, giới thiệu nhanh và kêu gọi hành động như đăng ký, mua hàng, tải ứng dụng.',
     },
     'gioi-thieu': {
         anh: anhGioiThieu,
@@ -18,15 +18,15 @@ export const moTaDanhMuc = {
     },
     'ban-hang': {
         anh: anhBanHang,
-        moTa: 'Có danh sách sản phẩm, giỏ hàng và thanh toán, phù hợp shop online.',
+        moTa: 'Có danh sách sản phẩm, giỏ hàng và thanh toán, phù hợp cửa hàng bán trực tuyến.',
     },
     'tin-tuc': {
         anh: anhTinTuc,
-        moTa: 'Đăng bài viết theo chuyên mục, phù hợp trang tin, blog cá nhân hoặc doanh nghiệp.',
+        moTa: 'Đăng bài viết theo chuyên mục, phù hợp trang tin, trang viết cá nhân hoặc doanh nghiệp.',
     },
     portfolio: {
         anh: anhPortfolio,
-        moTa: 'Trưng bày dự án và kinh nghiệm, dành cho freelancer, designer, nhiếp ảnh gia.',
+        moTa: 'Trưng bày dự án và kinh nghiệm, dành cho người làm tự do, nhà thiết kế, nhiếp ảnh gia.',
     },
     'admin-dashboard': {
         anh: anhAdminDashboard,

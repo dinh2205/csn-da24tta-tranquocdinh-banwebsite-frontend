@@ -9,6 +9,7 @@ import { tinhTienDon } from '../../data/donHang';
 import { dinhDangGia, dinhDangNgay } from '../../utils/chuyenDoi';
 import nenLoiChao from '../../assets/nen-loi-chao.webp';
 import bannerUuDai from '../../assets/banner-uu-dai.webp';
+import bannerUuDaiNho from '../../assets/banner-uu-dai-480.webp';
 
 const ICON = {
     muiTen: 'M5 12h14M13 6l6 6-6 6',
@@ -100,19 +101,20 @@ function TongQuan() {
                 </section>
 
                 {/* 3. ĐƠN HÀNG GẦN ĐÂY: 5 đơn mới nhất */}
-                <section className="overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm">
-                    <div className="flex items-center justify-between gap-3 px-5 py-4">
-                        <h2 className="flex items-center gap-2 text-lg font-bold text-slate-900">
-                            <Icon d={ICON.donHang} className="h-5 w-5 text-blue-600" strokeWidth={1.8} />
+                <section className="overflow-hidden rounded-2xl border border-blue-100 bg-gradient-to-br from-sky-50 to-blue-50 shadow-sm">
+                    {/* Dải đầu bảng nền navy (giống thẻ đơn ở trang Lịch sử mua hàng) */}
+                    <div className="flex items-center justify-between gap-3 bg-gradient-to-r from-[#0b1f4d] to-[#14317a] px-5 py-4">
+                        <h2 className="flex items-center gap-2 text-lg font-bold text-white">
+                            <Icon d={ICON.donHang} className="h-5 w-5 text-cyan-300" strokeWidth={1.8} />
                             Đơn hàng gần đây
                         </h2>
-                        <Link to="/tai-khoan/don-hang" className="flex items-center gap-1 text-sm font-semibold text-blue-600 hover:underline">
+                        <Link to="/tai-khoan/don-hang" className="flex items-center gap-1 text-sm font-semibold text-cyan-300 hover:underline">
                             Xem tất cả
                             <Icon d={ICON.muiTen} />
                         </Link>
                     </div>
                     {/* Hàng tiêu đề bảng: điện thoại ẩn vì không đủ chỗ cho 5 cột */}
-                    <div className={`hidden gap-3 bg-slate-50 px-5 py-3 text-xs font-semibold uppercase tracking-wide text-slate-500 sm:grid ${COT_BANG}`}>
+                    <div className={`hidden gap-3 bg-blue-100/70 px-5 py-3 text-xs font-semibold uppercase tracking-wide text-blue-700 sm:grid ${COT_BANG}`}>
                         <span>Mã đơn</span>
                         <span>Ngày mua</span>
                         <span>Sản phẩm</span>
@@ -128,7 +130,7 @@ function TongQuan() {
                             </Link>
                         </div>
                     ) : (
-                        <ul className="divide-y divide-slate-100">
+                        <ul className="divide-y divide-blue-100">
                             {donCuaToi.slice(0, SO_DON_GAN_DAY).map((d) => (
                                 // Điện thoại: 2 cột gọn (mã + tiền trên, sản phẩm dưới). Từ sm: 5 cột như tiêu đề
                                 <li key={d.ma} className={`grid grid-cols-2 gap-x-3 gap-y-1 px-5 py-3.5 text-sm sm:items-center ${COT_BANG}`}>
@@ -148,21 +150,21 @@ function TongQuan() {
 
             {/* 4. CỘT PHẢI: thẻ hồ sơ + banner ưu đãi */}
             {/* 4.1 Hồ sơ */}
-            <section className="order-first rounded-2xl border border-slate-200 bg-white p-5 shadow-sm xl:order-none">
+            <section className="order-first rounded-2xl bg-gradient-to-br from-[#0b1f4d] to-[#14317a] p-5 text-white shadow-lg shadow-blue-950/20 xl:order-none">
                 <div className="flex items-start gap-3">
                     <AnhDaiDien user={user} className="h-14 w-14 text-xl" />
                     <div className="min-w-0 flex-1">
-                        <p className="font-bold text-slate-900">{user.hoTen}</p>
-                        <span className="mt-1 inline-block rounded-full bg-blue-50 px-2.5 py-0.5 text-xs font-semibold text-blue-700">Thành viên</span>
+                        <p className="font-bold text-white">{user.hoTen}</p>
+                        <span className="mt-1 inline-block rounded-full bg-cyan-400/15 px-2.5 py-0.5 text-xs font-semibold text-cyan-300">Thành viên</span>
                     </div>
-                    <Link to="/tai-khoan/thong-tin" aria-label="Sửa hồ sơ" className="rounded-lg p-1.5 text-blue-600 transition hover:bg-blue-50">
+                    <Link to="/tai-khoan/thong-tin" aria-label="Sửa hồ sơ" className="rounded-lg p-1.5 text-cyan-300 transition hover:bg-white/10">
                         <Icon d={ICON.but} />
                     </Link>
                 </div>
                 <ul className="mt-5 space-y-3">
                     {dongHoSo.map((d) => (
-                        <li key={d.trong} className={`flex items-center gap-3 text-sm ${d.giaTri ? 'text-slate-600' : 'text-slate-400'}`}>
-                            <Icon d={d.icon} className="h-[18px] w-[18px] flex-none text-slate-400" strokeWidth={1.8} />
+                        <li key={d.trong} className={`flex items-center gap-3 text-sm ${d.giaTri ? 'text-blue-100' : 'text-blue-300/70'}`}>
+                            <Icon d={d.icon} className="h-[18px] w-[18px] flex-none text-blue-300" strokeWidth={1.8} />
                             <span className="min-w-0 truncate">{d.giaTri || d.trong}</span>
                         </li>
                     ))}
@@ -177,6 +179,8 @@ function TongQuan() {
             >
                 <img
                     src={bannerUuDai}
+                    srcSet={`${bannerUuDaiNho} 480w, ${bannerUuDai} 960w`}
+                    sizes="(min-width: 1280px) 17rem, 20rem" // cột phải rộng 17rem, màn nhỏ rộng tối đa 20rem
                     alt="Siêu giảm giá mẫu website, ưu đãi đến 50%"
                     width={960}
                     height={1358}

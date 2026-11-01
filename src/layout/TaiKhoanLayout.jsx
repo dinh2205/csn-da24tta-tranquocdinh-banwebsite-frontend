@@ -29,7 +29,7 @@ const ICON_DANG_XUAT = 'M15 4h3a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2h-3M10 16l4-4-4-4M
 const ICON_QUA = 'M4 11h16v9H4v-9ZM3 7h18v4H3V7ZM12 7v13M12 7S10.5 3 8 3.5 7 7 12 7Zm0 0s1.5-4 4-3.5S17 7 12 7Z';
 const ICON_TAI_NGHE = 'M4 14v-2a8 8 0 0 1 16 0v2M4 14a2 2 0 0 1 2-2h1v6H6a2 2 0 0 1-2-2v-2Zm16 0a2 2 0 0 0-2-2h-1v6h1a2 2 0 0 0 2-2v-2Z';
 
-// Kiểu 1 mục menu. Máy tính: xếp dọc, mục đang mở có vạch xanh bên trái. Điện thoại: nút tròn xếp ngang
+// Kiểu 1 mục menu (nền trắng). Mục đang mở: nền xanh nhạt, máy tính có thêm vạch xanh bên trái
 const kieuMuc = ({ isActive }) =>
     `relative flex flex-none items-center gap-3 whitespace-nowrap rounded-xl px-4 py-2.5 text-sm font-medium transition lg:py-3 ${isActive
         ? 'bg-blue-50 text-blue-700 lg:before:absolute lg:before:inset-y-2 lg:before:left-0 lg:before:w-1 lg:before:rounded-full lg:before:bg-blue-600'
@@ -73,7 +73,7 @@ function TaiKhoanLayout() {
     const thoat = () => navigate('/dang-xuat', { replace: true });
 
     return (
-        <div className="bg-slate-50">
+        <div className="bg-gradient-to-b from-blue-50 to-slate-50">
             <div className="mx-auto grid max-w-trang grid-cols-1 gap-6 px-4 py-8 sm:px-6 lg:grid-cols-[260px_minmax(0,1fr)] lg:gap-8">
                 {/* 1. CỘT TRÁI */}
                 <aside className="flex h-fit flex-col gap-4">
@@ -116,23 +116,23 @@ function TaiKhoanLayout() {
                     </nav>
 
                     {/* 1.2 Điểm thưởng, tính từ các đơn đã mua. Điện thoại ẩn cho gọn */}
-                    <div className="hidden rounded-2xl border border-slate-200 bg-white p-5 shadow-sm lg:block">
-                        <h2 className="flex items-center gap-2 font-bold text-slate-900">
-                            <Icon d={ICON_QUA} className="h-5 w-5 text-blue-600" strokeWidth={1.8} />
+                    <div className="hidden rounded-2xl bg-gradient-to-br from-blue-600 to-cyan-500 p-5 text-white shadow-lg shadow-blue-600/25 lg:block">
+                        <h2 className="flex items-center gap-2 font-bold">
+                            <Icon d={ICON_QUA} className="h-5 w-5 text-cyan-100" strokeWidth={1.8} />
                             Điểm thưởng
                         </h2>
-                        <p className="mt-3 text-4xl font-extrabold text-slate-900">
-                            {diem} <span className="text-base font-medium text-slate-500">điểm</span>
+                        <p className="mt-3 text-4xl font-extrabold">
+                            {diem} <span className="text-base font-medium text-blue-100">điểm</span>
                         </p>
                         {/* Thanh tiến độ tới mốc đổi quà, đầy tối đa 100% */}
-                        <div className="mt-3 h-2 overflow-hidden rounded-full bg-slate-100">
-                            <div className="h-full rounded-full bg-blue-600" style={{ width: `${Math.min(diem / MOC_DOI_QUA, 1) * 100}%` }} />
+                        <div className="mt-3 h-2 overflow-hidden rounded-full bg-white/25">
+                            <div className="h-full rounded-full bg-white" style={{ width: `${Math.min(diem / MOC_DOI_QUA, 1) * 100}%` }} />
                         </div>
-                        <p className="mt-2 text-xs leading-relaxed text-slate-500">
+                        <p className="mt-2 text-xs leading-relaxed text-blue-50">
                             {diem >= MOC_DOI_QUA ? 'Đủ điểm đổi 1 voucher 50.000 đ.' : `Còn ${MOC_DOI_QUA - diem} điểm nữa để đổi voucher 50.000 đ.`} 1.000 đ chi tiêu = 1 điểm.
                         </p>
                         {vuaDoi && (
-                            <p className="mt-4 rounded-xl bg-emerald-50 px-3 py-2.5 text-center text-xs font-semibold text-emerald-700">
+                            <p className="mt-4 rounded-xl bg-white/20 px-3 py-2.5 text-center text-xs font-semibold text-white">
                                 Đổi thành công! Đã trừ {MOC_DOI_QUA} điểm, mã voucher sẽ gửi về {user.email}
                             </p>
                         )}
@@ -140,15 +140,15 @@ function TaiKhoanLayout() {
                             type="button"
                             disabled={diem < MOC_DOI_QUA}
                             onClick={() => setHoiDoiQua(true)}
-                            className="mt-4 w-full rounded-xl bg-blue-600 py-2.5 text-sm font-semibold text-white transition hover:bg-blue-700 disabled:cursor-not-allowed disabled:bg-slate-100 disabled:text-slate-400"
+                            className="mt-4 w-full rounded-xl bg-[#0b1f4d] py-2.5 text-sm font-semibold text-white transition hover:bg-[#14317a] disabled:cursor-not-allowed disabled:bg-white/20 disabled:text-white/60"
                         >
                             Đổi quà
                         </button>
-                        {lanDaDoi.length > 0 && <p className="mt-2 text-center text-xs text-slate-400">Đã đổi {lanDaDoi.length} voucher</p>}
+                        {lanDaDoi.length > 0 && <p className="mt-2 text-center text-xs text-blue-100">Đã đổi {lanDaDoi.length} voucher</p>}
                     </div>
 
                     {/* 1.3 Cần hỗ trợ */}
-                    <div className="hidden rounded-2xl border border-slate-200 bg-white p-5 shadow-sm lg:block">
+                    <div className="hidden rounded-2xl border border-blue-100 bg-gradient-to-br from-sky-50 to-blue-50 p-5 shadow-sm lg:block">
                         <h2 className="flex items-center gap-2 font-bold text-slate-900">
                             <Icon d={ICON_TAI_NGHE} className="h-5 w-5 text-emerald-600" strokeWidth={1.8} />
                             Cần hỗ trợ?
@@ -156,7 +156,7 @@ function TaiKhoanLayout() {
                         <p className="mt-1 text-sm text-slate-500">Hotline 1900 6868 · 8:00 – 22:00</p>
                         <Link
                             to="/gioi-thieu#lien-he"
-                            className="mt-4 block rounded-xl border border-slate-300 py-2.5 text-center text-sm font-semibold text-slate-700 transition hover:bg-slate-50"
+                            className="mt-4 block rounded-xl border border-blue-600 py-2.5 text-center text-sm font-semibold text-blue-600 transition hover:bg-blue-600 hover:text-white"
                         >
                             Liên hệ hỗ trợ
                         </Link>

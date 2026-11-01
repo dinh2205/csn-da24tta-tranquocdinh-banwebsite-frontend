@@ -18,17 +18,17 @@ const ICON = {
     dauTich: 'M6 12.5l4 4L18 8.5',
 };
 
-// 3. THẺ 1 ĐƠN HÀNG: đầu thẻ + từng mẫu trong đơn
+// 3. THẺ 1 ĐƠN HÀNG: đầu thẻ nền navy + từng mẫu trong đơn trên nền xanh nhạt
 // itemsHien: mẫu còn lại sau khi lọc, tổng tiền vẫn tính cả đơn
 function TheDonHang({ don }) {
     const tien = tinhTienDon(don);
 
     return (
-        <section className="overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm">
+        <section className="overflow-hidden rounded-2xl border border-blue-100 bg-gradient-to-br from-sky-50 to-blue-50 shadow-sm">
             {/* 3.1 Đầu thẻ */}
-            <div className="flex flex-wrap items-center justify-between gap-x-6 gap-y-2 border-b border-slate-100 bg-slate-50 px-4 py-3">
-                <div className="flex flex-wrap items-center gap-x-5 gap-y-1 text-sm text-slate-500">
-                    <span className="flex items-center gap-1.5 font-bold text-slate-900">
+            <div className="flex flex-wrap items-center justify-between gap-x-6 gap-y-2 bg-gradient-to-r from-[#0b1f4d] to-[#14317a] px-4 py-3">
+                <div className="flex flex-wrap items-center gap-x-5 gap-y-1 text-sm text-blue-200">
+                    <span className="flex items-center gap-1.5 font-bold text-white">
                         <Icon d={ICON.gio} />
                         Đơn #{don.ma}
                     </span>
@@ -38,26 +38,26 @@ function TheDonHang({ don }) {
                     </span>
                     <span>{don.items.length} mẫu</span>
                     {don.giamGia > 0 && (
-                        <span className="rounded-full bg-emerald-50 px-2 py-0.5 text-xs font-semibold text-emerald-700">
+                        <span className="rounded-full bg-emerald-400/15 px-2 py-0.5 text-xs font-semibold text-emerald-300">
                             Giảm {dinhDangGia(don.giamGia)} ({don.maGiam})
                         </span>
                     )}
                 </div>
                 <div className="flex items-center gap-3">
-                    <span className="inline-flex items-center gap-1.5 whitespace-nowrap rounded-full bg-emerald-50 px-3 py-1 text-xs font-semibold text-emerald-700">
+                    <span className="inline-flex items-center gap-1.5 whitespace-nowrap rounded-full bg-emerald-400/15 px-3 py-1 text-xs font-semibold text-emerald-300">
                         <span className="flex h-4 w-4 items-center justify-center rounded-full bg-emerald-500 text-white">
                             <Icon d={ICON.dauTich} className="h-3 w-3" strokeWidth={2.5} />
                         </span>
                         Đã thanh toán
                     </span>
-                    <span className="whitespace-nowrap text-sm text-slate-500">
-                        Tổng: <span className="font-bold text-slate-900">{dinhDangGia(tien.tong)}</span>
+                    <span className="whitespace-nowrap text-sm text-blue-200">
+                        Tổng: <span className="font-bold text-cyan-300">{dinhDangGia(tien.tong)}</span>
                     </span>
                 </div>
             </div>
 
             {/* 3.2 Từng mẫu trong đơn */}
-            <div className="divide-y divide-slate-100">
+            <div className="divide-y divide-blue-100">
                 {don.itemsHien.map(({ id, gia, mau }) => (
                     // Máy tính: nút nằm bên phải cùng hàng
                     <div key={id} className="flex flex-col gap-4 p-4 md:flex-row md:items-center">
@@ -66,7 +66,7 @@ function TheDonHang({ don }) {
                                 to={`/mau-website/${id}`}
                                 state={TU_DON_HANG}
                                 title={`Xem chi tiết ${mau.ten}`}
-                                className="group block flex-none overflow-hidden rounded-xl ring-1 ring-slate-200 transition hover:ring-2 hover:ring-blue-400"
+                                className="group block flex-none overflow-hidden rounded-xl ring-1 ring-blue-200 transition hover:ring-2 hover:ring-cyan-400"
                             >
                                 <img
                                     src={mau.anh[0]}
@@ -78,23 +78,23 @@ function TheDonHang({ don }) {
 
                             <div className="min-w-0 flex-1">
                                 <p className="text-base font-bold text-slate-900">{mau.ten}</p>
-                                <span className="mt-1.5 inline-block rounded-lg bg-blue-50 px-2.5 py-1 text-xs font-semibold text-blue-700">
+                                <span className="mt-1.5 inline-block rounded-lg bg-blue-100 px-2.5 py-1 text-xs font-semibold text-blue-700">
                                     {loaiList.find((l) => l.id === mau.loai)?.ten}
                                 </span>
                                 {/* Giá lúc mua | đánh giá sao */}
                                 <div className="mt-2 flex flex-wrap items-center gap-x-4 gap-y-2">
-                                    <p className="flex items-center gap-1.5 text-sm text-slate-500">
+                                    <p className="flex items-center gap-1.5 text-sm font-medium text-slate-600">
                                         <Icon d={ICON.nhan} />
                                         {dinhDangGia(gia)}
                                     </p>
-                                    <span className="hidden h-4 w-px bg-slate-200 sm:block" aria-hidden="true" />
+                                    <span className="hidden h-4 w-px bg-blue-200 sm:block" aria-hidden="true" />
                                     <DanhGiaSao mau={mau} />
                                 </div>
                             </div>
                         </div>
 
                         {/* 3.3 Nút xem demo + tải mã nguồn */}
-                        <div className="flex gap-2 border-t border-slate-100 pt-4 md:w-40 md:flex-none md:flex-col md:border-0 md:pt-0">
+                        <div className="flex gap-2 border-t border-blue-100 pt-4 md:w-40 md:flex-none md:flex-col md:border-0 md:pt-0">
                             <Link
                                 to={`/mau-website/${id}/demo`}
                                 state={TU_DON_HANG}
@@ -107,7 +107,7 @@ function TheDonHang({ don }) {
                             <a
                                 href={mau.nguonZip}
                                 download={`${id}.zip`}
-                                className="flex flex-1 items-center justify-center gap-2 rounded-xl border border-blue-600 px-4 py-2.5 text-sm font-semibold text-blue-600 transition hover:bg-blue-50"
+                                className="flex flex-1 items-center justify-center gap-2 rounded-xl border border-blue-600 px-4 py-2.5 text-sm font-semibold text-blue-600 transition hover:bg-blue-600 hover:text-white"
                             >
                                 <Icon d={ICON.taiXuong} />
                                 Tải xuống

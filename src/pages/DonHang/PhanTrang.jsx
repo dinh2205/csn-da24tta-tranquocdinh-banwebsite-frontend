@@ -14,7 +14,7 @@ function PhanTrang({ trang, soTrang, onDoiTrang, moTa }) {
                         onClick={() => onDoiTrang(trang - 1)}
                         disabled={trang === 1}
                         aria-label="Trang trước"
-                        className={`${kieuNut} border-slate-200 bg-white text-slate-600 hover:bg-slate-50`}
+                        className={`${kieuNut} border-blue-100 bg-blue-50 text-blue-700 hover:bg-blue-100`}
                     >
                         ‹
                     </button>
@@ -25,8 +25,8 @@ function PhanTrang({ trang, soTrang, onDoiTrang, moTa }) {
                             type="button"
                             onClick={() => onDoiTrang(so)}
                             className={`${kieuNut} ${so === trang
-                                ? 'border-blue-600 bg-blue-600 text-white shadow-md shadow-blue-600/30'
-                                : 'border-slate-200 bg-white text-slate-600 hover:bg-slate-50'
+                                ? 'border-cyan-400 bg-cyan-400 text-blue-950 shadow-md shadow-cyan-500/30'
+                                : 'border-blue-100 bg-blue-50 text-blue-700 hover:bg-blue-100'
                                 }`}
                         >
                             {so}
@@ -38,7 +38,7 @@ function PhanTrang({ trang, soTrang, onDoiTrang, moTa }) {
                         onClick={() => onDoiTrang(trang + 1)}
                         disabled={trang === soTrang}
                         aria-label="Trang sau"
-                        className={`${kieuNut} border-slate-200 bg-white text-slate-600 hover:bg-slate-50`}
+                        className={`${kieuNut} border-blue-100 bg-blue-50 text-blue-700 hover:bg-blue-100`}
                     >
                         ›
                     </button>

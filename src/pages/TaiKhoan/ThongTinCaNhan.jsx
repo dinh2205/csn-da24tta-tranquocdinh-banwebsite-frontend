@@ -14,6 +14,10 @@ const ANH_TOI_DA = 1024 * 1024; // 1MB
 const matKhauBanDau = { cu: '', moi: '', xacNhan: '' };
 
 // Dòng báo xanh sau khi bấm lưu
+// Hai khung Hồ sơ và Đổi mật khẩu: nền navy giống dải đầu thẻ đơn hàng.
+// [&_label] ...: đổi màu nhãn, chữ phụ, chữ báo lỗi của TruongNhap / TruongMatKhau / DoManhMatKhau (dùng chung) chỉ trong khung này
+const KHUNG_NAVY = 'rounded-2xl bg-gradient-to-r from-[#0b1f4d] to-[#14317a] p-5 text-white shadow-lg shadow-blue-950/20 sm:p-6 [&_p.text-red-500]:text-red-300 [&_p.text-slate-500]:text-blue-200 [&_label]:text-blue-100';
+
 function BaoThanhCong({ chu }) {
     return chu ? <p className="rounded-lg bg-emerald-50 px-3.5 py-2.5 text-sm text-emerald-700">{chu}</p> : null;
 }
@@ -103,20 +107,20 @@ function ThongTinCaNhan() {
             <TieuDeTrang ten="Thông tin cá nhân" moTa="Cập nhật hồ sơ và mật khẩu để bảo vệ tài khoản của bạn." />
 
             {/* 1. HỒ SƠ: máy tính chia 2 cột (ảnh đại diện | form), điện thoại xếp dọc */}
-            <form onSubmit={luuHoSo} noValidate className="grid gap-6 rounded-2xl border border-slate-200 bg-white p-5 shadow-sm sm:p-6 md:grid-cols-[12rem_minmax(0,1fr)]">
+            <form onSubmit={luuHoSo} noValidate className={`grid gap-6 md:grid-cols-[12rem_minmax(0,1fr)] ${KHUNG_NAVY}`}>
                 {/* 1.1 Ảnh đại diện */}
                 <div className="flex flex-col items-center gap-3 text-center">
-                    <span className="flex h-28 w-28 items-center justify-center overflow-hidden rounded-full bg-gradient-to-br from-blue-500 to-cyan-400 text-white ring-4 ring-blue-50">
+                    <span className="flex h-28 w-28 items-center justify-center overflow-hidden rounded-full bg-gradient-to-br from-blue-500 to-cyan-400 text-white ring-4 ring-white shadow-lg shadow-blue-500/20">
                         {anh ? <img src={anh} alt="Ảnh đại diện" className="h-full w-full object-cover" /> : <Icon d={ICON_NGUOI} className="h-12 w-12" strokeWidth={1.6} />}
                     </span>
                     {/* label bọc input file ẩn: bấm chữ "Chọn ảnh" là mở hộp chọn file */}
-                    <label className="inline-flex cursor-pointer items-center gap-2 rounded-lg border border-slate-300 px-3 py-2 text-sm font-semibold text-slate-700 transition hover:bg-slate-50">
+                    <label className="inline-flex cursor-pointer items-center gap-2 rounded-lg border border-cyan-300/60 px-3 py-2 text-sm font-semibold text-cyan-300 transition hover:bg-cyan-400 hover:text-blue-950">
                         <Icon d={ICON_MAY_ANH} />
                         Chọn ảnh
                         <input type="file" accept="image/*" onChange={chonAnh} className="hidden" />
                     </label>
-                    <p className="text-xs text-slate-400">JPG, PNG · tối đa 1MB</p>
-                    {loiHoSo.anh && <p className="text-xs text-red-500">{loiHoSo.anh}</p>}
+                    <p className="text-xs text-blue-300/80">JPG, PNG · tối đa 1MB</p>
+                    {loiHoSo.anh && <p className="text-xs text-red-300">{loiHoSo.anh}</p>}
                 </div>
 
                 {/* 1.2 Form hồ sơ */}
@@ -155,12 +159,12 @@ function ThongTinCaNhan() {
 
             {/* 2. ĐỔI MẬT KHẨU */}
             {/* Máy tính: tiêu đề + lời khuyên bên trái, 3 ô xếp dọc bên phải. Điện thoại: xếp dọc hết */}
-            <form onSubmit={luuMatKhau} noValidate className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm sm:p-6">
+            <form onSubmit={luuMatKhau} noValidate className={KHUNG_NAVY}>
                 <div className="grid gap-6 md:grid-cols-[minmax(0,1fr)_minmax(0,1.6fr)] md:gap-10">
                     <div>
-                        <h2 className="text-lg font-bold text-slate-900">Đổi mật khẩu</h2>
-                        <p className="mt-1 text-sm text-slate-500">Mật khẩu mạnh giúp bảo vệ tài khoản của bạn.</p>
-                        <ul className="mt-4 space-y-1.5 text-sm text-slate-500">
+                        <h2 className="text-lg font-bold text-white">Đổi mật khẩu</h2>
+                        <p className="mt-1 text-sm text-blue-200">Mật khẩu mạnh giúp bảo vệ tài khoản của bạn.</p>
+                        <ul className="mt-4 space-y-1.5 text-sm text-blue-200">
                             <li>• Ít nhất 8 ký tự</li>
                             <li>• Có chữ hoa và chữ thường</li>
                             <li>• Có số và ký tự đặc biệt</li>

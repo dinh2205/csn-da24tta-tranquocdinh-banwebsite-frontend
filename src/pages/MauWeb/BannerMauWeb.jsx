@@ -1,14 +1,23 @@
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import banner1 from '../../assets/banner-mau-website.webp';
+import banner1Nho from '../../assets/banner-mau-website-1280.webp';
+import banner1Vua from '../../assets/banner-mau-website-1920.webp';
 import banner2 from '../../assets/banner-mau-website1.webp';
+import banner2Nho from '../../assets/banner-mau-website1-1280.webp';
+import banner2Vua from '../../assets/banner-mau-website1-1920.webp';
 import banner3 from '../../assets/banner-mau-website2.webp';
+import banner3Nho from '../../assets/banner-mau-website2-1280.webp';
+import banner3Vua from '../../assets/banner-mau-website2-1920.webp';
+
+// 3 cỡ mỗi ảnh (1280 / 1920 / 2560): trình duyệt tự chọn cỡ vừa màn hình
+const taoSrcSet = (nho, vua, lon) => `${nho} 1280w, ${vua} 1920w, ${lon} 2560w`;
 
 const bannerList = [
-    { src: banner3, alt: 'Hỗ trợ tận tâm, đồng hành cùng bạn', nut: { chu: 'Liên hệ ngay', den: '/gioi-thieu#lien-he', viTri: 'left-[6.3%] top-[66%]' } },
+    { src: banner3, srcSet: taoSrcSet(banner3Nho, banner3Vua, banner3), alt: 'Hỗ trợ tận tâm, đồng hành cùng bạn', nut: { chu: 'Liên hệ ngay', den: '/gioi-thieu#lien-he', viTri: 'left-[6.3%] top-[66%]' } },
     // uuDai: bấm vào ảnh thì chọn sẵn ưu đãi đó trong bộ lọc bên dưới (không đổi trang)
-    { src: banner1, alt: 'Siêu giảm giá mẫu website, xem các mẫu Siêu sale', uuDai: 'dacBiet' },
-    { src: banner2, alt: 'Mẫu website tương thích trên mọi thiết bị' },
+    { src: banner1, srcSet: taoSrcSet(banner1Nho, banner1Vua, banner1), alt: 'Siêu giảm giá mẫu website, xem các mẫu Siêu sale', uuDai: 'dacBiet' },
+    { src: banner2, srcSet: taoSrcSet(banner2Nho, banner2Vua, banner2), alt: 'Mẫu website tương thích trên mọi thiết bị' },
 ];
 // Nút trên banner (link sang trang khác, vd Liên hệ ngay)
 function NutTrenAnh({ nut, hien }) {
@@ -59,6 +68,8 @@ function BannerMauWeb({ onChonUuDai }) {
                             const anh = (
                                 <img
                                     src={b.src}
+                                    srcSet={b.srcSet}
+                                    sizes="100vw"
                                     alt={b.alt}
                                     width={2560}
                                     height={801}

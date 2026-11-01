@@ -77,7 +77,7 @@ function DonHang() {
                         {/* 3. DANH SÁCH ĐƠN */}
                         <div className="mt-4 space-y-4">
                             {donLoc.length === 0 ? (
-                                <div className="rounded-2xl border border-dashed border-slate-300 bg-white py-12 text-center">
+                                <div className="rounded-2xl border border-dashed border-blue-200 bg-blue-50 py-12 text-center">
                                     <p className="font-medium text-slate-700">Không tìm thấy mẫu phù hợp</p>
                                     <button
                                         type="button"

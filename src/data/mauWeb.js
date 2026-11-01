@@ -305,8 +305,7 @@ const mauWeb = [
     gia: 400000,
     moTa: 'Hệ thống quản lý câu lạc bộ sinh viên Trường Đại học Trà Vinh: sinh viên xem CLB, đăng ký hoạt động, theo dõi điểm rèn luyện; ban chủ nhiệm quản lý thành viên, hoạt động, điểm danh QR; ban quản lý trường duyệt hoạt động và xem báo cáo thống kê; quản trị viên phân quyền tài khoản.',
     luotBan: 0,
-    ngayTao: '2026-10-31',
-    moi: true, // nhãn "Mới"
+    ngayTao: '2026-10-15',
     boCuc: 'Trang công khai + khu làm việc có thanh menu bên trái, đổi giao diện theo 5 vai trò',
     soTrang: '20+ trang cho 5 vai trò (khách, sinh viên, ban chủ nhiệm, ban quản lý trường, quản trị viên)',
     bienThe: 'Xanh dương',

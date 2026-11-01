@@ -43,6 +43,7 @@ function TaiKhoanLayout() {
     const { user } = useTaiKhoan();
     const { donCuaToi } = useDonHang();
     const [hoiDangXuat, setHoiDangXuat] = useState(false);
+    const [khuRong, setKhuRong] = useState(null);
     const [hoiDoiQua, setHoiDoiQua] = useState(false);
     const [vuaDoi, setVuaDoi] = useState(false); // vừa đổi xong: hiện câu báo
     const [doiQua, setDoiQua] = useState(() => doc(KHOA_DOI_QUA, {}));
@@ -164,9 +165,13 @@ function TaiKhoanLayout() {
                 </aside>
 
                 {/* 2. TRANG CON (Tổng quan / Thông tin cá nhân / Lịch sử mua hàng / Mẫu yêu thích) */}
+                {/* khuRong: trang con gửi nội dung vào ô trải hết bề ngang bên dưới (vd Mẫu web đã mua ở Tổng quan) */}
                 <div className="min-w-0">
-                    <Outlet />
+                    <Outlet context={{ khuRong }} />
                 </div>
+
+                {/* 3. Ô TRẢI HẾT BỀ NGANG (dưới cả menu và trang con). Không có gì thì ẩn */}
+                <div ref={setKhuRong} className="min-w-0 empty:hidden lg:col-span-2" />
             </div>
 
             {/* HỘP HỎI LẠI KHI BẤM ĐỔI QUÀ */}

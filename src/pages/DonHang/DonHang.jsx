@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 import { useDonHang } from '../../context/DonHangContext';
 import mauWeb from '../../data/mauWeb';
 import { loaiList, nganhList } from '../../data/danhmuc';
@@ -20,6 +20,13 @@ function DonHang() {
     const [tuKhoa, setTuKhoa] = useState('');
     const [loaiLoc, setLoaiLoc] = useState(''); // '' = tất cả danh mục
     const [trang, setTrang] = useState(1);
+    const dauDanhSach = useRef(null);
+
+    // Đổi trang: cuộn mượt lên đầu danh sách đơn (đơn đầu tiên của trang mới), không phải kéo tay lên
+    const doiTrang = (so) => {
+        setTrang(so);
+        dauDanhSach.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    };
 
     // Đổi bộ lọc thì về trang 1
     const doiTuKhoa = (chu) => {
@@ -75,7 +82,8 @@ function DonHang() {
                         <TimLocDon tuKhoa={tuKhoa} onDoiTuKhoa={doiTuKhoa} loaiLoc={loaiLoc} onDoiLoai={doiLoai} />
 
                         {/* 3. DANH SÁCH ĐƠN */}
-                        <div className="mt-4 space-y-4">
+                        {/* scroll-mt: chừa chỗ cho thanh menu dính trên cùng khi cuộn tới */}
+                        <div ref={dauDanhSach} className="mt-4 scroll-mt-28 space-y-4">
                             {donLoc.length === 0 ? (
                                 <div className="rounded-2xl border border-dashed border-blue-200 bg-blue-50 py-12 text-center">
                                     <p className="font-medium text-slate-700">Không tìm thấy mẫu phù hợp</p>
@@ -100,7 +108,7 @@ function DonHang() {
                             <PhanTrang
                                 trang={trangHienTai}
                                 soTrang={soTrang}
-                                onDoiTrang={setTrang}
+                                onDoiTrang={doiTrang}
                                 moTa={`Hiển thị ${batDau + 1} - ${batDau + donHienThi.length} trong ${donLoc.length} đơn hàng`}
                             />
                         )}

@@ -1,4 +1,5 @@
-import { Link } from 'react-router-dom';
+import { createPortal } from 'react-dom';
+import { Link, useOutletContext } from 'react-router-dom';
 import Icon from '../../components/chung/Icon';
 import AnhDaiDien from '../../components/chung/AnhDaiDien';
 import { useDonHang } from '../../context/DonHangContext';
@@ -7,6 +8,7 @@ import { useYeuThich } from '../../context/YeuThichContext';
 import mauWeb from '../../data/mauWeb';
 import { tinhTienDon } from '../../data/donHang';
 import { dinhDangGia, dinhDangNgay } from '../../utils/chuyenDoi';
+import MauDaMua from './MauDaMua';
 import nenLoiChao from '../../assets/nen-loi-chao.webp';
 import bannerUuDai from '../../assets/banner-uu-dai.webp';
 
@@ -17,6 +19,9 @@ const ICON = {
     thu: 'M4 6h16v12H4V6Zm0 0 8 6 8-6',
     dienThoai: 'M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a1 1 0 0 1-1 1A16 16 0 0 1 4 5a1 1 0 0 1 1-1Z',
     lich: 'M7 3v3M17 3v3M4 9h16M5 5h14a1 1 0 0 1 1 1v13a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V6a1 1 0 0 1 1-1Z',
+    ma: 'M8 8l-4 4 4 4M16 8l4 4-4 4M14 5l-4 14',
+    tim: 'M12 20s-7-4.4-7-10a4 4 0 0 1 7-2.6A4 4 0 0 1 19 10c0 5.6-7 10-7 10Z',
+    vi: 'M4 7h15a1 1 0 0 1 1 1v11a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V7Zm0 0V6a2 2 0 0 1 2-2h11M16 13.5h.01',
 };
 
 const SO_DON_GAN_DAY = 5;
@@ -29,15 +34,17 @@ function TongQuan() {
     const { user } = useTaiKhoan();
     const { donCuaToi } = useDonHang();
     const { dsYeuThich } = useYeuThich();
+    const { khuRong } = useOutletContext();
 
     // Số liệu tính từ đơn hàng + yêu thích của tài khoản
     const soMauDaMua = donCuaToi.reduce((tong, d) => tong + d.items.length, 0);
     const tongChi = donCuaToi.reduce((tong, d) => tong + tinhTienDon(d).tong, 0);
+    // Mỗi thẻ 1 màu: o = ô icon + vạch màu trên đầu thẻ, chu = màu con số, vien = viền khi rê chuột
     const soLieu = [
-        { nhan: 'Đơn hàng', giaTri: donCuaToi.length, phu: 'đã thanh toán', to: '/tai-khoan/don-hang', mau: 'border-blue-100 bg-blue-50/60' },
-        { nhan: 'Mẫu đã mua', giaTri: soMauDaMua, phu: 'xem & tải mã nguồn', to: '/tai-khoan/don-hang', mau: 'border-emerald-100 bg-emerald-50/60' },
-        { nhan: 'Mẫu yêu thích', giaTri: dsYeuThich.length, phu: 'đang lưu', to: '/tai-khoan/yeu-thich', mau: 'border-rose-100 bg-rose-50/60' },
-        { nhan: 'Tổng chi tiêu', giaTri: dinhDangGia(tongChi), phu: 'từ trước đến nay', to: '/tai-khoan/don-hang', mau: 'border-amber-100 bg-amber-50/60' },
+        { nhan: 'Đơn hàng', giaTri: donCuaToi.length, phu: 'đã thanh toán', to: '/tai-khoan/don-hang', icon: ICON.donHang, o: 'from-blue-500 to-indigo-500 shadow-blue-500/30', chu: 'text-blue-700', vien: 'hover:border-blue-200' },
+        { nhan: 'Mẫu đã mua', giaTri: soMauDaMua, phu: 'xem & tải mã nguồn', to: '/tai-khoan/don-hang', icon: ICON.ma, o: 'from-emerald-400 to-teal-500 shadow-emerald-500/30', chu: 'text-emerald-700', vien: 'hover:border-emerald-200' },
+        { nhan: 'Mẫu yêu thích', giaTri: dsYeuThich.length, phu: 'đang lưu', to: '/tai-khoan/yeu-thich', icon: ICON.tim, o: 'from-rose-400 to-pink-500 shadow-rose-500/30', chu: 'text-rose-600', vien: 'hover:border-rose-200' },
+        { nhan: 'Tổng chi tiêu', giaTri: dinhDangGia(tongChi), phu: 'từ trước đến nay', to: '/tai-khoan/don-hang', icon: ICON.vi, o: 'from-amber-400 to-orange-500 shadow-amber-500/30', chu: 'text-amber-600', vien: 'hover:border-amber-200' },
     ];
 
     // Thẻ hồ sơ: ô nào chưa có thì ghi "Chưa cập nhật..." màu nhạt
@@ -47,6 +54,11 @@ function TongQuan() {
         { icon: ICON.lich, giaTri: user.ngaySinh && dinhDangNgay(user.ngaySinh), trong: 'Chưa cập nhật ngày sinh' },
     ];
 
+    // Mẫu đã mua: mới mua trước, mỗi mẫu 1 lần, bỏ mẫu đã bị xóa khỏi mauWeb.js
+    const mauDaMua = [...new Set(donCuaToi.flatMap((d) => d.items.map((it) => it.id)))]
+        .map((id) => mauWeb.find((m) => m.id === id))
+        .filter(Boolean);
+
     // Tên các mẫu trong đơn, vd "Bán Cây Xanh, Phòng Khám MedCare"
     const tenSanPham = (don) => don.items.map((it) => mauWeb.find((m) => m.id === it.id)?.ten ?? it.id).join(', ');
 
@@ -55,31 +67,36 @@ function TongQuan() {
         // Màn nhỏ: xếp 1 cột, thẻ hồ sơ lên đầu (order-first), banner xuống cuối
         <div className="grid gap-6 xl:grid-cols-[minmax(0,1fr)_17rem] xl:grid-rows-[auto_1fr]">
             <div className="min-w-0 space-y-6 xl:row-span-2">
-                {/* 1. LỜI CHÀO: hình minh họa nằm bên phải nền */}
+                {/* 1. LỜI CHÀO: nền xanh đậm có hình minh họa (tai nghe bên phải) → chữ trắng.
+                    bg-[#0a2a86]: màu nền tạm trong lúc ảnh đang tải */}
                 <section
-                    className="relative overflow-hidden rounded-2xl border border-slate-200 bg-white bg-cover bg-right bg-no-repeat p-6 shadow-sm sm:p-8"
+                    className="relative overflow-hidden rounded-2xl bg-[#0a2a86] bg-cover bg-center bg-no-repeat p-6 shadow-lg shadow-blue-900/20 sm:p-10"
                     style={{ backgroundImage: `url(${nenLoiChao})` }}
                 >
-                    {/* Điện thoại: hình nằm sau chữ nên phủ trắng mờ cho chữ dễ đọc */}
-                    <div className="pointer-events-none absolute inset-0 bg-gradient-to-r from-white/90 via-white/75 to-white/30 sm:hidden" aria-hidden="true" />
-                    <div className="relative">
-                        <p className="text-xs font-semibold uppercase tracking-wider text-slate-500">Tài khoản của tôi</p>
-                        <h1 className="mt-2 text-2xl font-extrabold leading-tight text-slate-900 sm:text-3xl">
+                    {/* Phủ tối dần từ trái sang để chữ nổi trên các đường sáng của ảnh (điện thoại phủ đậm hơn) */}
+                    <div className="pointer-events-none absolute inset-0 bg-gradient-to-r from-[#061a5c]/80 via-[#061a5c]/50 to-transparent sm:from-[#061a5c]/60 sm:via-[#061a5c]/20" aria-hidden="true" />
+                    <div className="relative max-w-xl">
+                        <p className="inline-flex items-center gap-2 rounded-full bg-white/10 px-3 py-1 text-xs font-semibold uppercase tracking-wider text-cyan-200 ring-1 ring-white/20 backdrop-blur-sm">
+                            <span className="h-1.5 w-1.5 rounded-full bg-cyan-300" aria-hidden="true" />
+                            Tài khoản của tôi
+                        </p>
+                        <h1 className="mt-4 text-2xl font-extrabold leading-tight text-white sm:text-4xl">
                             Chào mừng trở lại,
                             <br />
-                            {user.hoTen}! <span aria-hidden="true">👋</span>
+                            <span className="bg-gradient-to-r from-cyan-300 to-sky-200 bg-clip-text text-transparent">{user.hoTen}</span>
                         </h1>
+                        <p className="mt-3 text-sm text-blue-100/90 sm:text-base">Hôm nay bạn muốn tìm mẫu website nào?</p>
                         <div className="mt-6 flex flex-wrap gap-3">
                             <Link
                                 to="/mau-website"
-                                className="inline-flex items-center gap-2 rounded-xl bg-cyan-400 px-5 py-3 text-sm font-bold text-blue-950 shadow-md shadow-cyan-500/30 transition hover:bg-cyan-300"
+                                className="inline-flex items-center gap-2 rounded-xl bg-cyan-400 px-5 py-3 text-sm font-bold text-blue-950 shadow-lg shadow-cyan-500/30 transition hover:-translate-y-0.5 hover:bg-cyan-300"
                             >
                                 Khám phá mẫu mới
                                 <Icon d={ICON.muiTen} />
                             </Link>
                             <Link
                                 to="/tai-khoan/thong-tin"
-                                className="rounded-xl border border-blue-600 bg-white px-5 py-3 text-sm font-semibold text-blue-600 transition hover:bg-blue-50"
+                                className="rounded-xl border border-white/30 bg-white/10 px-5 py-3 text-sm font-semibold text-white backdrop-blur-sm transition hover:-translate-y-0.5 hover:bg-white/20"
                             >
                                 Cập nhật hồ sơ
                             </Link>
@@ -90,11 +107,25 @@ function TongQuan() {
                 {/* 2. SỐ LIỆU: điện thoại 2 cột, máy tính 4 cột */}
                 <section className="grid grid-cols-2 gap-3 md:grid-cols-4">
                     {soLieu.map((s) => (
-                        <Link key={s.nhan} to={s.to} className={`block min-w-0 rounded-xl border p-4 transition hover:-translate-y-0.5 hover:shadow-md ${s.mau}`}>
-                            <span className="block text-xs font-semibold text-slate-600">{s.nhan}</span>
-                            {/* Số tiền dài (vd 1.250.000 đ) nên dùng cỡ chữ vừa phải và cho xuống dòng thay vì cắt "..." */}
-                            <span className="mt-1 block break-words text-xl font-extrabold leading-tight text-slate-900">{s.giaTri}</span>
-                            <span className="mt-0.5 block text-xs text-slate-500">{s.phu}</span>
+                        <Link
+                            key={s.nhan}
+                            to={s.to}
+                            className={`group relative block min-w-0 overflow-hidden rounded-2xl border border-slate-200 bg-white p-4 shadow-sm transition hover:-translate-y-1 hover:shadow-lg ${s.vien}`}
+                        >
+                            {/* Vạch màu trên đầu thẻ làm điểm nhấn */}
+                            <span className={`absolute inset-x-0 top-0 h-1 bg-gradient-to-r ${s.o}`} aria-hidden="true" />
+                            <span className="flex items-center gap-2.5">
+                                <span className={`flex h-10 w-10 flex-none items-center justify-center rounded-xl bg-gradient-to-br text-white shadow-md ${s.o}`}>
+                                    <Icon d={s.icon} className="h-5 w-5" strokeWidth={1.9} />
+                                </span>
+                                <span className="text-sm font-semibold text-slate-600">{s.nhan}</span>
+                            </span>
+                            {/* Số tiền dài (vd 1.250.000 đ) cho xuống dòng thay vì cắt "..." */}
+                            <span className={`mt-3 block break-words text-xl font-extrabold leading-tight sm:text-2xl ${s.chu}`}>{s.giaTri}</span>
+                            <span className="mt-1 flex items-center justify-between gap-2 text-xs text-slate-500">
+                                {s.phu}
+                                <Icon d={ICON.muiTen} className="h-4 w-4 flex-none -translate-x-1 opacity-0 transition group-hover:translate-x-0 group-hover:opacity-100" />
+                            </span>
                         </Link>
                     ))}
                 </section>
@@ -185,6 +216,9 @@ function TongQuan() {
                     className="block h-auto w-full"
                 />
             </Link>
+
+            {/* 5. MẪU WEB ĐÃ MUA: gửi sang ô trải hết bề ngang của TaiKhoanLayout (dưới cả menu bên trái) */}
+            {mauDaMua.length > 0 && khuRong && createPortal(<MauDaMua dsMau={mauDaMua} />, khuRong)}
         </div>
     );
 }

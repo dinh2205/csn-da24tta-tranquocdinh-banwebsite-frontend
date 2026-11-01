@@ -54,3 +54,12 @@ export const danhGiaMau = [
     { id: 2, hoTen: 'Bùi Thanh Tâm', sao: 5, ngay: '2026-10-26', noiDung: 'Mẫu chạy mượt trên điện thoại, khách hàng của mình khen giao diện chuyên nghiệp.' },
     { id: 3, hoTen: 'Trần Minh Khoa', sao: 5, ngay: '2026-10-22', noiDung: 'Tài liệu hướng dẫn rõ ràng, hỗ trợ trả lời nhanh. Rất đáng tiền.' },
 ];
+
+// Gộp điểm đánh giá có sẵn của mẫu (mau.danhGia) với đánh giá thật người dùng gửi ở trang Đơn hàng.
+// dsNguoiDung: kết quả danhGiaCuaMau(id) trong DonHangContext. Trả về { diem, luot }
+export const tongHopDanhGia = (mau, dsNguoiDung = []) => {
+    const goc = mau.danhGia ?? { diem: danhGiaMau.reduce((tong, d) => tong + d.sao, 0) / danhGiaMau.length, luot: danhGiaMau.length };
+    const luot = goc.luot + dsNguoiDung.length;
+    const tongSao = goc.diem * goc.luot + dsNguoiDung.reduce((tong, d) => tong + d.sao, 0);
+    return { diem: luot ? tongSao / luot : 0, luot };
+};

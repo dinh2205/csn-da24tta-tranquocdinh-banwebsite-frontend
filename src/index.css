@@ -42,6 +42,34 @@
   pointer-events: auto;
 }
 
+/* Hiệu ứng hiện ra của thông báo giỏ hàng / hộp xác nhận: trượt nhẹ từ trên xuống + rõ dần */
+@keyframes tb-truot {
+  from {
+    opacity: 0;
+    transform: translateY(-8px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+.tb-truot {
+  animation: tb-truot 0.2s ease-out;
+}
+
+/* Vạch đếm ngược ở đáy thông báo: ngắn dần từ đủ chiều rộng về 0 (thời gian đặt trong style) */
+@keyframes tb-dem-nguoc {
+  from {
+    width: 100%;
+  }
+  to {
+    width: 0;
+  }
+}
+.tb-dem-nguoc {
+  animation: tb-dem-nguoc linear forwards;
+}
+
 /* Con trỏ bàn tay cho nút bấm */
 @layer base {
   button:not(:disabled),

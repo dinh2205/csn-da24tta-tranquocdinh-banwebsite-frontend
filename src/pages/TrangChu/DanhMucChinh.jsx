@@ -58,9 +58,9 @@ function DanhMucChinh() {
                 </div>
 
                 <div className="mt-10 text-center">
-                    {/* #danh-sach: cuộn tới khung tìm kiếm */}
+                    {/* #khu-loc: cuộn thẳng tới khung lọc + danh sách mẫu */}
                     <Link
-                        to="/mau-website#danh-sach"
+                        to="/mau-website#khu-loc"
                         className="inline-block rounded-xl bg-cyan-400 px-6 py-3 text-sm font-bold text-blue-950 shadow-md transition hover:bg-cyan-300 active:scale-95"
                     >
                         Xem Tất Cả

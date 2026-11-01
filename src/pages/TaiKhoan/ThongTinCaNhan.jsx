@@ -3,13 +3,14 @@ import Icon from '../../components/chung/Icon';
 import TruongNhap from '../../components/bieumau/TruongNhap';
 import TruongMatKhau from '../../components/bieumau/TruongMatKhau';
 import DoManhMatKhau from '../../components/bieumau/DoManhMatKhau';
+import { useTaiKhoan } from '../../context/TaiKhoanContext';
 import TieuDeTrang from './TieuDeTrang';
 
 const ICON_NGUOI = 'M16 8a4 4 0 1 1-8 0 4 4 0 0 1 8 0ZM4.5 20a7.5 7.5 0 0 1 15 0';
 const ICON_MAY_ANH = 'M4 8h3l2-3h6l2 3h3v11H4V8ZM12 16a3 3 0 1 0 0-6 3 3 0 0 0 0 6Z';
 
-// Chưa có tài khoản thật nên các ô đều trống
-const hoSoBanDau = { hoTen: '', email: '', sdt: '', ngaySinh: '', gioiTinh: '' };
+// Ảnh đại diện lưu thẳng vào localStorage (giới hạn ~5MB cho cả trang) nên chỉ nhận ảnh nhỏ
+const ANH_TOI_DA = 1024 * 1024; // 1MB
 const matKhauBanDau = { cu: '', moi: '', xacNhan: '' };
 
 // Dòng báo xanh sau khi bấm lưu
@@ -19,10 +20,18 @@ function BaoThanhCong({ chu }) {
 
 // Tài khoản → Thông tin cá nhân (/tai-khoan/thong-tin): ảnh đại diện, hồ sơ, đổi mật khẩu
 function ThongTinCaNhan() {
-    const [hoSo, setHoSo] = useState(hoSoBanDau);
+    // đổi tên doiMatKhau → luuMatKhauMoi vì trang này đã có hàm doiMatKhau (sửa ô nhập) bên dưới
+    const { user, capNhatHoSo, doiMatKhau: luuMatKhauMoi } = useTaiKhoan();
+    // Điền sẵn thông tin hiện có của tài khoản
+    const [hoSo, setHoSo] = useState({
+        hoTen: user.hoTen,
+        sdt: user.sdt ?? '',
+        ngaySinh: user.ngaySinh ?? '',
+        gioiTinh: user.gioiTinh ?? '',
+    });
     const [loiHoSo, setLoiHoSo] = useState({});
     const [baoHoSo, setBaoHoSo] = useState('');
-    const [anh, setAnh] = useState(''); // link tạm để xem trước ảnh vừa chọn
+    const [anh, setAnh] = useState(user.anh ?? ''); // ảnh dạng chuỗi data:image/... để lưu được vào localStorage
 
     const [matKhau, setMatKhau] = useState(matKhauBanDau);
     const [loiMatKhau, setLoiMatKhau] = useState({});
@@ -40,22 +49,34 @@ function ThongTinCaNhan() {
         setBaoMatKhau('');
     };
 
-    // Chọn ảnh: tạo link tạm (URL.createObjectURL) để hiện ngay, chưa lưu đi đâu
+    // Chọn ảnh: đọc file thành chuỗi data:image/... (FileReader) để vừa xem trước vừa lưu được.
+    // Bấm "Lưu thay đổi" mới lưu thật
     const chonAnh = (e) => {
         const file = e.target.files[0];
-        if (file) setAnh(URL.createObjectURL(file));
+        if (!file) return;
+        if (file.size > ANH_TOI_DA) {
+            setLoiHoSo({ ...loiHoSo, anh: 'Ảnh quá lớn, vui lòng chọn ảnh dưới 1MB' });
+            return;
+        }
+        const doc = new FileReader();
+        doc.onload = () => {
+            setAnh(doc.result);
+            setLoiHoSo({ ...loiHoSo, anh: '' });
+            setBaoHoSo('');
+        };
+        doc.readAsDataURL(file);
     };
 
     const luuHoSo = (e) => {
         e.preventDefault();
         const l = {};
         if (!hoSo.hoTen.trim()) l.hoTen = 'Vui lòng nhập họ và tên';
-        if (!/^\S+@\S+\.\S+$/.test(hoSo.email)) l.email = 'Email không hợp lệ';
         if (hoSo.sdt && !/^0\d{9}$/.test(hoSo.sdt)) l.sdt = 'Gồm 10 số, bắt đầu bằng 0';
         setLoiHoSo(l);
         if (Object.keys(l).length > 0) return;
-        // Chưa có localStorage: chỉ báo đã lưu, tải lại trang là mất
-        setBaoHoSo('Đã lưu thông tin cá nhân.');
+        const kq = capNhatHoSo({ ...hoSo, hoTen: hoSo.hoTen.trim(), anh });
+        if (kq.ok) setBaoHoSo('Đã lưu thông tin cá nhân.');
+        else setLoiHoSo({ anh: kq.loi });
     };
 
     const luuMatKhau = (e) => {
@@ -67,6 +88,12 @@ function ThongTinCaNhan() {
         if (matKhau.xacNhan !== matKhau.moi) l.xacNhan = 'Mật khẩu xác nhận không khớp';
         setLoiMatKhau(l);
         if (Object.keys(l).length > 0) return;
+        // Kiểm tra mật khẩu hiện tại có đúng với tài khoản không
+        const kq = luuMatKhauMoi(matKhau.cu, matKhau.moi);
+        if (!kq.ok) {
+            setLoiMatKhau({ cu: kq.loi });
+            return;
+        }
         setMatKhau(matKhauBanDau);
         setBaoMatKhau('Đã đổi mật khẩu.');
     };
@@ -88,7 +115,8 @@ function ThongTinCaNhan() {
                         Chọn ảnh
                         <input type="file" accept="image/*" onChange={chonAnh} className="hidden" />
                     </label>
-                    <p className="text-xs text-slate-400">JPG, PNG · tối đa 2MB</p>
+                    <p className="text-xs text-slate-400">JPG, PNG · tối đa 1MB</p>
+                    {loiHoSo.anh && <p className="text-xs text-red-500">{loiHoSo.anh}</p>}
                 </div>
 
                 {/* 1.2 Form hồ sơ */}
@@ -96,7 +124,8 @@ function ThongTinCaNhan() {
                     <BaoThanhCong chu={baoHoSo} />
                     <TruongNhap id="hoTen" nhan="Họ và tên *" value={hoSo.hoTen} onChange={doiHoSo('hoTen')} loi={loiHoSo.hoTen} placeholder="Nguyễn Văn A" autoComplete="name" />
                     <div className="grid gap-4 sm:grid-cols-2">
-                        <TruongNhap id="email" nhan="Email *" type="email" value={hoSo.email} onChange={doiHoSo('email')} loi={loiHoSo.email} placeholder="email@gmail.com" autoComplete="email" />
+                        {/* Email là tên đăng nhập nên không cho sửa */}
+                        <TruongNhap id="email" nhan="Email (tên đăng nhập)" type="email" value={user.email} disabled />
                         <TruongNhap id="sdt" nhan="Số điện thoại" type="tel" value={hoSo.sdt} onChange={doiHoSo('sdt')} loi={loiHoSo.sdt} placeholder="09xx xxx xxx" autoComplete="tel" />
                         <TruongNhap id="ngaySinh" nhan="Ngày sinh" type="date" value={hoSo.ngaySinh} onChange={doiHoSo('ngaySinh')} />
                         <div>

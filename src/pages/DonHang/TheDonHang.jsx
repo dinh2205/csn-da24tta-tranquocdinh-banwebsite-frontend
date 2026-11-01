@@ -3,6 +3,10 @@ import Icon from '../../components/chung/Icon';
 import { loaiList } from '../../data/danhmuc';
 import { tinhTienDon } from '../../data/donHang';
 import { dinhDangGia, dinhDangNgay } from '../../utils/chuyenDoi';
+import DanhGiaSao from './DanhGiaSao';
+
+// Gửi kèm khi mở chi tiết / demo từ đây: nút "Quay lại" bên đó sẽ về trang Đơn hàng
+const TU_DON_HANG = { quayVe: { to: '/tai-khoan/don-hang', ten: 'đơn hàng' } };
 
 // Icon trong thẻ đơn
 const ICON = {
@@ -60,6 +64,7 @@ function TheDonHang({ don }) {
                         <div className="flex min-w-0 flex-1 flex-col gap-4 sm:flex-row sm:items-center">
                             <Link
                                 to={`/mau-website/${id}`}
+                                state={TU_DON_HANG}
                                 title={`Xem chi tiết ${mau.ten}`}
                                 className="group block flex-none overflow-hidden rounded-xl ring-1 ring-slate-200 transition hover:ring-2 hover:ring-blue-400"
                             >
@@ -76,10 +81,15 @@ function TheDonHang({ don }) {
                                 <span className="mt-1.5 inline-block rounded-lg bg-blue-50 px-2.5 py-1 text-xs font-semibold text-blue-700">
                                     {loaiList.find((l) => l.id === mau.loai)?.ten}
                                 </span>
-                                <p className="mt-2 flex items-center gap-1.5 text-sm text-slate-500">
-                                    <Icon d={ICON.nhan} />
-                                    {dinhDangGia(gia)}
-                                </p>
+                                {/* Giá lúc mua | đánh giá sao */}
+                                <div className="mt-2 flex flex-wrap items-center gap-x-4 gap-y-2">
+                                    <p className="flex items-center gap-1.5 text-sm text-slate-500">
+                                        <Icon d={ICON.nhan} />
+                                        {dinhDangGia(gia)}
+                                    </p>
+                                    <span className="hidden h-4 w-px bg-slate-200 sm:block" aria-hidden="true" />
+                                    <DanhGiaSao mau={mau} />
+                                </div>
                             </div>
                         </div>
 
@@ -87,6 +97,7 @@ function TheDonHang({ don }) {
                         <div className="flex gap-2 border-t border-slate-100 pt-4 md:w-40 md:flex-none md:flex-col md:border-0 md:pt-0">
                             <Link
                                 to={`/mau-website/${id}/demo`}
+                                state={TU_DON_HANG}
                                 className="flex flex-1 items-center justify-center gap-2 rounded-xl bg-cyan-400 px-4 py-2.5 text-sm font-bold text-blue-950 shadow-sm shadow-cyan-500/30 transition hover:bg-cyan-300"
                             >
                                 <Icon d={ICON.moRa} />

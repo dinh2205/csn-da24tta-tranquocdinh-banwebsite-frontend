@@ -2,6 +2,7 @@ import { Outlet } from 'react-router-dom'
 import Header from '../components/chung/Header'
 import Footer from '../components/chung/Footer'
 import CuonTrang from '../components/chung/CuonTrang'
+import ThongBaoGioHang from '../components/chung/ThongBaoGioHang'
 
 function MainLayout() {
   return (
@@ -17,6 +18,9 @@ function MainLayout() {
       </main>
 
       <Footer />
+
+      {/* Thông báo "Đã thêm vào giỏ" ở góc phải, dùng chung cho mọi trang */}
+      <ThongBaoGioHang />
     </div>
   )
 }

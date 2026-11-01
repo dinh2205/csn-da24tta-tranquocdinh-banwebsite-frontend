@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { useDonHang } from '../../context/DonHangContext';
 import mauWeb from '../../data/mauWeb';
 import { loaiList, nganhList } from '../../data/danhmuc';
 import { boDau } from '../../utils/chuyenDoi';
@@ -12,12 +13,10 @@ const SO_DON_MOI_TRANG = 5;
 
 const layTen = (list, id) => list.find((x) => x.id === id)?.ten ?? '';
 
-// Đơn của tài khoản đang đăng nhập. Chưa có dữ liệu nên để rỗng → trang hiện khung "Bạn chưa có đơn hàng nào".
-// Muốn xem thử giao diện khi có đơn: import { donHangMau } from '../../data/donHang' rồi gán donCuaToi = donHangMau
-const donCuaToi = [];
-
 // Tài khoản → Lịch sử mua hàng (/tai-khoan/don-hang): mẫu đã mua, gom theo đơn
 function DonHang() {
+    // Đơn của tài khoản đang đăng nhập (lưu ở localStorage, xem DonHangContext), mới nhất trước
+    const { donCuaToi } = useDonHang();
     const [tuKhoa, setTuKhoa] = useState('');
     const [loaiLoc, setLoaiLoc] = useState(''); // '' = tất cả danh mục
     const [trang, setTrang] = useState(1);

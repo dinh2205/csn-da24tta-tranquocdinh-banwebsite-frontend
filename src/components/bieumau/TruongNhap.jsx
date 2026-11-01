@@ -9,7 +9,7 @@ function TruongNhap({ nhan, loi, id, phai, ...props }) {
         <input
           id={id}
           {...props}
-          className={`w-full rounded-lg border bg-white px-3.5 py-2.5 text-sm text-slate-900 outline-none transition placeholder:text-slate-400 focus:ring-2 ${phai ? 'pr-16' : ''} ${loi ? 'border-red-400 focus:ring-red-200' : 'border-slate-300 focus:border-blue-500 focus:ring-blue-200'
+          className={`w-full rounded-lg border bg-white px-3.5 py-2.5 text-sm text-slate-900 outline-none transition placeholder:text-slate-400 focus:ring-2 disabled:cursor-not-allowed disabled:bg-slate-100 disabled:text-slate-400 ${phai ? 'pr-16' : ''} ${loi ? 'border-red-400 focus:ring-red-200' : 'border-slate-300 focus:border-blue-500 focus:ring-blue-200'
             }`}
         />
         {phai && <div className="absolute inset-y-0 right-3 flex items-center">{phai}</div>}

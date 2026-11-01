@@ -15,8 +15,8 @@ export const lyDo = [
     },
     {
         anh: anhXemTruoc,
-        mauNhat: 'from-sky-100 to-sky-50',
-        mauChu: 'text-sky-600',
+        mauNhat: 'from-violet-100 to-violet-50',
+        mauChu: 'text-violet-600',
         tieuDe: 'Xem trước dễ dàng',
         moTa: 'Thử trực tiếp mẫu trên máy tính, máy tính bảng, điện thoại ngay trên trình duyệt, ưng ý mới quyết định.',
     },

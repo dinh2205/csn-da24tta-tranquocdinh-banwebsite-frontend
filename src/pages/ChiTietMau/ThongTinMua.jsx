@@ -1,5 +1,8 @@
-import { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
+import NutThemGio from '../../components/sanpham/NutThemGio';
+import { useGioHang } from '../../context/GioHangContext';
+import { useTaiKhoan } from '../../context/TaiKhoanContext';
+import { useYeuThich } from '../../context/YeuThichContext';
 import { loaiList } from '../../data/danhmuc';
 import { taoThongSo } from '../../data/chiTietMau';
 import { dinhDangGia } from '../../utils/chuyenDoi';
@@ -15,8 +18,21 @@ function TraiTim({ dac }) {
 
 // Thông tin mua
 function ThongTinMua({ mau }) {
-    // Tạm lưu bằng state, chưa lưu localStorage
-    const [yeuThich, setYeuThich] = useState(false);
+    const navigate = useNavigate();
+    const { state } = useLocation();
+    const { user } = useTaiKhoan();
+    const { laYeuThich, batTatYeuThich } = useYeuThich();
+    const { baoThongBao } = useGioHang();
+    const yeuThich = laYeuThich(mau.id);
+
+    // Yêu thích lưu theo tài khoản: chưa đăng nhập thì sang Đăng nhập, xong quay lại đúng trang mẫu này
+    const bamYeuThich = () => {
+        if (user) {
+            batTatYeuThich(mau.id);
+            baoThongBao(yeuThich ? 'bo-thich' : 'da-thich', mau);
+        } else navigate('/dang-nhap', { state: { from: `/mau-website/${mau.id}`, thongBao: 'Vui lòng đăng nhập để lưu mẫu yêu thích.' } });
+    };
+
     const tenLoai = loaiList.find((l) => l.id === mau.loai)?.ten;
     const coDemo = mau.demo && mau.demo !== '#';
 
@@ -36,19 +52,15 @@ function ThongTinMua({ mau }) {
                 )}
             </div>
 
-            {/* "Thêm vào giỏ" chưa làm */}
+            {/* Nút mua (đã mua / đã trong giỏ / thêm vào giỏ), xem NutThemGio.jsx */}
             <div className="mt-5 space-y-3">
-                <button
-                    type="button"
-                    className="w-full rounded-xl bg-cyan-400 py-3 text-sm font-bold text-blue-950 shadow-sm transition hover:bg-cyan-300 active:scale-95"
-                >
-                    Thêm vào giỏ
-                </button>
+                <NutThemGio mau={mau} kieu="w-full py-3" />
 
                 {/* Chưa có link demo thì nút mờ */}
                 {coDemo ? (
                     <Link
                         to={`/mau-website/${mau.id}/demo`}
+                        state={state} // giữ state.quayVe để từ demo quay ra, nút "Quay lại" vẫn đúng trang
                         className="block w-full rounded-xl border border-blue-600 py-3 text-center text-sm font-semibold text-blue-600 transition hover:bg-blue-50"
                     >
                         Xem demo
@@ -65,7 +77,7 @@ function ThongTinMua({ mau }) {
 
                 <button
                     type="button"
-                    onClick={() => setYeuThich(!yeuThich)}
+                    onClick={bamYeuThich}
                     className={`flex w-full items-center justify-center gap-2 rounded-xl border py-3 text-sm font-semibold transition ${yeuThich
                         ? 'border-red-200 bg-red-50 text-red-600'
                         : 'border-slate-300 text-slate-700 hover:border-red-300 hover:text-red-600'

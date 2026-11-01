@@ -1,7 +1,10 @@
 import { useState } from 'react';
-import { Link, useParams } from 'react-router-dom';
+import { Link, useLocation, useParams } from 'react-router-dom';
 import logo from '../../assets/logo-website-design.webp';
 import Icon from '../../components/chung/Icon';
+import NutThemGio from '../../components/sanpham/NutThemGio';
+import ThongBaoGioHang from '../../components/chung/ThongBaoGioHang';
+import { useGioHang } from '../../context/GioHangContext';
 import mauWeb from '../../data/mauWeb';
 import { thietBiList } from '../../data/xemDemo';
 import { dinhDangGia } from '../../utils/chuyenDoi';
@@ -10,6 +13,8 @@ import ManHinhDemo from './ManHinhDemo';
 // Trang Xem demo: toàn màn hình, không header / footer
 function XemDemo() {
     const { id } = useParams();
+    const { state } = useLocation();
+    const { soLuong: soLuongGio } = useGioHang();
     const mau = mauWeb.find((m) => m.id === id);
     const [thietBiId, setThietBiId] = useState('may-tinh');
 
@@ -35,6 +40,7 @@ function XemDemo() {
                 {/* 1.1 Quay lại + logo */}
                 <Link
                     to={`/mau-website/${mau.id}`}
+                    state={state} // trả lại state.quayVe cho trang chi tiết
                     aria-label="Quay lại trang chi tiết mẫu"
                     className="flex items-center gap-1.5 rounded-lg px-2.5 py-2 text-sm font-semibold text-blue-100 transition hover:bg-white/10 hover:text-white"
                 >
@@ -86,22 +92,18 @@ function XemDemo() {
                             <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6" />
                         </svg>
                         <span className="absolute -right-0.5 -top-0.5 flex h-[18px] min-w-[18px] items-center justify-center rounded-full bg-cyan-400 px-1 text-[10px] font-semibold text-blue-950">
-                            0
+                            {soLuongGio}
                         </span>
                     </Link>
-                    <button
-                        type="button"
-                        className="rounded-lg bg-blue-700 px-3 py-2 text-sm font-bold text-white shadow-sm transition hover:bg-blue-600 active:scale-95 sm:px-4"
-                    >
-                        {/* Nền trắng cho giá đỏ nổi rõ trên thanh navy */}
-                        Thêm vào giỏ
-                        <span className="ml-1.5 hidden font-extrabold text-white md:inline"> {dinhDangGia(mau.gia)}</span>
-                    </button>
+                    <NutThemGio mau={mau} kieu="rounded-lg px-3 py-2 sm:px-4" chu={`Thêm vào giỏ · ${dinhDangGia(mau.gia)}`} />
                 </div>
             </header>
 
             {/* 2. MÀN HÌNH DEMO */}
             <ManHinhDemo src={mau.demo} ten={mau.ten} thietBiId={thietBiId} />
+
+            {/* Trang này không dùng MainLayout nên tự gắn thông báo giỏ hàng */}
+            <ThongBaoGioHang />
         </div>
     );
 }

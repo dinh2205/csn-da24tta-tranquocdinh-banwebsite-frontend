@@ -1,5 +1,4 @@
 import { GIA_TOI_DA, mauList, loaiList } from '../../data/danhmuc';
-import mauWeb from '../../data/mauWeb';
 import { dinhDangGia } from '../../utils/chuyenDoi';
 import { GIAM_DAC_BIET, laDacBiet, laKhuyenMaiThuong, laMoi } from '../../utils/nhanMau';
 
@@ -14,7 +13,8 @@ const uuDaiList = [
 ];
 
 // 4. BỘ LỌC: bấm là lọc ngay. Điện thoại chỉ hiện khi bấm nút "Bộ lọc"
-function BoLoc({ boLoc, setBoLoc, loai, onChonLoai, onXoa, hien }) {
+// dsMau: mẫu chưa mua, dùng để đếm số mẫu cạnh mỗi lựa chọn (khớp với số mẫu hiện ra khi chọn)
+function BoLoc({ boLoc, setBoLoc, loai, onChonLoai, onXoa, hien, dsMau }) {
     return (
         <aside className={`${hien ? 'block' : 'hidden'} h-fit rounded-2xl border border-slate-200 bg-white p-5 shadow-sm lg:block`}>
             <div className="mb-5 flex items-center justify-between">
@@ -38,7 +38,7 @@ function BoLoc({ boLoc, setBoLoc, loai, onChonLoai, onXoa, hien }) {
                                 className="h-4 w-4 cursor-pointer accent-blue-600"
                             />
                             <span className="flex-1">Tất cả</span>
-                            <span className="text-xs text-slate-400">{mauWeb.length}</span>
+                            <span className="text-xs text-slate-400">{dsMau.length}</span>
                         </label>
 
                         {loaiList.map((l) => (
@@ -51,7 +51,7 @@ function BoLoc({ boLoc, setBoLoc, loai, onChonLoai, onXoa, hien }) {
                                     className="h-4 w-4 cursor-pointer accent-blue-600"
                                 />
                                 <span className="flex-1">{l.ten}</span>
-                                <span className="text-xs text-slate-400">{mauWeb.filter((m) => m.loai === l.id).length}</span>
+                                <span className="text-xs text-slate-400">{dsMau.filter((m) => m.loai === l.id).length}</span>
                             </label>
                         ))}
                     </div>
@@ -74,7 +74,7 @@ function BoLoc({ boLoc, setBoLoc, loai, onChonLoai, onXoa, hien }) {
                                 />
                                 <span className={`w-12 flex-none rounded-md py-0.5 text-center text-xs font-bold ${u.mau}`}>{u.nhan}</span>
                                 <span className="flex-1">{u.ten}</span>
-                                <span className="text-xs text-slate-400">{mauWeb.filter(u.kiemTra).length}</span>
+                                <span className="text-xs text-slate-400">{dsMau.filter(u.kiemTra).length}</span>
                             </label>
                         ))}
                     </div>

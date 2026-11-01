@@ -1,3 +1,4 @@
+import NutThemGio from '../../components/sanpham/NutThemGio';
 import { dinhDangGia } from '../../utils/chuyenDoi';
 
 // Thanh mua dính đáy màn hình (ẩn từ lg)
@@ -9,12 +10,7 @@ function ThanhMuaDienThoai({ mau }) {
                     <p className="truncate text-xs text-slate-500">{mau.ten}</p>
                     <p className="text-lg font-bold text-blue-600">{dinhDangGia(mau.gia)}</p>
                 </div>
-                <button
-                    type="button"
-                    className="flex-none rounded-xl bg-cyan-400 px-5 py-3 text-sm font-bold text-blue-950 shadow-sm transition hover:bg-cyan-300 active:scale-95"
-                >
-                    Thêm vào giỏ
-                </button>
+                <NutThemGio mau={mau} kieu="flex-none px-5 py-3" />
             </div>
         </div>
     );

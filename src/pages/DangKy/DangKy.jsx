@@ -1,5 +1,6 @@
 import { useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
+import { useTaiKhoan } from '../../context/TaiKhoanContext';
 import KhungXacThuc from '../../components/bieumau/KhungXacThuc';
 import TruongNhap from '../../components/bieumau/TruongNhap';
 import TruongMatKhau from '../../components/bieumau/TruongMatKhau';
@@ -11,6 +12,9 @@ const formBanDau = { hoTen: '', email: '', sdt: '', matKhau: '', xacNhan: '' };
 // Trang Đăng ký (/dang-ky)
 function DangKy() {
     const navigate = useNavigate();
+    const { dangKy } = useTaiKhoan();
+    // from: trang bị chặn lúc đầu (vd /gio-hang), chuyền tiếp qua trang Đăng nhập
+    const { state } = useLocation();
 
     const [f, setF] = useState(formBanDau);
     const [dongY, setDongY] = useState(false);
@@ -36,8 +40,13 @@ function DangKy() {
         setLoi(l);
         if (Object.keys(l).length > 0) return;
 
-        // 2. Hợp lệ thì sang Đăng nhập (chưa lưu tài khoản)
-        navigate('/dang-nhap', { state: { email: f.email, thongBao: 'Đăng ký thành công! Mời bạn đăng nhập.' } });
+        // 2. Lưu tài khoản (email đã có thì báo lỗi ở ô email), xong sang Đăng nhập với email điền sẵn
+        const kq = dangKy(f);
+        if (!kq.ok) {
+            setLoi({ email: kq.loi });
+            return;
+        }
+        navigate('/dang-nhap', { state: { email: f.email.trim(), thongBao: 'Đăng ký thành công! Mời bạn đăng nhập.', from: state?.from } });
     };
 
     return (
@@ -138,7 +147,7 @@ function DangKy() {
             {/* 4. CHUYỂN SANG ĐĂNG NHẬP */}
             <p className="mt-5 text-center text-sm text-slate-500">
                 Đã có tài khoản?{' '}
-                <Link to="/dang-nhap" className="font-semibold text-blue-600 hover:underline">
+                <Link to="/dang-nhap" state={{ from: state?.from }} className="font-semibold text-blue-600 hover:underline">
                     Đăng nhập
                 </Link>
             </p>

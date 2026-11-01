@@ -1,5 +1,6 @@
 import { useState } from 'react';
-import { Link, useLocation, useNavigate } from 'react-router-dom';
+import { Link, Navigate, useLocation, useNavigate } from 'react-router-dom';
+import { useTaiKhoan } from '../../context/TaiKhoanContext';
 import KhungXacThuc from '../../components/bieumau/KhungXacThuc';
 import TruongNhap from '../../components/bieumau/TruongNhap';
 import TruongMatKhau from '../../components/bieumau/TruongMatKhau';
@@ -8,8 +9,11 @@ import NutGoogle from '../../components/bieumau/NutGoogle';
 // Trang Đăng nhập (/dang-nhap)
 function DangNhap() {
     const navigate = useNavigate();
-    // Vừa đăng ký xong thì điền sẵn email
+    const { user, dangNhap } = useTaiKhoan();
+    // state có thể có: email (vừa đăng ký xong thì điền sẵn), thongBao (câu báo xanh),
+    // from (trang bị chặn vì chưa đăng nhập, vd /gio-hang → đăng nhập xong quay lại đó)
     const { state } = useLocation();
+    const veTrang = state?.from ?? '/tai-khoan';
 
     const [email, setEmail] = useState(state?.email ?? '');
     const [matKhau, setMatKhau] = useState('');
@@ -27,9 +31,17 @@ function DangNhap() {
         setLoi(l);
         if (Object.keys(l).length > 0) return;
 
-        // 2. Hợp lệ thì về Trang chủ (chưa kiểm tra tài khoản)
-        navigate('/', { replace: true });
+        // 2. Đúng định dạng thì kiểm tra tài khoản đã đăng ký. Sai email / mật khẩu thì báo lỗi ở ô tương ứng
+        const kq = dangNhap(email, matKhau, ghiNho);
+        if (!kq.ok) {
+            setLoi(kq.loi.startsWith('Email') ? { email: kq.loi } : { matKhau: kq.loi });
+            return;
+        }
+        navigate(veTrang, { replace: true });
     };
+
+    // Đã đăng nhập rồi mà vẫn mở trang này thì chuyển đi luôn
+    if (user) return <Navigate to={veTrang} replace />;
 
     return (
         <KhungXacThuc>
@@ -102,7 +114,8 @@ function DangNhap() {
             {/* 4. CHUYỂN SANG ĐĂNG KÝ */}
             <p className="mt-6 text-center text-sm text-slate-500">
                 Chưa có tài khoản?{' '}
-                <Link to="/dang-ky" className="font-semibold text-blue-600 hover:underline">
+                {/* Truyền tiếp from để đăng ký → đăng nhập xong vẫn quay về đúng trang ban đầu */}
+                <Link to="/dang-ky" state={{ from: state?.from }} className="font-semibold text-blue-600 hover:underline">
                     Đăng ký ngay
                 </Link>
             </p>

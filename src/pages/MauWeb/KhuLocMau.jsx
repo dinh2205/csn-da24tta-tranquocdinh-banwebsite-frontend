@@ -1,12 +1,10 @@
-import useLocMau from './useLocMau';
 import TabLinhVuc from './TabLinhVuc';
 import BoLoc from './BoLoc';
 import DanhSachMau from './DanhSachMau';
 
-// 3–5. KHU LỌC MẪU: tab lĩnh vực + bộ lọc + danh sách, xử lý ở useLocMau.js
-function KhuLocMau() {
-    const loc = useLocMau();
-
+// 3–5. KHU LỌC MẪU: tab lĩnh vực + bộ lọc + danh sách.
+// loc: kết quả useLocMau() do trang cha (MauWeb.jsx) truyền xuống, để banner cũng chọn được ưu đãi
+function KhuLocMau({ loc }) {
     return (
         <section className="bg-slate-50">
             <div className="mx-auto max-w-trang px-4 py-8 sm:px-6">
@@ -22,6 +20,7 @@ function KhuLocMau() {
                         onChonLoai={(id) => loc.doiThamSo('loai', id)}
                         onXoa={loc.xoaTatCa}
                         hien={loc.moBoLoc}
+                        dsMau={loc.dsMau}
                     />
 
                     {/* 5. DANH SÁCH MẪU */}
@@ -34,6 +33,8 @@ function KhuLocMau() {
                         soLocDangBat={loc.soLocDangBat}
                         onBatTatBoLoc={() => loc.setMoBoLoc(!loc.moBoLoc)}
                         onXoaTatCa={loc.xoaTatCa}
+                        dsMau={loc.dsMau}
+                        soDaMua={loc.soDaMua}
                     />
                 </div>
             </div>

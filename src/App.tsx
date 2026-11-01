@@ -12,6 +12,9 @@ import TaiKhoanLayout from './layout/TaiKhoanLayout'
 import TongQuan from './pages/TaiKhoan/TongQuan'
 import ThongTinCaNhan from './pages/TaiKhoan/ThongTinCaNhan'
 import YeuThich from './pages/TaiKhoan/YeuThich'
+import GioHang from './pages/GioHang/GioHang'
+import CanDangNhap from './components/chung/CanDangNhap'
+import DangXuat from './components/chung/DangXuat'
 
 
 
@@ -25,8 +28,11 @@ function App() {
         <Route path="gioi-thieu" element={<GioiThieu />} />
         <Route path="mau-website" element={<MauWeb />} />
         <Route path="mau-website/:id" element={<ChiTietMau />} />
-        {/* Khu tài khoản: menu bên trái dùng chung (TaiKhoanLayout), 4 trang con bên phải */}
-        <Route path="tai-khoan" element={<TaiKhoanLayout />}>
+        {/* Giỏ hàng + thanh toán chung 1 trang (3 bước). Chưa đăng nhập vẫn xem giỏ được, bấm thanh toán mới cần đăng nhập */}
+        <Route path="gio-hang" element={<GioHang />} />
+        <Route path="thanh-toan" element={<Navigate to="/gio-hang" replace />} />
+        {/* Khu tài khoản: phải đăng nhập (CanDangNhap). Menu bên trái dùng chung (TaiKhoanLayout), 4 trang con bên phải */}
+        <Route path="tai-khoan" element={<CanDangNhap><TaiKhoanLayout /></CanDangNhap>}>
           <Route index element={<TongQuan />} />
           <Route path="thong-tin" element={<ThongTinCaNhan />} />
           <Route path="don-hang" element={<DonHang />} />
@@ -36,6 +42,7 @@ function App() {
         <Route path="khach-hang" element={<Navigate to="/tai-khoan/don-hang" replace />} />
         <Route path="dang-nhap" element={<DangNhap />} />
         <Route path="dang-ky" element={<DangKy />} />
+        <Route path="dang-xuat" element={<DangXuat />} />
         <Route path="*" element={<Navigate to="/" replace />} />
       </Route>
     </Routes>

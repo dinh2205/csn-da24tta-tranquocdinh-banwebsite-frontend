@@ -74,7 +74,7 @@ function MauNoiBat() {
 
                 <div className="mt-10 text-center">
                     <Link
-                        to={`/mau-website?loai=${tabChon}`}
+                        to={`/mau-website?loai=${tabChon}#khu-loc`}
                         className="inline-block rounded-xl bg-cyan-400 px-6 py-3 text-sm font-bold text-blue-950 shadow-md transition hover:bg-cyan-300 active:scale-95"
                     >
                         Xem Thêm

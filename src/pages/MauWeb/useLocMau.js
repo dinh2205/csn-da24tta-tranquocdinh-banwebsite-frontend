@@ -1,9 +1,11 @@
 import { useEffect, useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
+import { useDonHang } from '../../context/DonHangContext';
 import mauWeb from '../../data/mauWeb';
 import { GIA_TOI_DA } from '../../data/danhmuc';
 import { locTheoTuKhoa } from './timKiemMau';
 import { laDacBiet, laKhuyenMaiThuong, laMoi } from '../../utils/nhanMau';
+import { docDanhSach, luuDanhSach, useLaQuayLai } from './nhoDanhSach';
 
 // uuDai: ưu đãi đang chọn, rỗng = Tất cả
 const boLocBanDau = { nganh: '', mau: '', giaToiThieu: 0, giaToiDa: GIA_TOI_DA, uuDai: '' };
@@ -25,16 +27,33 @@ function useLocMau() {
     const loai = searchParams.get('loai') ?? '';
     const tuKhoa = searchParams.get('tim') ?? '';
 
+    // Ẩn mẫu tài khoản đang đăng nhập đã mua (đã có trong Lịch sử mua hàng, không cần xem / mua lại).
+    // Chưa đăng nhập thì daMua luôn false → hiện đủ. dsMau dùng chung cho lọc, số đếm ở Bộ lọc và gợi ý
+    const { daMua } = useDonHang();
+    const dsMau = mauWeb.filter((m) => !daMua(m.id));
+    const soDaMua = mauWeb.length - dsMau.length;
+
+    // Quay lại từ trang chi tiết thì lấy lại bộ lọc, sắp xếp đã chọn
+    const laQuayLai = useLaQuayLai();
+    const [daLuu] = useState(() => (laQuayLai ? docDanhSach() : {}));
+
     // ?uudai=dacBiet (vd bấm banner ưu đãi) thì chọn sẵn ưu đãi đó lúc mở trang
     const [boLoc, setBoLoc] = useState(() => {
+        if (daLuu.boLoc) return daLuu.boLoc;
         const uuDai = searchParams.get('uudai') ?? '';
         return { ...boLocBanDau, uuDai: kiemTraUuDai[uuDai] ? uuDai : '' };
     });
     // Có từ khóa thì xếp "Phù hợp nhất", không thì "Mới nhất"
-    const [sapXep, setSapXep] = useState(tuKhoa ? 'phu-hop' : 'moi-nhat');
-    useEffect(() => {
+    const [sapXep, setSapXep] = useState(daLuu.sapXep ?? (tuKhoa ? 'phu-hop' : 'moi-nhat'));
+    // Đổi từ khóa thì đặt lại cách sắp xếp
+    const [tuKhoaCu, setTuKhoaCu] = useState(tuKhoa);
+    if (tuKhoa !== tuKhoaCu) {
+        setTuKhoaCu(tuKhoa);
         setSapXep(tuKhoa ? 'phu-hop' : 'moi-nhat');
-    }, [tuKhoa]);
+    }
+    useEffect(() => {
+        luuDanhSach({ boLoc, sapXep });
+    }, [boLoc, sapXep]);
     const [moBoLoc, setMoBoLoc] = useState(false); // điện thoại: mở / đóng cột lọc
 
     const doiThamSo = (khoa, giaTri) => {
@@ -51,7 +70,7 @@ function useLocMau() {
     };
 
     // Lọc → tìm theo từ khóa → sắp xếp
-    const quaBoLoc = mauWeb.filter((m) => {
+    const quaBoLoc = dsMau.filter((m) => {
         if (loai && m.loai !== loai) return false;
         if (boLoc.nganh && m.nganh !== boLoc.nganh) return false;
         if (boLoc.mau && m.mau !== boLoc.mau) return false;
@@ -65,7 +84,7 @@ function useLocMau() {
     const soLocDangBat = (loai ? 1 : 0) + (boLoc.nganh ? 1 : 0) + (boLoc.mau ? 1 : 0) + (boLoc.giaToiThieu > 0 || boLoc.giaToiDa < GIA_TOI_DA ? 1 : 0) + (boLoc.uuDai ? 1 : 0);
 
     return {
-        loai, tuKhoa, ketQua, soLocDangBat,
+        loai, tuKhoa, ketQua, soLocDangBat, dsMau, soDaMua,
         boLoc, setBoLoc, sapXep, setSapXep, moBoLoc, setMoBoLoc,
         doiThamSo, xoaTatCa,
     };

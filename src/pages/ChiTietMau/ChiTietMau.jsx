@@ -1,5 +1,5 @@
 import { useEffect } from 'react';
-import { Link, useParams } from 'react-router-dom';
+import { Link, useLocation, useParams } from 'react-router-dom';
 import Icon from '../../components/chung/Icon';
 import mauWeb from '../../data/mauWeb';
 import KhungXemTruoc from './KhungXemTruoc';
@@ -9,15 +9,21 @@ import DanhGiaKhachHang from './DanhGiaKhachHang';
 import ThongTinMua from './ThongTinMua';
 import ThanhMuaDienThoai from './ThanhMuaDienThoai';
 import MauLienQuan from './MauLienQuan';
+import { docDanhSach } from '../MauWeb/nhoDanhSach';
 
+// Vào từ trang khác (vd giỏ hàng) thì link gửi kèm state.quayVe = { to, ten }: nút quay về đúng trang đó.
+// Không có thì quay về danh sách đúng bộ lọc, đúng chỗ đang xem (nhớ ở nhoDanhSach.js)
 function NutQuayLai() {
+    const { state } = useLocation();
+    const quayVe = state?.quayVe;
     return (
         <Link
-            to="/mau-website"
+            to={quayVe ? quayVe.to : `/mau-website${docDanhSach().search ?? ''}`}
+            state={quayVe ? undefined : { quayLai: true }}
             className="inline-flex items-center gap-2 rounded-lg bg-cyan-400 px-4 py-2 text-sm font-bold text-blue-950 shadow-sm transition hover:bg-cyan-300 active:scale-95"
         >
             <Icon d="M19 12H5M12 19l-7-7 7-7" strokeWidth={2.2} />
-            Quay lại danh sách
+            {quayVe ? `Quay lại ${quayVe.ten}` : 'Quay lại danh sách'}
         </Link>
     );
 }
@@ -58,7 +64,7 @@ function ChiTietMau() {
                     {/* 3. MÔ TẢ TỔNG QUAN */}
                     <MoTaMau mau={mau} />
                     {/* 4. ĐÁNH GIÁ CỦA KHÁCH HÀNG */}
-                    <DanhGiaKhachHang />
+                    <DanhGiaKhachHang mau={mau} />
                 </div>
 
                 {/* 5. THÔNG TIN MUA */}

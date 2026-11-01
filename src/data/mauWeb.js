@@ -14,6 +14,7 @@ const mauWeb = [
     giaGoc: 650000, // giá gốc (có = đang khuyến mãi)
     moTa: 'Website bán cây xanh: giới thiệu, thực đơn, hệ thống cửa hàng, khuyến mãi, giỏ hàng và đặt bàn.',
     luotBan: 12,
+    danhGia: { diem: 4.8, luot: 9 }, // sao trung bình, số lượt đánh giá
     ngayTao: '2026-09-25',
     boCuc: 'Landing + 4 mục (Giới thiệu, Thực đơn, Cửa hàng, Khuyến mãi)',
     soTrang: '4 mục + giỏ hàng, đặt bàn, chi tiết món',
@@ -42,6 +43,7 @@ const mauWeb = [
     giaGoc: 800000, // giá gốc (có = đang khuyến mãi)
     moTa: 'Landing page trung tâm luyện thi IELTS phong cách trẻ trung (sticker, doodle, giấy xé): khóa học, lộ trình học, giảng viên, cảm nhận học viên và form đăng ký tư vấn.',
     luotBan: 12,
+    danhGia: { diem: 4.9, luot: 14 }, // sao trung bình, số lượt đánh giá
     ngayTao: '2026-10-15',
     boCuc: 'Landing page một trang cuộn dọc',
     soTrang: '1 trang, 6 mục (Trang chủ, Giới thiệu, Khóa học, Lộ trình, Học viên, Đăng ký)',
@@ -68,6 +70,7 @@ const mauWeb = [
     giaGoc: 400000, // giá gốc (có = đang khuyến mãi)
     moTa: 'Landing page phòng khám đa khoa: giới thiệu dịch vụ, đội ngũ bác sĩ, đặt lịch khám trực tuyến, tra cứu lịch hẹn và cảm nhận bệnh nhân.',
     luotBan: 12,
+    danhGia: { diem: 4.7, luot: 11 }, // sao trung bình, số lượt đánh giá
     ngayTao: '2026-10-15',
     boCuc: 'Landing page một trang cuộn dọc',
     soTrang: '1 trang, 5 mục (Trang chủ, Dịch vụ, Bác sĩ, Giới thiệu, Liên hệ) + form đặt lịch',
@@ -93,6 +96,7 @@ const mauWeb = [
     gia: 200000,
     moTa: 'Landing page phòng khám VitaCare: ảnh nền lớn, giới thiệu đội ngũ bác sĩ, các dịch vụ chuyên khoa, đặt lịch khám và thông tin liên hệ trong hộp thoại.',
     luotBan: 12,
+    danhGia: { diem: 4.6, luot: 8 }, // sao trung bình, số lượt đánh giá
     ngayTao: '2026-10-15',
     boCuc: 'Landing page một trang, đầu trang ảnh lớn',
     soTrang: '1 trang, 3 mục (Trang chủ, Giới thiệu, Dịch vụ) + hộp đặt lịch, bác sĩ, liên hệ',
@@ -118,6 +122,7 @@ const mauWeb = [
     gia: 100000,
     moTa: 'Landing page thương hiệu thời trang hiện đại: bộ sưu tập, sản phẩm nổi bật lọc theo Nam/Nữ/Phụ kiện, xem nhanh sản phẩm, giỏ hàng, danh sách yêu thích và đăng ký nhận tin.',
     luotBan: 12,
+    danhGia: { diem: 4.8, luot: 12 }, // sao trung bình, số lượt đánh giá
     ngayTao: '2026-10-15',
     boCuc: 'Landing page một trang cuộn dọc, có giỏ hàng',
     soTrang: '1 trang, 6 mục (Trang chủ, Hàng mới, Nữ, Nam, Phụ kiện, Bộ sưu tập) + giỏ hàng, yêu thích',
@@ -144,6 +149,7 @@ const mauWeb = [
     gia: 100000,
     moTa: 'Landing page thương hiệu nội thất: bộ sưu tập sofa, ghế thư giãn, xích đu, đèn trang trí, đồ ngoài trời; xem chi tiết sản phẩm, giỏ hàng, đăng nhập, dịch vụ và liên hệ.',
     luotBan: 12,
+    danhGia: { diem: 4.7, luot: 10 }, // sao trung bình, số lượt đánh giá
     ngayTao: '2026-10-15',
     boCuc: 'Landing page một trang cuộn dọc, có giỏ hàng',
     soTrang: '1 trang, 3 mục (Trang chủ, Sản phẩm, Về chúng tôi) + hộp dịch vụ, liên hệ, giỏ hàng',
@@ -169,6 +175,7 @@ const mauWeb = [
     gia: 100000,
     moTa: 'Landing page thương hiệu nước trái cây thiên nhiên phong cách tươi mát: giới thiệu thương hiệu, sản phẩm theo vị, khuyến mãi, lợi ích, cảm nhận khách hàng, giỏ hàng và đăng ký nhận tin.',
     luotBan: 12,
+    danhGia: { diem: 4.9, luot: 10 }, // sao trung bình, số lượt đánh giá
     ngayTao: '2026-10-17',
     moi: true, // nhãn "Mới"
     boCuc: 'Landing page một trang cuộn dọc, có giỏ hàng',
@@ -195,6 +202,7 @@ const mauWeb = [
     gia: 100000,
     moTa: 'Portfolio cá nhân cho nhà thiết kế UI/UX: giới thiệu, dự án tiêu biểu (xem chi tiết từng dự án), dịch vụ, kỹ năng, cảm nhận khách hàng, đặt lịch tư vấn và liên hệ; nền xanh navy hiện đại.',
     luotBan: 12,
+    danhGia: { diem: 4.8, luot: 7 }, // sao trung bình, số lượt đánh giá
     ngayTao: '2026-10-17',
     moi: true, // nhãn "Mới"
     boCuc: 'Một trang cuộn dọc, nền tối, có hộp xem chi tiết dự án',
@@ -221,6 +229,7 @@ const mauWeb = [
     gia: 100000,
     moTa: 'Website báo điện tử tin tức: trang chủ tin nổi bật, 11 chuyên mục (thời sự, công nghệ, giáo dục, thể thao, kinh tế, sức khỏe, du lịch...), xem chi tiết bài viết và bình luận, tìm kiếm, lưu bài viết.',
     luotBan: 12,
+    danhGia: { diem: 4.6, luot: 9 }, // sao trung bình, số lượt đánh giá
     ngayTao: '2026-10-18',
     moi: true, // nhãn "Mới"
     boCuc: 'Báo điện tử nhiều chuyên mục, có cột tin bên phải',
@@ -250,6 +259,7 @@ const mauWeb = [
     gia: 510000,
     moTa: 'Website văn phòng phẩm: giới thiệu, sản phẩm, hệ thống cửa hàng, khuyến mãi, giỏ hàng và đặt hàng.',
     luotBan: 0,
+    danhGia: { diem: 4.5, luot: 4 }, // sao trung bình, số lượt đánh giá
     ngayTao: '2026-09-25',
     boCuc: 'Landing + 4 mục (Giới thiệu, Sản phẩm, Cửa hàng, Khuyến mãi)',
     soTrang: '4 mục + giỏ hàng, đặt hàng, chi tiết sản phẩm',
@@ -277,6 +287,7 @@ const mauWeb = [
     giaGoc: 200000, // giá gốc (có = đang khuyến mãi)
     moTa: 'Website giới thiệu làng nghề và di sản thủ công truyền thống Việt Nam: nghệ nhân, di sản, sự kiện, tin tức, bản đồ làng nghề và trang liên hệ, có tìm kiếm và xem ảnh lớn.',
     luotBan: 12,
+    danhGia: { diem: 4.9, luot: 13 }, // sao trung bình, số lượt đánh giá
     ngayTao: '2026-10-16',
     boCuc: 'Nhiều trang, có trang chi tiết cho từng di sản, nghệ nhân, sự kiện, bài viết',
     soTrang: '8 trang chính (Trang chủ, Về chúng tôi, Nghệ nhân, Di sản, Sự kiện, Tin tức, Bản đồ làng nghề, Liên hệ) + trang chi tiết',
@@ -305,6 +316,7 @@ const mauWeb = [
     gia: 400000,
     moTa: 'Hệ thống quản lý câu lạc bộ sinh viên Trường Đại học Trà Vinh: sinh viên xem CLB, đăng ký hoạt động, theo dõi điểm rèn luyện; ban chủ nhiệm quản lý thành viên, hoạt động, điểm danh QR; ban quản lý trường duyệt hoạt động và xem báo cáo thống kê; quản trị viên phân quyền tài khoản.',
     luotBan: 0,
+    danhGia: { diem: 4.8, luot: 5 }, // sao trung bình, số lượt đánh giá
     ngayTao: '2026-10-15',
     boCuc: 'Trang công khai + khu làm việc có thanh menu bên trái, đổi giao diện theo 5 vai trò',
     soTrang: '20+ trang cho 5 vai trò (khách, sinh viên, ban chủ nhiệm, ban quản lý trường, quản trị viên)',
@@ -339,6 +351,7 @@ const mauWeb = [
     gia: 350000,
     moTa: 'Website giới thiệu showroom ô tô giao diện tối hiện đại: danh sách xe có lọc theo dòng xe, hãng, khoảng giá; trang chi tiết xe chọn màu, thông số; dịch vụ bảo dưỡng, tin tức, liên hệ và đặt lịch lái thử lưu lại trên trình duyệt.',
     luotBan: 0,
+    danhGia: { diem: 5.0, luot: 3 }, // sao trung bình, số lượt đánh giá
     ngayTao: '2026-10-31',
     moi: true, // nhãn "Mới"
     boCuc: 'Nhiều trang, menu trên cùng, có trang chi tiết cho từng xe và hộp tìm kiếm nhanh',

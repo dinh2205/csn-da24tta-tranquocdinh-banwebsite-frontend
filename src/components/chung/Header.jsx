@@ -1,6 +1,9 @@
 import { useState } from 'react';
 import { Link, NavLink } from 'react-router-dom';
 import logo from '../../assets/logo-website-design.webp';
+import { useGioHang } from '../../context/GioHangContext';
+import { useTaiKhoan } from '../../context/TaiKhoanContext';
+import AnhDaiDien from './AnhDaiDien';
 
 const MENU = [
   { to: '/', ten: 'Trang chủ', end: true },
@@ -18,7 +21,8 @@ const kieuMenu = ({ isActive }) =>
 function Header() {
   const [moMenu, setMoMenu] = useState(false);
 
-  const soLuongGio = 0;
+  const { soLuong: soLuongGio } = useGioHang();
+  const { user } = useTaiKhoan();
 
   return (
     <header className="sticky top-0 z-40 bg-[#0b1f4d] shadow-md">
@@ -54,18 +58,28 @@ function Header() {
             </span>
           </Link>
 
-          <Link
-            to="/dang-nhap"
-            className="hidden rounded-lg px-3 py-2 text-sm font-medium text-blue-100 transition hover:bg-white/10 hover:text-white sm:block"
-          >
-            Đăng nhập
-          </Link>
-          <Link
-            to="/dang-ky"
-            className="hidden rounded-lg bg-cyan-400 px-3.5 py-2 text-sm font-bold text-blue-950 shadow-sm transition hover:bg-cyan-300 sm:block"
-          >
-            Đăng ký
-          </Link>
+          {/* Đã đăng nhập: ảnh đại diện + tên (bấm vào khu Tài khoản). Chưa: 2 nút Đăng nhập / Đăng ký */}
+          {user ? (
+            <Link to="/tai-khoan" className="flex items-center gap-2 rounded-full py-1 pl-1 pr-1 text-sm font-semibold text-white transition hover:bg-white/10 sm:pr-3">
+              <AnhDaiDien user={user} className="h-9 w-9 text-sm" />
+              <span className="hidden max-w-[10rem] truncate sm:inline">{user.hoTen}</span>
+            </Link>
+          ) : (
+            <>
+              <Link
+                to="/dang-nhap"
+                className="hidden rounded-lg px-3 py-2 text-sm font-medium text-blue-100 transition hover:bg-white/10 hover:text-white sm:block"
+              >
+                Đăng nhập
+              </Link>
+              <Link
+                to="/dang-ky"
+                className="hidden rounded-lg bg-cyan-400 px-3.5 py-2 text-sm font-bold text-blue-950 shadow-sm transition hover:bg-cyan-300 sm:block"
+              >
+                Đăng ký
+              </Link>
+            </>
+          )}
 
           {/* Nút ☰ (điện thoại) */}
           <button
@@ -95,7 +109,8 @@ function Header() {
               {m.ten}
             </NavLink>
           ))}
-          <div className="grid grid-cols-2 gap-3 pt-4 sm:hidden">
+          {/* Đã đăng nhập thì ảnh đại diện trên thanh đã dẫn tới Tài khoản, không cần 2 nút này */}
+          <div className={`grid-cols-2 gap-3 pt-4 sm:hidden ${user ? 'hidden' : 'grid'}`}>
             <Link to="/dang-nhap" onClick={() => setMoMenu(false)} className="rounded-lg border border-white/20 py-2.5 text-center text-sm font-semibold text-white">
               Đăng nhập
             </Link>

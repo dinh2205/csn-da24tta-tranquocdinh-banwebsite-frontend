@@ -1,12 +1,13 @@
+import { Link } from 'react-router-dom';
 import TheMau from '../../components/sanpham/TheMau';
 import { sapXepList } from '../../data/danhmuc';
-import mauWeb from '../../data/mauWeb';
-
-// Không có kết quả thì gợi ý 3 mẫu bán chạy
-const goiY = [...mauWeb].sort((a, b) => b.luotBan - a.luotBan).slice(0, 3);
 
 // 5. DANH SÁCH MẪU
-function DanhSachMau({ ketQua, tuKhoa, onXoaTuKhoa, sapXep, setSapXep, soLocDangBat, onBatTatBoLoc, onXoaTatCa }) {
+// dsMau: mẫu chưa mua (đã bỏ mẫu tài khoản đã mua), soDaMua: số mẫu bị ẩn vì đã mua
+function DanhSachMau({ ketQua, tuKhoa, onXoaTuKhoa, sapXep, setSapXep, soLocDangBat, onBatTatBoLoc, onXoaTatCa, dsMau, soDaMua }) {
+    // Không có kết quả thì gợi ý 3 mẫu bán chạy (trong số mẫu chưa mua)
+    const goiY = [...dsMau].sort((a, b) => b.luotBan - a.luotBan).slice(0, 3);
+
     return (
         <div className="min-w-0">
             {/* 5.1 Thanh trên */}
@@ -24,6 +25,15 @@ function DanhSachMau({ ketQua, tuKhoa, onXoaTuKhoa, sapXep, setSapXep, soLocDang
                         >
                             Từ khóa: "{tuKhoa}" ✕
                         </button>
+                    )}
+                    {/* Có mẫu bị ẩn vì đã mua thì nói rõ, kèm link tới nơi xem lại các mẫu đó */}
+                    {soDaMua > 0 && (
+                        <span className="text-xs text-slate-400">
+                            · Đã ẩn {soDaMua} mẫu bạn đã mua{' '}
+                            <Link to="/tai-khoan/don-hang" className="font-semibold text-blue-600 hover:underline">
+                                Xem đơn hàng
+                            </Link>
+                        </span>
                     )}
                 </div>
 

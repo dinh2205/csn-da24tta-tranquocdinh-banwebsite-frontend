@@ -1,6 +1,17 @@
-import { useEffect, useRef, useState } from 'react';
+import { useState } from 'react';
 import { Link, NavLink, Outlet, useLocation, useNavigate } from 'react-router-dom';
+import HopXacNhan from '../components/chung/HopXacNhan';
 import Icon from '../components/chung/Icon';
+import { useDonHang } from '../context/DonHangContext';
+import { useTaiKhoan } from '../context/TaiKhoanContext';
+import { tinhTienDon } from '../data/donHang';
+import { dinhDangGia } from '../utils/chuyenDoi';
+import { doc, ghi } from '../utils/luuTru';
+
+const MOC_DOI_QUA = 500; // số điểm cho 1 lần đổi
+const GIA_TRI_VOUCHER = 50000;
+// Các lần đã đổi quà, lưu theo email: wd_doi_qua: { 'email@gmail.com': [{ ngay, diem }], ... }
+const KHOA_DOI_QUA = 'wd_doi_qua';
 
 // Các mục menu bên trái khu Tài khoản: thêm trang mới chỉ cần thêm 1 dòng
 const MENU = [
@@ -29,61 +40,111 @@ const kieuMuc = ({ isActive }) =>
 function TaiKhoanLayout() {
     const navigate = useNavigate();
     const { pathname } = useLocation();
+    const { user } = useTaiKhoan();
+    const { donCuaToi } = useDonHang();
     const [hoiDangXuat, setHoiDangXuat] = useState(false);
-    const menu = useRef(null);
+    const [hoiDoiQua, setHoiDoiQua] = useState(false);
+    const [vuaDoi, setVuaDoi] = useState(false); // vừa đổi xong: hiện câu báo
+    const [doiQua, setDoiQua] = useState(() => doc(KHOA_DOI_QUA, {}));
+    // Điện thoại: menu gập lại thành 1 thanh (nút ☰ + tên trang đang mở), bấm mới xổ xuống
+    const [moMenu, setMoMenu] = useState(false);
+    const [trangCu, setTrangCu] = useState(pathname);
+    if (pathname !== trangCu) {
+        setTrangCu(pathname);
+        setMoMenu(false); // chọn trang khác thì tự gập lại
+    }
+    const mucDangMo = MENU.find((m) => (m.end ? pathname === m.to : pathname.startsWith(m.to))) ?? MENU[0];
 
-    // Điện thoại: menu là 1 hàng vuốt ngang, mục đang mở có thể bị khuất bên phải
-    // → mỗi lần đổi trang thì cuộn hàng menu sao cho mục đó nằm giữa (chỉ cuộn ngang trong menu, không cuộn cả trang)
-    useEffect(() => {
-        const el = menu.current;
-        const dangMo = el?.querySelector('[aria-current="page"]'); // NavLink tự gắn aria-current="page" cho mục đang mở
-        if (!dangMo || el.scrollWidth <= el.clientWidth) return;
-        el.scrollTo({ left: dangMo.offsetLeft - (el.clientWidth - dangMo.offsetWidth) / 2, behavior: 'smooth' });
-    }, [pathname]);
+    // Điểm thưởng: cứ 1.000 đ đã chi được 1 điểm, trừ đi số điểm đã dùng đổi quà. Đủ MOC_DOI_QUA điểm thì đổi được voucher
+    const diemTichLuy = Math.floor(donCuaToi.reduce((tong, d) => tong + tinhTienDon(d).tong, 0) / 1000);
+    const lanDaDoi = doiQua[user.email] ?? [];
+    const diem = diemTichLuy - lanDaDoi.reduce((tong, l) => tong + l.diem, 0);
+
+    // Xác nhận đổi quà: ghi thêm 1 lần đổi (trừ MOC_DOI_QUA điểm) vào localStorage
+    const xacNhanDoiQua = () => {
+        const moi = { ...doiQua, [user.email]: [...lanDaDoi, { ngay: new Date().toISOString().slice(0, 10), diem: MOC_DOI_QUA }] };
+        setDoiQua(moi);
+        ghi(KHOA_DOI_QUA, moi);
+        setHoiDoiQua(false);
+        setVuaDoi(true);
+    };
+
+    // Sang trang /dang-xuat (DangXuat.jsx): trang đó đăng xuất rồi về Trang chủ
+    const thoat = () => navigate('/dang-xuat', { replace: true });
 
     return (
         <div className="bg-slate-50">
             <div className="mx-auto grid max-w-trang grid-cols-1 gap-6 px-4 py-8 sm:px-6 lg:grid-cols-[260px_minmax(0,1fr)] lg:gap-8">
                 {/* 1. CỘT TRÁI */}
                 <aside className="flex h-fit flex-col gap-4">
-                    {/* 1.1 Menu. Điện thoại: 1 hàng vuốt ngang (overflow-x-auto) */}
-                    <nav ref={menu} className="relative flex gap-1 overflow-x-auto rounded-2xl border border-slate-200 bg-white p-2 shadow-sm [scrollbar-width:none] lg:flex-col lg:p-3">
-                        {MENU.map((m) => (
-                            <NavLink key={m.to} to={m.to} end={m.end} className={kieuMuc}>
-                                <Icon d={m.icon} className="h-5 w-5 flex-none" strokeWidth={1.8} />
-                                {m.ten}
-                            </NavLink>
-                        ))}
-                        {/* Đăng xuất tách riêng bằng đường kẻ */}
-                        <div className="hidden border-t border-slate-100 lg:mt-2 lg:block lg:pt-2" />
+                    {/* 1.1 Menu. Điện thoại: thanh ☰ + tên trang, bấm để xổ danh sách dọc. Máy tính: luôn hiện dọc */}
+                    <nav className="rounded-2xl border border-slate-200 bg-white p-2 shadow-sm lg:p-3">
                         <button
                             type="button"
-                            onClick={() => setHoiDangXuat(true)}
-                            className="flex flex-none items-center gap-3 whitespace-nowrap rounded-xl px-4 py-2.5 text-left text-sm font-medium text-slate-600 transition hover:bg-red-50 hover:text-red-600 lg:py-3"
+                            onClick={() => setMoMenu(!moMenu)}
+                            aria-expanded={moMenu}
+                            aria-controls="menu-tai-khoan"
+                            className="flex w-full items-center gap-3 rounded-xl px-3 py-2.5 text-left text-sm font-semibold text-slate-900 transition hover:bg-slate-50 lg:hidden"
                         >
-                            <Icon d={ICON_DANG_XUAT} className="h-5 w-5 flex-none" strokeWidth={1.8} />
-                            Đăng xuất
+                            <span className="flex h-9 w-9 flex-none items-center justify-center rounded-lg bg-blue-50 text-blue-600">
+                                <Icon d={moMenu ? 'M6 6l12 12M18 6 6 18' : 'M4 6h16M4 12h16M4 18h16'} className="h-5 w-5" strokeWidth={2} />
+                            </span>
+                            <span className="min-w-0 flex-1">
+                                <span className="block text-xs font-medium text-slate-400">Tài khoản</span>
+                                <span className="block truncate">{mucDangMo.ten}</span>
+                            </span>
+                            <Icon d="m6 9 6 6 6-6" className={`h-5 w-5 flex-none text-slate-400 transition ${moMenu ? 'rotate-180' : ''}`} />
                         </button>
+                        <div id="menu-tai-khoan" className={`${moMenu ? 'mt-2 flex border-t border-slate-100 pt-2' : 'hidden'} flex-col gap-1 lg:mt-0 lg:flex lg:border-0 lg:pt-0`}>
+                            {MENU.map((m) => (
+                                <NavLink key={m.to} to={m.to} end={m.end} className={kieuMuc}>
+                                    <Icon d={m.icon} className="h-5 w-5 flex-none" strokeWidth={1.8} />
+                                    {m.ten}
+                                </NavLink>
+                            ))}
+                            {/* Đăng xuất tách riêng bằng đường kẻ, nền đỏ nhạt + chữ đỏ cho dễ thấy */}
+                            <div className="mt-1 border-t border-slate-100 pt-1 lg:mt-2 lg:pt-2" />
+                            <button
+                                type="button"
+                                onClick={() => setHoiDangXuat(true)}
+                                className="flex flex-none items-center gap-3 whitespace-nowrap rounded-xl border border-red-200 bg-red-50 px-4 py-2.5 text-left text-sm font-semibold text-red-600 transition hover:border-red-600 hover:bg-red-600 hover:text-white lg:py-3"
+                            >
+                                <Icon d={ICON_DANG_XUAT} className="h-5 w-5 flex-none" strokeWidth={1.8} />
+                                Đăng xuất
+                            </button>
+                        </div>
                     </nav>
 
-                    {/* 1.2 Điểm thưởng (chưa có đơn nên 0 điểm). Điện thoại ẩn cho gọn */}
+                    {/* 1.2 Điểm thưởng, tính từ các đơn đã mua. Điện thoại ẩn cho gọn */}
                     <div className="hidden rounded-2xl border border-slate-200 bg-white p-5 shadow-sm lg:block">
                         <h2 className="flex items-center gap-2 font-bold text-slate-900">
                             <Icon d={ICON_QUA} className="h-5 w-5 text-blue-600" strokeWidth={1.8} />
                             Điểm thưởng
                         </h2>
                         <p className="mt-3 text-4xl font-extrabold text-slate-900">
-                            0 <span className="text-base font-medium text-slate-500">điểm</span>
+                            {diem} <span className="text-base font-medium text-slate-500">điểm</span>
                         </p>
-                        <div className="mt-3 h-2 rounded-full bg-slate-100" />
-                        <p className="mt-2 text-xs leading-relaxed text-slate-500">Mua mẫu để tích điểm: 1.000 đ chi tiêu = 1 điểm. Đủ 500 điểm đổi được voucher 50.000 đ.</p>
+                        {/* Thanh tiến độ tới mốc đổi quà, đầy tối đa 100% */}
+                        <div className="mt-3 h-2 overflow-hidden rounded-full bg-slate-100">
+                            <div className="h-full rounded-full bg-blue-600" style={{ width: `${Math.min(diem / MOC_DOI_QUA, 1) * 100}%` }} />
+                        </div>
+                        <p className="mt-2 text-xs leading-relaxed text-slate-500">
+                            {diem >= MOC_DOI_QUA ? 'Đủ điểm đổi 1 voucher 50.000 đ.' : `Còn ${MOC_DOI_QUA - diem} điểm nữa để đổi voucher 50.000 đ.`} 1.000 đ chi tiêu = 1 điểm.
+                        </p>
+                        {vuaDoi && (
+                            <p className="mt-4 rounded-xl bg-emerald-50 px-3 py-2.5 text-center text-xs font-semibold text-emerald-700">
+                                Đổi thành công! Đã trừ {MOC_DOI_QUA} điểm, mã voucher sẽ gửi về {user.email}
+                            </p>
+                        )}
                         <button
                             type="button"
-                            disabled
-                            className="mt-4 w-full cursor-not-allowed rounded-xl bg-slate-100 py-2.5 text-sm font-semibold text-slate-400"
+                            disabled={diem < MOC_DOI_QUA}
+                            onClick={() => setHoiDoiQua(true)}
+                            className="mt-4 w-full rounded-xl bg-blue-600 py-2.5 text-sm font-semibold text-white transition hover:bg-blue-700 disabled:cursor-not-allowed disabled:bg-slate-100 disabled:text-slate-400"
                         >
                             Đổi quà
                         </button>
+                        {lanDaDoi.length > 0 && <p className="mt-2 text-center text-xs text-slate-400">Đã đổi {lanDaDoi.length} voucher</p>}
                     </div>
 
                     {/* 1.3 Cần hỗ trợ */}
@@ -108,6 +169,17 @@ function TaiKhoanLayout() {
                 </div>
             </div>
 
+            {/* HỘP HỎI LẠI KHI BẤM ĐỔI QUÀ */}
+            {hoiDoiQua && (
+                <HopXacNhan
+                    tieuDe="Đổi điểm lấy voucher?"
+                    noiDung={`Dùng ${MOC_DOI_QUA} điểm để đổi 1 voucher ${dinhDangGia(GIA_TRI_VOUCHER)}. Sau khi đổi bạn còn ${diem - MOC_DOI_QUA} điểm.`}
+                    nutXacNhan="Đổi quà"
+                    onXacNhan={xacNhanDoiQua}
+                    onHuy={() => setHoiDoiQua(false)}
+                />
+            )}
+
             {/* 3. HỘP HỎI LẠI KHI BẤM ĐĂNG XUẤT: bấm ra ngoài hộp thì đóng */}
             {hoiDangXuat && (
                 <div
@@ -128,10 +200,9 @@ function TaiKhoanLayout() {
                             >
                                 Hủy
                             </button>
-                            {/* Chưa có đăng nhập thật nên chỉ chuyển sang trang Đăng nhập */}
                             <button
                                 type="button"
-                                onClick={() => navigate('/dang-nhap')}
+                                onClick={thoat}
                                 className="rounded-xl bg-red-600 py-2.5 text-sm font-semibold text-white transition hover:bg-red-700"
                             >
                                 Đăng xuất

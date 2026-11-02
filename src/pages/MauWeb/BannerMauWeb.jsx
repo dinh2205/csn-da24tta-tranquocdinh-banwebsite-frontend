@@ -7,7 +7,7 @@ import banner3 from '../../assets/banner-mau-website2.webp';
 const bannerList = [
     { src: banner3, alt: 'Hỗ trợ tận tâm, đồng hành cùng bạn', nut: { chu: 'Liên hệ ngay', den: '/gioi-thieu#lien-he', viTri: 'left-[7.4%] top-[66%]' } },
     // uuDai: bấm vào ảnh thì chọn sẵn ưu đãi đó trong bộ lọc bên dưới (không đổi trang)
-    { src: banner1, alt: 'Siêu giảm giá mẫu website, xem các mẫu Siêu sale', uuDai: 'dacBiet', nut: { chu: 'Săn sale ngay', viTri: 'left-[46.5%] top-[73%] -translate-x-1/2 max-sm:hidden', mau: 'bg-gradient-to-r from-orange-500 to-amber-400 text-white shadow-orange-600/40 hover:from-orange-400 hover:to-amber-300' } },
+    { src: banner1, alt: 'Siêu giảm giá mẫu website, xem các mẫu Siêu sale', uuDai: 'dacBiet', nut: { chu: 'Săn sale ngay', viTri: 'left-1/2 top-[76%] -translate-x-1/2 max-sm:hidden', mau: 'bg-gradient-to-r from-orange-500 to-amber-400 text-white shadow-orange-600/40 hover:from-orange-400 hover:to-amber-300' } },
     { src: banner2, alt: 'Mẫu website tương thích trên mọi thiết bị' },
 ];
 // Màu nút mặc định; nut.mau để đổi màu riêng cho banner nền sáng (vd banner Siêu giảm giá)

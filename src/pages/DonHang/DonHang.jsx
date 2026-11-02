@@ -6,7 +6,7 @@ import { boDau } from '../../utils/chuyenDoi';
 import TieuDeTrang from '../TaiKhoan/TieuDeTrang';
 import TimLocDon from './TimLocDon';
 import TheDonHang from './TheDonHang';
-import PhanTrang from './PhanTrang';
+import PhanTrang from '../../components/chung/PhanTrang';
 import ChuaCoDon from './ChuaCoDon';
 
 const SO_DON_MOI_TRANG = 5;

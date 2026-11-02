@@ -51,9 +51,17 @@ function useLocMau() {
         setTuKhoaCu(tuKhoa);
         setSapXep(tuKhoa ? 'phu-hop' : 'moi-nhat');
     }
+    // Trang đang xem (9 mẫu / trang); đổi bộ lọc, từ khóa, sắp xếp thì về trang 1
+    const [trang, setTrang] = useState(daLuu.trang ?? 1);
+    const khoaLoc = JSON.stringify([boLoc, sapXep, loai, tuKhoa]);
+    const [khoaLocCu, setKhoaLocCu] = useState(khoaLoc);
+    if (khoaLoc !== khoaLocCu) {
+        setKhoaLocCu(khoaLoc);
+        setTrang(1);
+    }
     useEffect(() => {
-        luuDanhSach({ boLoc, sapXep });
-    }, [boLoc, sapXep]);
+        luuDanhSach({ boLoc, sapXep, trang });
+    }, [boLoc, sapXep, trang]);
     const [moBoLoc, setMoBoLoc] = useState(false); // điện thoại: mở / đóng cột lọc
 
     const doiThamSo = (khoa, giaTri) => {
@@ -85,7 +93,7 @@ function useLocMau() {
 
     return {
         loai, tuKhoa, ketQua, soLocDangBat, dsMau, soDaMua,
-        boLoc, setBoLoc, sapXep, setSapXep, moBoLoc, setMoBoLoc,
+        boLoc, setBoLoc, sapXep, setSapXep, moBoLoc, setMoBoLoc, trang, setTrang,
         doiThamSo, xoaTatCa,
     };
 }

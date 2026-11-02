@@ -1,7 +1,17 @@
 // Kiểu chung cho nút phân trang
 const kieuNut = 'flex h-9 min-w-9 items-center justify-center rounded-lg border px-2.5 text-sm font-semibold transition disabled:cursor-not-allowed disabled:opacity-40';
 
-// 4. PHÂN TRANG (1 trang thì ẩn nút)
+// Danh sách số trang cần hiện: ít trang thì hiện hết, nhiều trang thì rút gọn bằng "…"
+// vd trang 6 / 12 → 1 … 5 6 7 … 12
+function soCanHien(trang, soTrang) {
+    if (soTrang <= 7) return Array.from({ length: soTrang }, (_, i) => i + 1);
+    const dau = Math.max(2, Math.min(trang - 1, soTrang - 4));
+    const cuoi = Math.min(soTrang - 1, Math.max(trang + 1, 5));
+    const giua = Array.from({ length: cuoi - dau + 1 }, (_, i) => dau + i);
+    return [1, ...(dau > 2 ? ['…'] : []), ...giua, ...(cuoi < soTrang - 1 ? ['…'] : []), soTrang];
+}
+
+// PHÂN TRANG (1 trang thì ẩn nút), dùng ở Đơn hàng và Mẫu website
 function PhanTrang({ trang, soTrang, onDoiTrang, moTa }) {
     return (
         <div className="mt-5 flex flex-wrap items-center justify-between gap-3">
@@ -19,7 +29,9 @@ function PhanTrang({ trang, soTrang, onDoiTrang, moTa }) {
                         ‹
                     </button>
 
-                    {Array.from({ length: soTrang }, (_, i) => i + 1).map((so) => (
+                    {soCanHien(trang, soTrang).map((so, i) => so === '…' ? (
+                        <span key={`cham-${i}`} className="px-1 text-sm font-semibold text-slate-400">…</span>
+                    ) : (
                         <button
                             key={so}
                             type="button"

@@ -7,12 +7,15 @@ import banner3 from '../../assets/banner-mau-website2.webp';
 const bannerList = [
     { src: banner3, alt: 'Hỗ trợ tận tâm, đồng hành cùng bạn', nut: { chu: 'Liên hệ ngay', den: '/gioi-thieu#lien-he', viTri: 'left-[7.4%] top-[66%]' } },
     // uuDai: bấm vào ảnh thì chọn sẵn ưu đãi đó trong bộ lọc bên dưới (không đổi trang)
-    { src: banner1, alt: 'Siêu giảm giá mẫu website, xem các mẫu Siêu sale', uuDai: 'dacBiet' },
+    { src: banner1, alt: 'Siêu giảm giá mẫu website, xem các mẫu Siêu sale', uuDai: 'dacBiet', nut: { chu: 'Săn sale ngay', viTri: 'left-[46.5%] top-[73%] -translate-x-1/2 max-sm:hidden', mau: 'bg-gradient-to-r from-orange-500 to-amber-400 text-white shadow-orange-600/40 hover:from-orange-400 hover:to-amber-300' } },
     { src: banner2, alt: 'Mẫu website tương thích trên mọi thiết bị' },
 ];
-// Nút trên banner (link sang trang khác, vd Liên hệ ngay)
-function NutTrenAnh({ nut, hien }) {
-    const kieu = `absolute ${nut.viTri} inline-flex items-center gap-[0.5em] whitespace-nowrap rounded-full bg-cyan-400 px-[1.4em] py-[0.6em] text-[clamp(0.625rem,1.25vw,1.25rem)] font-bold text-blue-950 shadow-lg shadow-cyan-500/30 transition hover:bg-cyan-300 active:scale-95`;
+// Màu nút mặc định; nut.mau để đổi màu riêng cho banner nền sáng (vd banner Siêu giảm giá)
+const MAU_NUT = 'bg-cyan-400 text-blue-950 shadow-cyan-500/30 hover:bg-cyan-300';
+
+// Nút trên banner: có nut.den thì link sang trang khác (vd Liên hệ ngay), không thì gọi onClick (vd chọn ưu đãi)
+function NutTrenAnh({ nut, hien, onClick }) {
+    const kieu = `absolute ${nut.viTri} inline-flex items-center gap-[0.5em] whitespace-nowrap rounded-full px-[1.4em] py-[0.6em] text-[clamp(0.625rem,1.25vw,1.25rem)] font-bold shadow-lg transition active:scale-95 ${nut.mau ?? MAU_NUT}`;
     const noiDung = (
         <>
             {nut.chu}
@@ -22,6 +25,13 @@ function NutTrenAnh({ nut, hien }) {
         </>
     );
     // Banner đang khuất thì không cho Tab tới nút
+    if (!nut.den) {
+        return (
+            <button type="button" onClick={onClick} tabIndex={hien ? 0 : -1} className={kieu}>
+                {noiDung}
+            </button>
+        );
+    }
     return (
         <Link to={nut.den} tabIndex={hien ? 0 : -1} className={kieu}>
             {noiDung}
@@ -76,7 +86,7 @@ function BannerMauWeb({ onChonUuDai }) {
                             );
                         })()}
                         {/* Nút trên ảnh: vị trí theo % ảnh (viTri), cỡ theo chiều rộng ảnh (vw) */}
-                        {b.nut && <NutTrenAnh nut={b.nut} hien={i === hienTai} />}
+                        {b.nut && <NutTrenAnh nut={b.nut} hien={i === hienTai} onClick={() => onChonUuDai(b.uuDai)} />}
                     </div>
                 ))}
             </div>

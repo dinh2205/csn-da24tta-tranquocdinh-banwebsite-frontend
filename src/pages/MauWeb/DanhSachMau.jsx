@@ -1,20 +1,37 @@
+import { useRef } from 'react';
 import { Link } from 'react-router-dom';
+import PhanTrang from '../../components/chung/PhanTrang';
 import TheMau from '../../components/sanpham/TheMau';
 import { sapXepList } from '../../data/danhmuc';
 
+const SO_MAU_MOI_TRANG = 9;
+
 // 5. DANH SÁCH MẪU
 // dsMau: mẫu chưa mua (đã bỏ mẫu tài khoản đã mua), soDaMua: số mẫu bị ẩn vì đã mua
-function DanhSachMau({ ketQua, tuKhoa, onXoaTuKhoa, sapXep, setSapXep, soLocDangBat, onBatTatBoLoc, onXoaTatCa, dsMau, soDaMua }) {
+function DanhSachMau({ ketQua, tuKhoa, onXoaTuKhoa, sapXep, setSapXep, soLocDangBat, onBatTatBoLoc, onXoaTatCa, dsMau, soDaMua, trang, setTrang }) {
+    const dauDanhSach = useRef(null);
     // Không có kết quả thì gợi ý 3 mẫu bán chạy (trong số mẫu chưa mua)
     const goiY = [...dsMau].sort((a, b) => b.luotBan - a.luotBan).slice(0, 3);
 
+    // Phân trang: 9 mẫu / trang
+    const soTrang = Math.max(1, Math.ceil(ketQua.length / SO_MAU_MOI_TRANG));
+    const trangHienTai = Math.min(trang, soTrang);
+    const batDau = (trangHienTai - 1) * SO_MAU_MOI_TRANG;
+    const mauHienThi = ketQua.slice(batDau, batDau + SO_MAU_MOI_TRANG);
+
+    // Đổi trang: cuộn mượt lên đầu danh sách, không phải kéo tay lên
+    const doiTrang = (so) => {
+        setTrang(so);
+        dauDanhSach.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    };
+
     return (
-        <div className="min-w-0">
+        <div ref={dauDanhSach} className="min-w-0 scroll-mt-24">
             {/* 5.1 Thanh trên */}
             <div className="mb-4 flex flex-wrap items-center justify-between gap-3">
                 <div className="flex flex-wrap items-center gap-2 text-sm text-slate-500">
                     <span>
-                        Hiển thị <strong className="text-slate-900">{ketQua.length}</strong> mẫu website
+                        Tìm thấy <strong className="text-slate-900">{ketQua.length}</strong> mẫu website
                     </span>
                     {/* Nhãn từ khóa, bấm để bỏ */}
                     {tuKhoa && (
@@ -92,11 +109,21 @@ function DanhSachMau({ ketQua, tuKhoa, onXoaTuKhoa, sapXep, setSapXep, soLocDang
                     </div>
                 </div>
             ) : (
-                <div className="grid gap-5 sm:grid-cols-2 xl:grid-cols-3">
-                    {ketQua.map((m) => (
-                        <TheMau key={m.id} mau={m} />
-                    ))}
-                </div>
+                <>
+                    <div className="grid gap-5 sm:grid-cols-2 xl:grid-cols-3">
+                        {mauHienThi.map((m) => (
+                            <TheMau key={m.id} mau={m} />
+                        ))}
+                    </div>
+
+                    {/* 5.3 Phân trang */}
+                    <PhanTrang
+                        trang={trangHienTai}
+                        soTrang={soTrang}
+                        onDoiTrang={doiTrang}
+                        moTa={`Hiển thị ${batDau + 1} - ${batDau + mauHienThi.length} trong ${ketQua.length} mẫu`}
+                    />
+                </>
             )}
         </div>
     );

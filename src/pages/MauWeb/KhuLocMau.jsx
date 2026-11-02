@@ -35,6 +35,8 @@ function KhuLocMau({ loc }) {
                         onXoaTatCa={loc.xoaTatCa}
                         dsMau={loc.dsMau}
                         soDaMua={loc.soDaMua}
+                        trang={loc.trang}
+                        setTrang={loc.setTrang}
                     />
                 </div>
             </div>

@@ -1,9 +1,10 @@
 import TheMau from '../../components/sanpham/TheMau';
-import mauWeb from '../../data/mauWeb';
+import { useDonHang } from '../../context/DonHangContext';
 
 // Mẫu liên quan: trùng cả lĩnh vực và loại website
 function MauLienQuan({ mau }) {
-    const lienQuan = mauWeb
+    const { mauCoLuotBan } = useDonHang();
+    const lienQuan = mauCoLuotBan
         .filter((m) => m.id !== mau.id && m.nganh === mau.nganh && m.loai === mau.loai)
         .sort((a, b) => b.luotBan - a.luotBan)
         .slice(0, 3);

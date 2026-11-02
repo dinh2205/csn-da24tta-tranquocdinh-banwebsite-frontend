@@ -1,11 +1,13 @@
 import { loaiList } from '../../data/danhmuc';
 import mauWeb from '../../data/mauWeb';
+import { useDonHang } from '../../context/DonHangContext';
 import { dinhDangGia } from '../../utils/chuyenDoi';
 
 // 3. SỐ LIỆU
 function SoLieu() {
 
-    const tongLuotMua = mauWeb.reduce((tong, m) => tong + m.luotBan, 0);
+    const { mauCoLuotBan } = useDonHang();
+    const tongLuotMua = mauCoLuotBan.reduce((tong, m) => tong + m.luotBan, 0);
     const giaThapNhat = Math.min(...mauWeb.map((m) => m.gia));
    
     const soNganh = new Set(mauWeb.map((m) => m.nganh)).size;
@@ -14,7 +16,7 @@ function SoLieu() {
         { so: `${mauWeb.length}+`, nhan: 'Mẫu website' },
         { so: `${loaiList.length}`, nhan: 'Danh mục' },
         { so: `${soNganh}+`, nhan: 'Ngành nghề' },
-        { so: `${tongLuotMua}+`, nhan: 'Lượt mua thành công' },
+        { so: `${tongLuotMua}`, nhan: 'Lượt mua thành công' },
         { so: `Từ ${dinhDangGia(giaThapNhat)}`, nhan: 'Mức giá khởi điểm' },
     ];
 

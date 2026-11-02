@@ -1,7 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import { useDonHang } from '../../context/DonHangContext';
-import mauWeb from '../../data/mauWeb';
 import { GIA_TOI_DA } from '../../data/danhmuc';
 import { locTheoTuKhoa } from './timKiemMau';
 import { laDacBiet, laKhuyenMaiThuong, laMoi } from '../../utils/nhanMau';
@@ -29,9 +28,9 @@ function useLocMau() {
 
     // Ẩn mẫu tài khoản đang đăng nhập đã mua (đã có trong Lịch sử mua hàng, không cần xem / mua lại).
     // Chưa đăng nhập thì daMua luôn false → hiện đủ. dsMau dùng chung cho lọc, số đếm ở Bộ lọc và gợi ý
-    const { daMua } = useDonHang();
-    const dsMau = mauWeb.filter((m) => !daMua(m.id));
-    const soDaMua = mauWeb.length - dsMau.length;
+    const { daMua, mauCoLuotBan } = useDonHang();
+    const dsMau = mauCoLuotBan.filter((m) => !daMua(m.id));
+    const soDaMua = mauCoLuotBan.length - dsMau.length;
 
     // Quay lại từ trang chi tiết thì lấy lại bộ lọc, sắp xếp đã chọn
     const laQuayLai = useLaQuayLai();

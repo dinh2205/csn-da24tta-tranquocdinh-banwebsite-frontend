@@ -1,4 +1,5 @@
 import { createContext, useContext, useState } from 'react';
+import mauWeb from '../data/mauWeb';
 import { doc, ghi } from '../utils/luuTru';
 import { useTaiKhoan } from './TaiKhoanContext';
 
@@ -23,6 +24,11 @@ export function DonHangProvider({ children }) {
     // Đơn của người đang đăng nhập, mới nhất trước (đơn tạo sau nằm cuối mảng nên đảo ngược lại)
     const donCuaToi = user ? tatCa.filter((d) => d.email === user.email).reverse() : [];
     const daMua = (id) => donCuaToi.some((d) => d.items.some((it) => it.id === id));
+
+    // Lượt bán thật của từng mẫu = số đơn (mọi tài khoản) có mẫu đó; mauCoLuotBan: mauWeb kèm luotBan đã đếm
+    const demLuotBan = {};
+    tatCa.forEach((d) => d.items.forEach((it) => (demLuotBan[it.id] = (demLuotBan[it.id] ?? 0) + 1)));
+    const mauCoLuotBan = mauWeb.map((m) => ({ ...m, luotBan: demLuotBan[m.id] ?? 0 }));
 
     // Tạo đơn mới sau khi "thanh toán", trả về mã đơn để trang Thành công hiện ra.
     // Mã đơn: DH + số thứ tự 3 chữ số, tăng dần trên toàn hệ thống, vd DH001, DH002...
@@ -67,7 +73,7 @@ export function DonHangProvider({ children }) {
         ghi(KHOA_DANH_GIA, moi);
     };
 
-    return <DonHangContext.Provider value={{ donCuaToi, daMua, taoDon, danhGiaCuaToi, danhGiaCuaMau, guiDanhGia }}>{children}</DonHangContext.Provider>;
+    return <DonHangContext.Provider value={{ donCuaToi, daMua, mauCoLuotBan, taoDon, danhGiaCuaToi, danhGiaCuaMau, guiDanhGia }}>{children}</DonHangContext.Provider>;
 }
 
 export const useDonHang = () => useContext(DonHangContext);

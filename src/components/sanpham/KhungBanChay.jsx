@@ -1,12 +1,13 @@
 import { Link } from 'react-router-dom';
-import mauWeb from '../../data/mauWeb';
+import { useDonHang } from '../../context/DonHangContext';
 import { dinhDangGia } from '../../utils/chuyenDoi';
 
 
 const MAU_HANG = ['bg-amber-400 text-amber-950', 'bg-slate-300 text-slate-800', 'bg-orange-300 text-orange-950'];
 
 function KhungBanChay({ soLuong = 4 }) {
-  const top = [...mauWeb].sort((a, b) => b.luotBan - a.luotBan).slice(0, soLuong);
+  const { mauCoLuotBan } = useDonHang();
+  const top = [...mauCoLuotBan].sort((a, b) => b.luotBan - a.luotBan).slice(0, soLuong);
 
   return (
     <div className="min-w-0 rounded-2xl bg-white p-5 text-left shadow-xl shadow-blue-950/30">

@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import TheMau from '../../components/sanpham/TheMau';
 import { loaiList } from '../../data/danhmuc';
-import mauWeb from '../../data/mauWeb';
+import { useDonHang } from '../../context/DonHangContext';
 import nenMauNoiBat from '../../assets/nen-mau-noi-bat.webp';
 
 // 4. MẪU NỔI BẬT: 4 mẫu bán chạy nhất theo danh mục
@@ -10,7 +10,8 @@ function MauNoiBat() {
 
     const [tabChon, setTabChon] = useState(loaiList[0].id);
 
-    const noiBat = mauWeb
+    const { mauCoLuotBan } = useDonHang();
+    const noiBat = mauCoLuotBan
         .filter((m) => m.loai === tabChon)
         .sort((a, b) => b.luotBan - a.luotBan)
         .slice(0, 4);

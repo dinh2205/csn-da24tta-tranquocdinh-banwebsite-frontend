@@ -1,7 +1,5 @@
 import { useEffect, useLayoutEffect, useRef } from 'react';
 import { useLocation, useSearchParams } from 'react-router-dom';
-import KhungTimKiem from '../../components/sanpham/KhungTimKiem';
-import BannerMauWeb from './BannerMauWeb';
 import KhuLocMau from './KhuLocMau';
 import useLocMau from './useLocMau';
 import { docDanhSach, luuDanhSach, useLaQuayLai } from './nhoDanhSach';
@@ -11,7 +9,6 @@ function MauWeb() {
     const [searchParams] = useSearchParams();
     const { hash, search } = useLocation();
     const laQuayLai = useLaQuayLai();
-    const khungTimKiem = useRef(null);
     const khuLoc = useRef(null);
     const loc = useLocMau();
 
@@ -19,12 +16,6 @@ function MauWeb() {
     const cuonToi = (khung) => {
         const caoMenu = document.querySelector('header')?.offsetHeight ?? 0;
         window.scrollTo(0, khung.current.getBoundingClientRect().top + window.scrollY - caoMenu);
-    };
-
-    // Nút trên banner Siêu giảm giá: chọn ưu đãi đó rồi cuộn tới khung lọc
-    const chonUuDai = (uuDai) => {
-        loc.setBoLoc((b) => ({ ...b, uuDai }));
-        cuonToi(khuLoc);
     };
 
     // Nhớ ?tim=, ?loai= đang có (cho nút "Quay lại danh sách")
@@ -39,7 +30,7 @@ function MauWeb() {
     }, []);
 
     // Quay lại từ trang chi tiết: cuộn về đúng chỗ đang xem.
-    // Còn mở kèm ?tim=, ?loai= thì cuộn tới khung tìm kiếm; ?uudai= (banner ưu đãi) hoặc #khu-loc (nút Xem tất cả ở trang chủ) thì cuộn thẳng tới khung lọc
+    // Mở kèm ?tim=, ?loai=, ?uudai= (banner ưu đãi ở trang chủ) hoặc #khu-loc (nút Xem tất cả) thì cuộn tới khung lọc
     useEffect(() => {
         const daLuu = docDanhSach();
         if (laQuayLai && daLuu.viTri != null) {
@@ -54,23 +45,14 @@ function MauWeb() {
             return () => clearTimeout(hen);
         }
         luuDanhSach({ viTri: null }); // vào mới thì quên vị trí cũ
-        const uuDai = searchParams.get('uudai');
-        const toiKhuLoc = uuDai || hash === '#khu-loc';
-        if (!searchParams.get('tim') && !searchParams.get('loai') && !toiKhuLoc) return;
-        cuonToi(toiKhuLoc ? khuLoc : khungTimKiem);
+        if (!searchParams.get('tim') && !searchParams.get('loai') && !searchParams.get('uudai') && hash !== '#khu-loc') return;
+        cuonToi(khuLoc);
         // Chỉ chạy lúc mở trang
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
     return (
         <div>
-            <BannerMauWeb onChonUuDai={chonUuDai} />
-            <div ref={khungTimKiem}>
-                <KhungTimKiem
-                    tieuDe="Mẫu website"
-                    moTa="Khám phá các mẫu website chuyên nghiệp, phù hợp với nhiều lĩnh vực."
-                />
-            </div>
             <div ref={khuLoc}>
                 <KhuLocMau loc={loc} />
             </div>

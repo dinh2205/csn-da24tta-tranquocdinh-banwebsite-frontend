@@ -1,13 +1,34 @@
 import TabLinhVuc from './TabLinhVuc';
 import BoLoc from './BoLoc';
 import DanhSachMau from './DanhSachMau';
+import { layBannerDanhMuc, tatCaBannerDanhMuc } from './bannerDanhMuc';
+import OTimKiem from '../../components/sanpham/OTimKiem';
+import SliderBannerDanhMuc from './SliderBannerDanhMuc';
 
 // 3–5. KHU LỌC MẪU: tab lĩnh vực + bộ lọc + danh sách.
-// loc: kết quả useLocMau() do trang cha (MauWeb.jsx) truyền xuống, để banner cũng chọn được ưu đãi
+// loc: kết quả useLocMau() do trang cha (MauWeb.jsx) truyền xuống
 function KhuLocMau({ loc }) {
+    // Đang chọn 1 danh mục: banner của danh mục đó (có thể chưa có); "Tất cả": slider mọi banner
+    const bannerLoai = loc.loai ? layBannerDanhMuc(loc.loai) : null;
+    const coBanner = loc.loai ? Boolean(bannerLoai) : tatCaBannerDanhMuc.length > 0;
+
     return (
         <section className="bg-slate-50">
-            <div className="mx-auto max-w-trang px-4 py-8 sm:px-6">
+            {/* Banner tràn hết bề ngang màn hình: danh mục đang chọn (giữ nguyên tỉ lệ ảnh), "Tất cả" thì slider mọi danh mục.
+                Ô tìm kiếm đè lên mép dưới */}
+            {coBanner && (
+                <div className="relative">
+                    {bannerLoai ? <img src={bannerLoai} alt="" className="block h-auto w-full" /> : <SliderBannerDanhMuc />}
+                    <div className="absolute inset-x-0 bottom-0 z-10 translate-y-1/2 px-4">
+                        <OTimKiem />
+                    </div>
+                </div>
+            )}
+
+            <div className={`mx-auto max-w-trang px-4 pb-8 sm:px-6 ${coBanner ? 'pt-16' : 'pt-8'}`}>
+                {/* Chưa có banner thì ô tìm kiếm nằm trên cùng */}
+                {!coBanner && <OTimKiem className="mb-6" />}
+
                 {/* 3. TAB LĨNH VỰC */}
                 <TabLinhVuc nganh={loc.boLoc.nganh} onChon={(id) => loc.setBoLoc({ ...loc.boLoc, nganh: id })} />
 
@@ -17,7 +38,11 @@ function KhuLocMau({ loc }) {
                         boLoc={loc.boLoc}
                         setBoLoc={loc.setBoLoc}
                         loai={loc.loai}
-                        onChonLoai={(id) => loc.doiThamSo('loai', id)}
+                        onChonLoai={(id) => {
+                            loc.doiThamSo('loai', id);
+                            // Đổi danh mục thì cuộn lên đầu trang để thấy banner của danh mục đó
+                            window.scrollTo({ top: 0, behavior: 'smooth' });
+                        }}
                         onXoa={loc.xoaTatCa}
                         hien={loc.moBoLoc}
                         dsMau={loc.dsMau}

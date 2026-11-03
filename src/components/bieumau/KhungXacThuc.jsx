@@ -1,6 +1,7 @@
 import logo from '../../assets/logo-website-design.webp';
 
-// Ảnh nền riêng (nếu có): đặt file src/assets/nen-dang-nhap.webp là tự dùng, chưa có thì dùng nền màu
+// Ảnh nền riêng (nếu có): đặt file src/assets/nen-dang-nhap.webp là tự dùng, chưa có thì dùng nền màu.
+// Nền cố định theo màn hình (bg-fixed): Đăng nhập và Đăng ký thấy nền y hệt, chỉ thẻ form khác nhau
 const anhNen = Object.values(import.meta.glob('../../assets/nen-dang-nhap.webp', { eager: true, import: 'default' }))[0];
 
 // Lợi ích: [icon (đường SVG), tiêu đề, mô tả ngắn]
@@ -15,7 +16,7 @@ const loiIch = [
 function KhungXacThuc({ children }) {
   return (
     <div
-      className="relative overflow-hidden bg-gradient-to-br from-slate-50 via-sky-50 to-blue-100 bg-cover bg-center"
+      className="relative overflow-hidden bg-gradient-to-br from-slate-50 via-sky-50 to-blue-100 bg-cover bg-center bg-fixed"
       style={anhNen ? { backgroundImage: `url(${anhNen})` } : undefined}
     >
       {/* Chưa có ảnh nền: mảng xanh cong bên phải */}

@@ -47,12 +47,11 @@ function DangNhap() {
         <KhungXacThuc>
             {/* 1. TIÊU ĐỀ */}
             <h1 className="text-center text-3xl font-extrabold text-slate-900">Đăng nhập</h1>
-            <p className="mt-1 text-center text-slate-500">Chào mừng bạn quay lại Website Design</p>
 
             {/* 2. FORM (noValidate: dùng báo lỗi riêng) */}
             <form onSubmit={gui} className="mt-7 space-y-4" noValidate>
                 {state?.thongBao && (
-                    <p className="rounded-lg bg-emerald-50 px-3.5 py-2.5 text-sm text-emerald-700">{state.thongBao}</p>
+                    <p className="rounded-lg bg-emerald-500 px-3.5 py-2.5 text-sm font-medium text-white shadow-md shadow-emerald-900/20">{state.thongBao}</p>
                 )}
 
                 <TruongNhap
@@ -82,7 +81,7 @@ function DangNhap() {
                 />
 
                 {/* 2.1 Ghi nhớ + quên mật khẩu (chưa có trang Quên mật khẩu) */}
-                <div className="flex items-center justify-between text-sm">
+                <div className="flex flex-wrap items-center justify-between gap-x-4 gap-y-2 text-sm">
                     <label className="flex cursor-pointer items-center gap-2 text-slate-600">
                         <input
                             type="checkbox"
@@ -102,7 +101,7 @@ function DangNhap() {
 
                 <button
                     type="submit"
-                    className="w-full rounded-xl bg-cyan-400 py-3 text-sm font-bold text-blue-950 shadow-sm transition hover:bg-cyan-300"
+                    className="w-full rounded-xl bg-blue-600 py-3 text-sm font-bold uppercase tracking-wide text-white shadow-md shadow-blue-600/30 transition hover:bg-blue-700 active:scale-[0.98]"
                 >
                     Đăng nhập
                 </button>

@@ -15,9 +15,9 @@ function NutGoogle({ chu, baoLoi }) {
       <button
         type="button"
         onClick={() => setDaBam(true)}
-        className="flex w-full items-center justify-center gap-2.5 rounded-xl border border-slate-300 py-3 text-sm font-semibold text-slate-700 transition hover:bg-slate-50"
+        className="flex w-full items-center justify-center gap-2.5 rounded-xl border border-blue-600 py-3 text-sm font-bold text-blue-600 transition hover:bg-blue-50"
       >
-        <span className="flex h-5 w-5 items-center justify-center rounded-full bg-slate-100 text-[11px] font-bold text-blue-600">G</span>
+        <span className="flex h-5 w-5 items-center justify-center rounded-full bg-blue-50 text-[11px] font-bold text-blue-600">G</span>
         {chu}
       </button>
       {daBam && <p className="mt-2 text-center text-xs text-slate-500">{baoLoi}</p>}

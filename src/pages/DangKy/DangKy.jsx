@@ -53,7 +53,6 @@ function DangKy() {
         <KhungXacThuc>
             {/* 1. TIÊU ĐỀ */}
             <h1 className="text-center text-3xl font-extrabold text-slate-900">Đăng ký</h1>
-            <p className="mt-1 text-center text-slate-500">Chỉ mất 1 phút để bắt đầu mua mẫu website</p>
 
             {/* 2. FORM */}
             <form onSubmit={gui} className="mt-6 space-y-4" noValidate>
@@ -67,8 +66,8 @@ function DangKy() {
                     autoComplete="name"
                 />
 
-                {/* Email + số điện thoại: 2 cột trên máy tính */}
-                <div className="grid gap-4 sm:grid-cols-2">
+                {/* Email + số điện thoại: chung 1 hàng trên máy tính, ô email rộng hơn (số điện thoại chỉ 10 số) */}
+                <div className="grid gap-4 sm:grid-cols-[3fr_2fr]">
                     <TruongNhap
                         id="email"
                         nhan="Email *"
@@ -135,7 +134,7 @@ function DangKy() {
 
                 <button
                     type="submit"
-                    className="w-full rounded-xl bg-cyan-400 py-3 text-sm font-bold text-blue-950 shadow-sm transition hover:bg-cyan-300"
+                    className="w-full rounded-xl bg-blue-600 py-3 text-sm font-bold uppercase tracking-wide text-white shadow-md shadow-blue-600/30 transition hover:bg-blue-700 active:scale-[0.98]"
                 >
                     Tạo tài khoản
                 </button>

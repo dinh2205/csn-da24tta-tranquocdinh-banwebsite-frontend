@@ -27,11 +27,11 @@ function DanhSachMau({ ketQua, tuKhoa, onXoaTuKhoa, sapXep, setSapXep, soLocDang
 
     return (
         <div ref={dauDanhSach} className="min-w-0 scroll-mt-24">
-            {/* 5.1 Thanh trên */}
-            <div className="mb-4 flex flex-wrap items-center justify-between gap-3">
+            {/* 5.1 Thanh trên: khung ngang mỏng viền xanh, số kết quả bên trái, sắp xếp bên phải */}
+            <div className="mb-4 flex flex-wrap items-center justify-between gap-x-3 gap-y-2 rounded-xl border border-blue-200 bg-blue-50/70 px-3 py-2">
                 <div className="flex flex-wrap items-center gap-2 text-sm text-slate-500">
                     <span>
-                        Tìm thấy <strong className="text-slate-900">{ketQua.length}</strong> mẫu website
+                        Tìm thấy <strong className="text-blue-700">{ketQua.length}</strong> mẫu website
                     </span>
                     {/* Nhãn từ khóa, bấm để bỏ */}
                     {tuKhoa && (
@@ -59,7 +59,7 @@ function DanhSachMau({ ketQua, tuKhoa, onXoaTuKhoa, sapXep, setSapXep, soLocDang
                     <button
                         type="button"
                         onClick={onBatTatBoLoc}
-                        className="flex items-center gap-2 rounded-lg border border-slate-300 bg-white px-3 py-2 text-sm font-semibold text-slate-700 transition hover:bg-slate-50 lg:hidden"
+                        className="flex items-center gap-2 rounded-lg border border-blue-200 bg-white px-3 py-1.5 text-sm font-semibold text-blue-700 transition hover:bg-blue-50 lg:hidden"
                     >
                         Bộ lọc
                         {soLocDangBat > 0 && (
@@ -69,12 +69,12 @@ function DanhSachMau({ ketQua, tuKhoa, onXoaTuKhoa, sapXep, setSapXep, soLocDang
                         )}
                     </button>
 
-                    <label className="ml-auto flex items-center gap-2 text-sm text-slate-500">
+                    <label className="ml-auto flex items-center gap-2 text-sm text-blue-900/70">
                         <span className="hidden sm:inline">Sắp xếp:</span>
                         <select
                             value={sapXep}
                             onChange={(e) => setSapXep(e.target.value)}
-                            className="rounded-lg border border-slate-300 bg-white px-3 py-2 text-sm text-slate-700 outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-200"
+                            className="cursor-pointer rounded-lg border border-blue-200 bg-white px-3 py-1.5 text-sm font-semibold text-blue-700 outline-none transition hover:border-blue-400 focus:border-blue-500 focus:ring-2 focus:ring-blue-200"
                         >
                             {sapXepList.filter((s) => tuKhoa || s.id !== 'phu-hop').map((s) => (
                                 <option key={s.id} value={s.id}>

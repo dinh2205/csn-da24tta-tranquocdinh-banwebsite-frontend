@@ -104,7 +104,7 @@ function DonHang() {
                         {/* 4. PHÂN TRANG */}
                         {donLoc.length > 0 && (
                             <PhanTrang
-                                khung="border-2 border-cyan-300 bg-cyan-50"
+                                khung="rounded-xl border-2 border-cyan-300 bg-cyan-50"
                                 trang={trangHienTai}
                                 soTrang={soTrang}
                                 onDoiTrang={doiTrang}

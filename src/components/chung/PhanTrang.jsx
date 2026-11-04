@@ -13,9 +13,10 @@ function soCanHien(trang, soTrang) {
 
 // PHÂN TRANG (1 trang thì ẩn nút), dùng ở Đơn hàng và Mẫu website.
 // khung: màu viền + nền (vd 'border-blue-200 bg-blue-50') thì bọc trong khung ngang mỏng, bỏ trống = không khung
-function PhanTrang({ trang, soTrang, onDoiTrang, moTa, khung = '' }) {
+// nutChon: màu nút trang đang chọn (đổi khi khung cùng màu xanh ngọc để nút không bị chìm)
+function PhanTrang({ trang, soTrang, onDoiTrang, moTa, khung = '', nutChon = 'border-cyan-400 bg-cyan-400 text-blue-950 shadow-md shadow-cyan-500/30' }) {
     return (
-        <div className={`mt-5 flex flex-wrap items-center justify-between gap-3 ${khung ? `rounded-xl border px-3 py-2 ${khung}` : ''}`}>
+        <div className={`mt-5 flex flex-wrap items-center justify-between gap-3 ${khung ? `border px-3 py-2 ${khung}` : ''}`}>
             <p className={`text-sm ${khung ? 'text-blue-900/70' : 'text-slate-500'}`}>{moTa}</p>
 
             {soTrang > 1 && (
@@ -38,7 +39,7 @@ function PhanTrang({ trang, soTrang, onDoiTrang, moTa, khung = '' }) {
                             type="button"
                             onClick={() => onDoiTrang(so)}
                             className={`${kieuNut} ${so === trang
-                                ? 'border-cyan-400 bg-cyan-400 text-blue-950 shadow-md shadow-cyan-500/30'
+                                ? nutChon
                                 : 'border-blue-200 bg-white text-blue-700 hover:border-blue-400 hover:bg-blue-50'
                                 }`}
                         >

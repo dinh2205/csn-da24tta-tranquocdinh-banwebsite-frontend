@@ -1,7 +1,7 @@
 import { GIA_TOI_DA, mauList, loaiList } from '../../data/danhmuc';
 import { dinhDangGia } from '../../utils/chuyenDoi';
 import { GIAM_DAC_BIET, laDacBiet, laKhuyenMaiThuong, laMoi } from '../../utils/nhanMau';
-import { mauToiTheoLoai } from './bannerDanhMuc';
+import { MAU_CHON } from './bannerDanhMuc';
 
 // Bước kéo giá: 50.000 đ
 const BUOC_GIA = 50000;
@@ -17,7 +17,7 @@ const uuDaiList = [
 // dsMau: mẫu chưa mua, dùng để đếm số mẫu cạnh mỗi lựa chọn (khớp với số mẫu hiện ra khi chọn)
 function BoLoc({ boLoc, setBoLoc, loai, onChonLoai, onXoa, hien, dsMau }) {
     return (
-        <aside className={`${hien ? 'block' : 'hidden'} h-fit rounded-2xl border border-slate-200 bg-white p-5 shadow-sm lg:block`}>
+        <aside className={`${hien ? 'block' : 'hidden'} h-fit rounded-2xl border border-slate-200 bg-white p-5 shadow-sm lg:relative lg:z-10 lg:block lg:h-auto lg:rounded-none lg:border-b-0`}>
             <div className="mb-5 flex items-center justify-between">
                 <h2 className="text-lg font-bold text-slate-900">Bộ lọc</h2>
                 <button type="button" onClick={onXoa} className="text-xs text-slate-500 transition hover:text-red-600">
@@ -29,21 +29,21 @@ function BoLoc({ boLoc, setBoLoc, loai, onChonLoai, onXoa, hien, dsMau }) {
                 {/* 4.0 Danh mục (chọn 1) */}
                 <div>
                     <h3 className="mb-3 text-sm font-bold text-slate-900">Danh mục</h3>
-                    {/* Dòng đang chọn: nền tối theo màu banner của danh mục, chữ trắng */}
+                    {/* Dòng đang chọn: nền xanh ngọc chữ navy (màu cố định) */}
                     <div className="-mx-2 space-y-1">
                         {[{ id: '', ten: 'Tất cả' }, ...loaiList].map((l) => {
                             const dangChon = (loai ?? '') === l.id;
                             return (
                                 <label
                                     key={l.id || 'tat-ca'}
-                                    className={`flex cursor-pointer items-center gap-3 rounded-lg px-2 py-1.5 text-sm transition ${dangChon ? `${mauToiTheoLoai[l.id] ?? mauToiTheoLoai['']} font-semibold shadow-md` : 'text-slate-700 hover:bg-slate-50'}`}
+                                    className={`flex cursor-pointer items-center gap-3 rounded-lg px-2 py-1.5 text-sm transition ${dangChon ? `${MAU_CHON} font-semibold shadow-md` : 'text-slate-700 hover:bg-slate-50'}`}
                                 >
                                     <input
                                         type="radio"
                                         name="danh-muc"
                                         checked={dangChon}
                                         onChange={() => onChonLoai(l.id)}
-                                        className={`h-4 w-4 cursor-pointer ${dangChon ? 'accent-white' : 'accent-blue-600'}`}
+                                        className={`h-4 w-4 cursor-pointer ${dangChon ? 'accent-blue-950' : 'accent-blue-600'}`}
                                     />
                                     <span className="flex-1">{l.ten}</span>
                                     <span className={`text-xs ${dangChon ? 'opacity-80' : 'text-slate-400'}`}>

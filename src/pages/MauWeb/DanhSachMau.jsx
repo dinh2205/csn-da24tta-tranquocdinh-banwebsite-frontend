@@ -3,14 +3,17 @@ import { Link } from 'react-router-dom';
 import PhanTrang from '../../components/chung/PhanTrang';
 import TheMau from '../../components/sanpham/TheMau';
 import { sapXepList } from '../../data/danhmuc';
-import { mauToiTheoLoai } from './bannerDanhMuc';
+import { MAU_CHON, MAU_THANH } from './bannerDanhMuc';
 
 const SO_MAU_MOI_TRANG = 9;
 
+// Thanh trên + thanh phân trang: không bo góc. Máy tính: nền kéo tràn sang phải hết màn hình,
+// bên trái luồn xuống dưới khung Bộ lọc (250px + khe 32px)
+const THANH_TRAN = "relative isolate rounded-none lg:border-transparent lg:bg-transparent lg:before:absolute lg:before:-inset-y-px lg:before:-left-[282px] lg:before:-right-[100vw] lg:before:-z-10 lg:before:border-y lg:before:content-['']";
+
 // 5. DANH SÁCH MẪU
 // dsMau: mẫu chưa mua (đã bỏ mẫu tài khoản đã mua), soDaMua: số mẫu bị ẩn vì đã mua
-// loai: danh mục đang chọn, nút "Xóa tất cả bộ lọc" tô màu theo banner danh mục đó
-function DanhSachMau({ loai, ketQua, tuKhoa, onXoaTuKhoa, sapXep, setSapXep, soLocDangBat, onBatTatBoLoc, onXoaTatCa, dsMau, soDaMua, trang, setTrang }) {
+function DanhSachMau({ ketQua, tuKhoa, onXoaTuKhoa, sapXep, setSapXep, soLocDangBat, onBatTatBoLoc, onXoaTatCa, dsMau, soDaMua, trang, setTrang }) {
     const dauDanhSach = useRef(null);
     // Không có kết quả thì gợi ý 3 mẫu bán chạy (trong số mẫu chưa mua)
     const goiY = [...dsMau].sort((a, b) => b.luotBan - a.luotBan).slice(0, 3);
@@ -20,6 +23,8 @@ function DanhSachMau({ loai, ketQua, tuKhoa, onXoaTuKhoa, sapXep, setSapXep, soL
     const trangHienTai = Math.min(trang, soTrang);
     const batDau = (trangHienTai - 1) * SO_MAU_MOI_TRANG;
     const mauHienThi = ketQua.slice(batDau, batDau + SO_MAU_MOI_TRANG);
+    // Thanh phân trang chỉ hiện khi có từ 10 mẫu (hơn 1 trang)
+    const coPhanTrang = ketQua.length > SO_MAU_MOI_TRANG;
 
     // Đổi trang: cuộn mượt lên đầu danh sách, không phải kéo tay lên
     const doiTrang = (so) => {
@@ -28,12 +33,12 @@ function DanhSachMau({ loai, ketQua, tuKhoa, onXoaTuKhoa, sapXep, setSapXep, soL
     };
 
     return (
-        <div ref={dauDanhSach} className="min-w-0 scroll-mt-24">
+        <div ref={dauDanhSach} className={`min-w-0 scroll-mt-24 ${coPhanTrang ? '' : 'lg:pb-8'}`}>
             {/* 5.1 Thanh trên: khung ngang mỏng viền xanh, số kết quả bên trái, sắp xếp bên phải */}
-            <div className="mb-4 flex flex-wrap items-center justify-between gap-x-3 gap-y-2 rounded-xl border border-blue-200 bg-blue-50 px-3 py-2">
-                <div className="flex flex-wrap items-center gap-2 text-sm text-slate-500">
+            <div className={`mb-4 flex flex-wrap items-center justify-between gap-x-3 gap-y-2 border px-3 py-2 ${MAU_THANH} ${THANH_TRAN}`}>
+                <div className="flex flex-wrap items-center gap-2 text-sm">
                     <span>
-                        Tìm thấy <strong className="text-blue-700">{ketQua.length}</strong> mẫu website
+                        Tìm thấy <strong className="font-extrabold">{ketQua.length}</strong> mẫu website
                     </span>
                     {/* Nhãn từ khóa, bấm để bỏ */}
                     {tuKhoa && (
@@ -47,9 +52,9 @@ function DanhSachMau({ loai, ketQua, tuKhoa, onXoaTuKhoa, sapXep, setSapXep, soL
                     )}
                     {/* Có mẫu bị ẩn vì đã mua thì nói rõ, kèm link tới nơi xem lại các mẫu đó */}
                     {soDaMua > 0 && (
-                        <span className="text-xs text-slate-400">
+                        <span className="text-xs text-blue-950/75">
                             · Đã ẩn {soDaMua} mẫu bạn đã mua{' '}
-                            <Link to="/tai-khoan/don-hang" className="font-semibold text-blue-600 hover:underline">
+                            <Link to="/tai-khoan/don-hang" className="font-semibold text-blue-800 underline-offset-2 hover:underline">
                                 Xem đơn hàng
                             </Link>
                         </span>
@@ -71,7 +76,7 @@ function DanhSachMau({ loai, ketQua, tuKhoa, onXoaTuKhoa, sapXep, setSapXep, soL
                         )}
                     </button>
 
-                    <label className="ml-auto flex items-center gap-2 text-sm text-blue-900/70">
+                    <label className="ml-auto flex items-center gap-2 text-sm text-blue-950">
                         <span className="hidden sm:inline">Sắp xếp:</span>
                         <select
                             value={sapXep}
@@ -97,7 +102,7 @@ function DanhSachMau({ loai, ketQua, tuKhoa, onXoaTuKhoa, sapXep, setSapXep, soL
                         <button
                             type="button"
                             onClick={onXoaTatCa}
-                            className={`mt-4 rounded-lg px-4 py-2 text-sm font-bold shadow-md transition hover:brightness-110 active:scale-95 ${mauToiTheoLoai[loai ?? ''] ?? mauToiTheoLoai['']}`}
+                            className={`mt-4 rounded-lg px-4 py-2 text-sm font-bold shadow-md transition hover:brightness-110 active:scale-95 ${MAU_CHON}`}
                         >
                             Xóa tất cả bộ lọc
                         </button>
@@ -118,14 +123,17 @@ function DanhSachMau({ loai, ketQua, tuKhoa, onXoaTuKhoa, sapXep, setSapXep, soL
                         ))}
                     </div>
 
-                    {/* 5.3 Phân trang */}
+                    {/* 5.3 Phân trang (máy tính: dính sát footer) */}
+                    {coPhanTrang && (
                     <PhanTrang
-                        khung="border-blue-200 bg-blue-50"
+                        khung={`${MAU_THANH} ${THANH_TRAN}`}
+                        nutChon="border-cyan-700 bg-cyan-700 text-white shadow-md"
                         trang={trangHienTai}
                         soTrang={soTrang}
                         onDoiTrang={doiTrang}
                         moTa={`Hiển thị ${batDau + 1} - ${batDau + mauHienThi.length} trong ${ketQua.length} mẫu`}
                     />
+                    )}
                 </>
             )}
         </div>

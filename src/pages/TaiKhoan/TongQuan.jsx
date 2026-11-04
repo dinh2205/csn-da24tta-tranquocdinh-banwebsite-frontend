@@ -5,7 +5,7 @@ import AnhDaiDien from '../../components/chung/AnhDaiDien';
 import { useDonHang } from '../../context/DonHangContext';
 import { useTaiKhoan } from '../../context/TaiKhoanContext';
 import { useYeuThich } from '../../context/YeuThichContext';
-import mauWeb from '../../data/mauWeb';
+import mauWeb, { timMau } from '../../data/mauWeb';
 import { tinhTienDon } from '../../data/donHang';
 import { dinhDangGia, dinhDangNgay } from '../../utils/chuyenDoi';
 import MauDaMua from './MauDaMua';
@@ -59,11 +59,11 @@ function TongQuan() {
 
     // Mẫu đã mua: mới mua trước, mỗi mẫu 1 lần, bỏ mẫu đã bị xóa khỏi mauWeb.js
     const mauDaMua = [...new Set(donCuaToi.flatMap((d) => d.items.map((it) => it.id)))]
-        .map((id) => mauWeb.find((m) => m.id === id))
+        .map((id) => timMau(id))
         .filter(Boolean);
 
     // Tên các mẫu trong đơn, vd "Bán Cây Xanh, Phòng Khám MedCare"
-    const tenSanPham = (don) => don.items.map((it) => mauWeb.find((m) => m.id === it.id)?.ten ?? it.id).join(', ');
+    const tenSanPham = (don) => don.items.map((it) => timMau(it.id)?.ten ?? it.id).join(', ');
 
     return (
         // Máy tính (xl): cột trái = nội dung chính (chiếm 3 hàng), cột phải = hồ sơ + điểm thưởng (giãn cao lấp chỗ trống) + poster liên hệ.

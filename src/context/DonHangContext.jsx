@@ -1,5 +1,5 @@
-import { createContext, useContext, useState } from 'react';
-import mauWeb from '../data/mauWeb';
+import { createContext, useContext, useState, useSyncExternalStore } from 'react';
+import mauWeb, { layPhienBanMau, ngheThayDoiMau } from '../data/mauWeb';
 import { doc, ghi } from '../utils/luuTru';
 import { useTaiKhoan } from './TaiKhoanContext';
 
@@ -20,6 +20,8 @@ const homNay = () => {
 export function DonHangProvider({ children }) {
     const { user } = useTaiKhoan();
     const [tatCa, setTatCa] = useState(() => doc(KHOA_DON, []));
+    // Quản trị thêm / sửa / ẩn mẫu thì vẽ lại (mauCoLuotBan và các trang dùng mauWeb lấy dữ liệu mới)
+    useSyncExternalStore(ngheThayDoiMau, layPhienBanMau);
 
     // Đơn của người đang đăng nhập, mới nhất trước (đơn tạo sau nằm cuối mảng nên đảo ngược lại)
     const donCuaToi = user ? tatCa.filter((d) => d.email === user.email).reverse() : [];
@@ -74,7 +76,7 @@ export function DonHangProvider({ children }) {
         ghi(KHOA_DANH_GIA, moi);
     };
 
-    return <DonHangContext.Provider value={{ donCuaToi, daMua, mauCoLuotBan, taoDon, danhGiaCuaToi, danhGiaCuaMau, guiDanhGia }}>{children}</DonHangContext.Provider>;
+    return <DonHangContext.Provider value={{ donHang: tatCa, donCuaToi, daMua, mauCoLuotBan, taoDon, danhGiaCuaToi, danhGiaCuaMau, guiDanhGia }}>{children}</DonHangContext.Provider>;
 }
 
 export const useDonHang = () => useContext(DonHangContext);

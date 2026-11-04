@@ -37,7 +37,7 @@ function Header() {
   const [moMenu, setMoMenu] = useState(false);
 
   const { soLuong: soLuongGio } = useGioHang();
-  const { user } = useTaiKhoan();
+  const { user, laAdmin } = useTaiKhoan();
 
   // Menu tài khoản (bấm vào tên): bấm ra ngoài, bấm Esc hoặc đổi trang thì tự đóng
   const [moTaiKhoan, setMoTaiKhoan] = useState(false);
@@ -62,7 +62,7 @@ function Header() {
 
   return (
     <header className="sticky top-0 z-40 bg-[#0b1f4d] shadow-md">
-      <div className="mx-auto flex max-w-trang items-center gap-8 px-4 py-4 sm:px-6">
+      <div className="mx-auto flex max-w-trang items-center gap-8 px-4 py-3 sm:px-6">
         <Link to="/" className="flex-none">
           <img src={logo} alt="Website Design" width="480" height="199" className="h-9 w-auto sm:h-11" />
         </Link>
@@ -118,6 +118,13 @@ function Header() {
                     <p className="truncate text-sm font-bold text-white">{user.hoTen}</p>
                     <p className="truncate text-xs text-blue-200/70">{user.email}</p>
                   </div>
+                  {/* Tài khoản quản trị: thêm lối vào trang quản trị */}
+                  {laAdmin && (
+                    <Link to="/admin" role="menuitem" className="flex items-center gap-3 px-4 py-2 text-sm font-semibold text-cyan-300 transition hover:bg-blue-600 hover:text-white">
+                      <IconNho d="M4 4h7v7H4zM13 4h7v4h-7zM13 10h7v10h-7zM4 13h7v7H4z" />
+                      Trang quản trị
+                    </Link>
+                  )}
                   {MENU_TAI_KHOAN.map(([to, ten, icon]) => (
                     <Link key={to} to={to} role="menuitem" className="flex items-center gap-3 px-4 py-2 text-sm font-medium text-blue-100 transition hover:bg-blue-600 hover:text-white">
                       <IconNho d={icon} />

@@ -9,11 +9,12 @@ import NutGoogle from '../../components/bieumau/NutGoogle';
 // Trang Đăng nhập (/dang-nhap)
 function DangNhap() {
     const navigate = useNavigate();
-    const { user, dangNhap } = useTaiKhoan();
+    const { user, laAdmin, dangNhap } = useTaiKhoan();
     // state có thể có: email (vừa đăng ký xong thì điền sẵn), thongBao (câu báo xanh),
     // from (trang bị chặn vì chưa đăng nhập, vd /gio-hang → đăng nhập xong quay lại đó)
     const { state } = useLocation();
-    const veTrang = state?.from ?? '/tai-khoan';
+    // Tài khoản quản trị không có trang cần quay lại thì vào thẳng trang quản trị
+    const veTrang = state?.from ?? (laAdmin ? '/admin' : '/tai-khoan');
 
     const [email, setEmail] = useState(state?.email ?? '');
     const [matKhau, setMatKhau] = useState('');
@@ -37,7 +38,7 @@ function DangNhap() {
             setLoi(kq.loi.startsWith('Email') ? { email: kq.loi } : { matKhau: kq.loi });
             return;
         }
-        navigate(veTrang, { replace: true });
+        navigate(state?.from ?? (kq.laAdmin ? '/admin' : '/tai-khoan'), { replace: true });
     };
 
     // Đã đăng nhập rồi mà vẫn mở trang này thì chuyển đi luôn

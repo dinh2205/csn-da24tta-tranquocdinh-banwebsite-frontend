@@ -5,7 +5,8 @@ import Icon from '../../components/chung/Icon';
 import NutThemGio from '../../components/sanpham/NutThemGio';
 import ThongBaoGioHang from '../../components/chung/ThongBaoGioHang';
 import { useGioHang } from '../../context/GioHangContext';
-import mauWeb from '../../data/mauWeb';
+import { timMau } from '../../data/mauWeb';
+import { useDonHang } from '../../context/DonHangContext';
 import { thietBiList } from '../../data/xemDemo';
 import { dinhDangGia } from '../../utils/chuyenDoi';
 import ManHinhDemo from './ManHinhDemo';
@@ -15,7 +16,9 @@ function XemDemo() {
     const { id } = useParams();
     const { state } = useLocation();
     const { soLuong: soLuongGio } = useGioHang();
-    const mau = mauWeb.find((m) => m.id === id);
+    const { daMua } = useDonHang();
+    const timThay = timMau(id);
+    const mau = timThay && (!timThay.daAn || daMua(id)) ? timThay : null;
     const [thietBiId, setThietBiId] = useState('may-tinh');
 
     if (!mau || !mau.demo || mau.demo === '#') {

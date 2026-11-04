@@ -1,7 +1,9 @@
 import { useEffect } from 'react';
 import { Link, useLocation, useParams } from 'react-router-dom';
 import Icon from '../../components/chung/Icon';
-import mauWeb from '../../data/mauWeb';
+import { timMau } from '../../data/mauWeb';
+import { useDonHang } from '../../context/DonHangContext';
+import { useTaiKhoan } from '../../context/TaiKhoanContext';
 import KhungXemTruoc from './KhungXemTruoc';
 import CacTrangMau from './CacTrangMau';
 import MoTaMau from './MoTaMau';
@@ -31,7 +33,11 @@ function NutQuayLai() {
 // Trang chi tiết mẫu (/mau-website/:id)
 function ChiTietMau() {
     const { id } = useParams();
-    const mau = mauWeb.find((m) => m.id === id);
+    const { daMua } = useDonHang();
+    const { laAdmin } = useTaiKhoan();
+    // Mẫu quản trị đã ẩn khỏi cửa hàng: chỉ người đã mua (xem lại mẫu mình mua) và quản trị mới còn mở được
+    const timThay = timMau(id);
+    const mau = timThay && (!timThay.daAn || daMua(id) || laAdmin) ? timThay : null;
 
     // Mở mẫu khác thì cuộn lên đầu
     useEffect(() => {

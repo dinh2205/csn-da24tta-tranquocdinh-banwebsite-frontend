@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useDonHang } from '../../context/DonHangContext';
-import mauWeb from '../../data/mauWeb';
+import { timMau } from '../../data/mauWeb';
 import { loaiList, nganhList } from '../../data/danhmuc';
 import { boDau } from '../../utils/chuyenDoi';
 import TieuDeTrang from '../TaiKhoan/TieuDeTrang';
@@ -40,7 +40,7 @@ function DonHang() {
     // 1. Ghép thông tin mẫu vào từng mẫu trong đơn
     const tatCaDon = donCuaToi.map((don) => ({
         ...don,
-        items: don.items.map((it) => ({ ...it, mau: mauWeb.find((m) => m.id === it.id) })),
+        items: don.items.map((it) => ({ ...it, mau: timMau(it.id) })),
     }));
 
     // 2. Lọc theo danh mục + từ khóa, bỏ đơn không còn mẫu nào

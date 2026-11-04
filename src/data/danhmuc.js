@@ -29,10 +29,13 @@ export const nganhList = [
 export const mauList = [
   { id: 'xanh-duong', ten: 'Xanh dương', swatch: 'bg-blue-600' },
   { id: 'xanh-dam', ten: 'Xanh đậm', swatch: 'bg-blue-900' },
-  { id: 'hong', ten: 'Hồng', swatch: 'bg-pink-500' },
+  { id: 'do', ten: 'Đỏ', swatch: 'bg-red-600' },
   { id: 'cam', ten: 'Cam', swatch: 'bg-orange-500' },
+  { id: 'vang', ten: 'Vàng', swatch: 'bg-yellow-400' },
   { id: 'xanh-la', ten: 'Xanh lá', swatch: 'bg-emerald-600' },
+  { id: 'hong', ten: 'Hồng', swatch: 'bg-pink-500' },
   { id: 'tim', ten: 'Tím', swatch: 'bg-violet-600' },
+  { id: 'trang', ten: 'Trắng', swatch: 'bg-white shadow-[inset_0_0_0_1px_#cbd5e1]' }, // viền xám mảnh để thấy trên nền trắng
   { id: 'toi', ten: 'Tối', swatch: 'bg-slate-900' },
 ];
 

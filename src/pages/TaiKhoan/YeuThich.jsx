@@ -51,8 +51,8 @@ function YeuThich() {
                 {/* Tìm kiếm + lọc danh mục (dùng lại khung của trang Lịch sử mua hàng) */}
                 <TimLocDon tuKhoa={tuKhoa} onDoiTuKhoa={setTuKhoa} loaiLoc={loaiLoc} onDoiLoai={setLoaiLoc} goiY="Tìm theo tên mẫu, danh mục hoặc lĩnh vực..." hong />
 
-                {/* Khung nền đỏ nhạt bọc lưới thẻ (cùng tông trái tim Yêu thích) */}
-                <section className="rounded-2xl border border-rose-200 bg-rose-50 p-5 shadow-sm sm:p-6">
+                {/* Khung nền trắng bọc lưới thẻ, viền đỏ nhạt (cùng tông trái tim Yêu thích) */}
+                <section className="rounded-2xl border border-rose-200 bg-white p-5 shadow-sm sm:p-6">
                     <div className="mb-5 flex flex-wrap items-center justify-between gap-3">
                         <h2 className="flex items-center gap-2 text-lg font-bold text-slate-900">
                             <Icon d={ICON_TIM} className="h-5 w-5 text-rose-500" strokeWidth={1.8} />

@@ -12,13 +12,18 @@ const KHOA_DANG_NHAP = 'wd_dang_nhap';
 
 const TaiKhoanContext = createContext(null);
 
+// Tài khoản quản trị có sẵn (vaiTro = 'admin'): đăng nhập xong vào thẳng trang /admin
+const TAI_KHOAN_ADMIN = { hoTen: 'Admin', email: 'admin@websitedesign.vn', sdt: '', matKhau: 'admin123', vaiTro: 'admin', ngaySinh: '', gioiTinh: '', anh: '' };
+// Luôn có tài khoản quản trị trong danh sách (trình duyệt mới chưa lưu gì cũng đăng nhập được)
+const coAdmin = (ds) => (ds.some((t) => t.email === TAI_KHOAN_ADMIN.email) ? ds : [TAI_KHOAN_ADMIN, ...ds]);
+
 // Email viết hoa / thường hay có khoảng trắng thừa vẫn tính là 1
 const chuanEmail = (email) => email.trim().toLowerCase();
 // Số điện thoại chỉ giữ chữ số (bỏ khoảng trắng, dấu chấm...) để so trùng chính xác
 const chuanSdt = (sdt) => (sdt ?? '').replace(/\D/g, '');
 
 export function TaiKhoanProvider({ children }) {
-    const [dsTaiKhoan, setDsTaiKhoan] = useState(() => doc(KHOA_TAI_KHOAN, []));
+    const [dsTaiKhoan, setDsTaiKhoan] = useState(() => coAdmin(doc(KHOA_TAI_KHOAN, [])));
     const [emailDangNhap, setEmailDangNhap] = useState(() => doc(KHOA_DANG_NHAP, null) ?? doc(KHOA_DANG_NHAP, null, sessionStorage));
 
     // Lưu danh sách tài khoản vào state (để giao diện vẽ lại) và localStorage (để tải lại trang vẫn còn)
@@ -31,6 +36,9 @@ export function TaiKhoanProvider({ children }) {
     // Người đang đăng nhập (null = chưa đăng nhập). Bỏ mật khẩu ra, các trang không cần biết
     const tk = dsTaiKhoan.find((t) => t.email === emailDangNhap);
     const user = tk ? { ...tk, matKhau: undefined } : null;
+    const laAdmin = tk?.vaiTro === 'admin';
+    // Danh sách tài khoản cho trang quản trị (bỏ mật khẩu)
+    const taiKhoan = dsTaiKhoan.map((t) => ({ ...t, matKhau: undefined }));
 
     const dangKy = ({ hoTen, email, sdt, matKhau }) => {
         const e = chuanEmail(email);
@@ -49,7 +57,7 @@ export function TaiKhoanProvider({ children }) {
         xoa(KHOA_DANG_NHAP, sessionStorage);
         ghi(KHOA_DANG_NHAP, e, ghiNho ? localStorage : sessionStorage);
         setEmailDangNhap(e);
-        return { ok: true };
+        return { ok: true, laAdmin: timThay.vaiTro === 'admin' };
     };
 
     const dangXuat = () => {
@@ -75,7 +83,7 @@ export function TaiKhoanProvider({ children }) {
     };
 
     return (
-        <TaiKhoanContext.Provider value={{ user, dangKy, dangNhap, dangXuat, capNhatHoSo, doiMatKhau }}>
+        <TaiKhoanContext.Provider value={{ user, laAdmin, taiKhoan, dangKy, dangNhap, dangXuat, capNhatHoSo, doiMatKhau }}>
             {children}
         </TaiKhoanContext.Provider>
     );

@@ -3,7 +3,7 @@ const tatCaAnh = import.meta.glob('../assets/mau-noi-bat/*.webp', { eager: true,
 
 const layAnh = (id) => tatCaAnh[`../assets/mau-noi-bat/${id}.webp`] ?? '#';
 
-const mauWeb = [
+export const mauGoc = [
   {
     id: 'BanCayXanh',
     ten: 'Bán Cây Xanh',
@@ -373,4 +373,54 @@ const mauWeb = [
   },
 ];
 
-export default  mauWeb;
+// ===== Thay đổi của quản trị (trang /admin/mau-website) =====
+// mauGoc ở trên là mẫu khai báo tay. Quản trị thêm / sửa / "xóa" mẫu thì lưu trong localStorage (chưa có backend):
+//   wd_quan_ly_mau: { sua: { [id]: các trường đã sửa }, them: [mẫu thêm bằng form], an: [id mẫu đã ẩn] }
+// "Xóa" là ẩn khỏi cửa hàng (bán lại được), để đơn hàng / đánh giá cũ của mẫu vẫn còn.
+// 2 mảng dưới đây được làm mới tại chỗ (không tạo mảng mới) nên mọi file đang import vẫn thấy dữ liệu mới:
+//   mauWeb   : mẫu đang bán (trang bán hàng dùng)
+//   tatCaMau : cả mẫu đã ẩn, có thêm daAn (trang quản trị, lịch sử mua hàng)
+export const KHOA_QUAN_LY_MAU = 'wd_quan_ly_mau';
+
+export const docQuanLyMau = () => {
+  try {
+    const g = JSON.parse(localStorage.getItem(KHOA_QUAN_LY_MAU));
+    return { sua: g?.sua ?? {}, them: Array.isArray(g?.them) ? g.them : [], an: Array.isArray(g?.an) ? g.an : [] };
+  } catch {
+    return { sua: {}, them: [], an: [] };
+  }
+};
+
+export const tatCaMau = [];
+const mauWeb = [];
+
+// Phiên bản dữ liệu: tăng mỗi lần quản trị lưu, các context dùng để vẽ lại giao diện (xem useMauWeb)
+let phienBan = 0;
+const dsNghe = new Set();
+
+export const lamMoiMau = () => {
+  const { sua, them, an } = docQuanLyMau();
+  const ds = [...mauGoc.map((m) => ({ ...m, tuThuMuc: true, ...sua[m.id] })), ...them].map((m) => ({ ...m, daAn: an.includes(m.id) }));
+  tatCaMau.splice(0, tatCaMau.length, ...ds);
+  mauWeb.splice(0, mauWeb.length, ...ds.filter((m) => !m.daAn));
+  phienBan += 1;
+  dsNghe.forEach((f) => f());
+};
+lamMoiMau();
+
+// Dùng với useSyncExternalStore: nghe thay đổi và đọc phiên bản hiện tại
+export const ngheThayDoiMau = (f) => {
+  dsNghe.add(f);
+  return () => dsNghe.delete(f);
+};
+export const layPhienBanMau = () => phienBan;
+
+// Tab khác của trình duyệt sửa mẫu thì tab này cũng làm mới
+if (typeof window !== 'undefined') {
+  window.addEventListener('storage', (e) => e.key === KHOA_QUAN_LY_MAU && lamMoiMau());
+}
+
+// Tìm cả mẫu đã ẩn, để lịch sử mua / trang chi tiết của người đã mua vẫn mở được
+export const timMau = (id) => tatCaMau.find((m) => m.id === id);
+
+export default mauWeb;

@@ -4,9 +4,6 @@ import mauWeb from '../../data/mauWeb';
 import { moTaDanhMuc } from '../../data/trangChu';
 import { mauChuTheoLoai } from '../MauWeb/bannerDanhMuc';
 
-// Số mẫu từng loại + loại nhiều mẫu nhất (gắn nhãn "Phổ biến")
-const soMau = Object.fromEntries(loaiList.map((l) => [l.id, mauWeb.filter((m) => m.loai === l.id).length]));
-const loaiPhoBien = loaiList.reduce((a, b) => (soMau[b.id] > soMau[a.id] ? b : a)).id;
 
 // Màu theo tông ảnh từng danh mục: viền khung khi rê chuột | khung chú thích | chữ nút
 const tongMau = {
@@ -21,6 +18,9 @@ const TONG_MAC_DINH = tongMau['gioi-thieu'];
 
 // 3. DANH MỤC WEBSITE
 function DanhMucChinh() {
+    // Số mẫu từng loại + loại nhiều mẫu nhất (gắn nhãn "Phổ biến"). Đếm lúc vẽ để quản trị thêm / ẩn mẫu là cập nhật
+    const soMau = Object.fromEntries(loaiList.map((l) => [l.id, mauWeb.filter((m) => m.loai === l.id).length]));
+    const loaiPhoBien = loaiList.reduce((a, b) => (soMau[b.id] > soMau[a.id] ? b : a)).id;
     return (
         <section className="relative overflow-hidden bg-gradient-to-b from-blue-50/80 via-white to-white py-14">
             {/* Nền: chấm lưới mờ dần + 2 vệt sáng */}

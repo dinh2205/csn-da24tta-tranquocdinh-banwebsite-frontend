@@ -15,6 +15,11 @@ import YeuThich from './pages/TaiKhoan/YeuThich'
 import GioHang from './pages/GioHang/GioHang'
 import CanDangNhap from './components/chung/CanDangNhap'
 import DangXuat from './components/chung/DangXuat'
+import AdminLayout from './layout/AdminLayout'
+import TongQuanQuanTri from './pages/QuanTri/TongQuanQuanTri'
+import QuanLyMau from './pages/QuanTri/QuanLyMau'
+import QuanLyDon from './pages/QuanTri/QuanLyDon'
+import QuanLyKhach from './pages/QuanTri/QuanLyKhach'
 
 
 
@@ -23,6 +28,13 @@ function App() {
     <Routes>
       {/* Xem demo: toàn màn hình, không có header / footer */}
       <Route path="mau-website/:id/demo" element={<XemDemo />} />
+      {/* Trang quản trị: khung riêng (AdminLayout), chỉ tài khoản admin vào được */}
+      <Route path="admin" element={<AdminLayout />}>
+        <Route index element={<TongQuanQuanTri />} />
+        <Route path="mau-website" element={<QuanLyMau />} />
+        <Route path="don-hang" element={<QuanLyDon />} />
+        <Route path="khach-hang" element={<QuanLyKhach />} />
+      </Route>
       <Route element={<MainLayout />}>
         <Route index element={<TrangChu />} />
         <Route path="gioi-thieu" element={<GioiThieu />} />

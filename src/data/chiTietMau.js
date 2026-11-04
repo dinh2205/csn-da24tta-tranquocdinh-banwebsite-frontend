@@ -8,6 +8,23 @@ export const tinhNang = [
     'Kèm tài liệu hướng dẫn cài đặt và video minh họa.',
 ];
 
+// Font + bộ icon thật của từng mẫu (lấy từ bản build trong public/mau-web)
+const fontIconTheoMau = {
+    BanCayXanh: 'Plus Jakarta Sans, Inter, Playfair Display, Merriweather, Dancing Script, Caveat · Material Symbols',
+    DBclb: 'Be Vietnam Pro · Lucide Icons',
+    GTcar: 'Be Vietnam Pro, Montserrat · Lucide Icons',
+    KhoaHocIelt: 'Be Vietnam Pro, Baloo, Patrick Hand · Lucide Icons',
+    LDBacSi: 'Be Vietnam Pro, Caveat · Lucide Icons',
+    LDBacSi1: 'Plus Jakarta Sans · Lucide Icons',
+    LDFashion: 'Be Vietnam Pro, Anton, Playfair Display, Caveat · Lucide Icons',
+    LDNoiThat: 'Be Vietnam Pro, Playfair Display · Lucide Icons',
+    LDNuocNgot: 'Be Vietnam Pro, Poppins, Caveat · Lucide Icons',
+    PL001: 'Inter, Montserrat, Caveat · Lucide Icons',
+    TT001: 'Inter · Lucide Icons',
+    VanPhongPham: 'Be Vietnam Pro · Material Symbols',
+    WSVanHoa: 'Be Vietnam Pro, Montserrat · Lucide Icons',
+};
+
 // Bảng thông số kỹ thuật, mỗi dòng [tên, giá trị]
 export const taoThongSo = (mau) => [
     {
@@ -15,16 +32,16 @@ export const taoThongSo = (mau) => [
         muc: [
             ['Kiểu bố cục', mau.boCuc],
             ['Số trang', mau.soTrang],
-            ['Biến thể', mau.bienThe],
-            ['Độ khó chỉnh sửa', 'Dễ, không cần biết code'],
+            ['Màu chủ đạo', mau.bienThe],
+            ['Độ khó chỉnh sửa', 'Trung bình, cần biết React cơ bản'],
         ],
     },
     {
         nhom: 'Công nghệ',
         muc: [
-            ['Ngôn ngữ', 'React, JavaScript'],
-            ['Thư viện', 'Tailwind CSS'],
-            ['Font, icon', 'Be Vietnam Pro, Heroicons'],
+            ['Ngôn ngữ', 'JavaScript (JSX)'],
+            ['Thư viện', 'React, Tailwind CSS'],
+            ['Font, icon', fontIconTheoMau[mau.id] ?? 'Be Vietnam Pro · Lucide Icons'],
             ['Tệp đi kèm', 'Mã nguồn, ảnh demo, tài liệu PDF'],
         ],
     },

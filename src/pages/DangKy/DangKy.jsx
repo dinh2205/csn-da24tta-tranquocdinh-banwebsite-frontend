@@ -40,10 +40,10 @@ function DangKy() {
         setLoi(l);
         if (Object.keys(l).length > 0) return;
 
-        // 2. Lưu tài khoản (email đã có thì báo lỗi ở ô email), xong sang Đăng nhập với email điền sẵn
+        // 2. Lưu tài khoản (email hoặc số điện thoại đã có thì báo lỗi ở ô tương ứng), xong sang Đăng nhập với email điền sẵn
         const kq = dangKy(f);
         if (!kq.ok) {
-            setLoi({ email: kq.loi });
+            setLoi({ [kq.truong ?? 'email']: kq.loi });
             return;
         }
         navigate('/dang-nhap', { state: { email: f.email.trim(), thongBao: 'Đăng ký thành công! Mời bạn đăng nhập.', from: state?.from } });

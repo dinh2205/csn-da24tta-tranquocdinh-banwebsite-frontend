@@ -17,13 +17,14 @@ function KhungTimKiem({
         <div className="absolute -right-16 -top-20 h-56 w-56 rounded-full bg-cyan-400/20 blur-3xl" />
       </div>
 
-      {/* Có children: 2 cột, không có: 1 cột ở giữa */}
+      {/* Có children: 2 cột tràn hết bề ngang, cột phải (children) sát mép phải + chạm trên/dưới dải.
+          Không có: 1 cột ở giữa */}
       <div
-        className={`relative mx-auto grid grid-cols-1 items-center gap-8 px-4 py-10 sm:px-6 ${
-          children ? 'max-w-trang lg:grid-cols-[minmax(0,1.35fr)_minmax(0,1fr)] lg:gap-10' : 'max-w-4xl'
+        className={`relative grid grid-cols-1 ${
+          children ? 'items-stretch lg:grid-cols-[minmax(0,1.35fr)_minmax(0,1fr)]' : 'mx-auto max-w-4xl items-center gap-8 px-4 py-10 sm:px-6'
         }`}
       >
-        <div className="min-w-0 text-center">
+        <div className={`min-w-0 text-center ${children ? 'self-center px-4 py-10 sm:px-6 lg:px-10' : ''}`}>
           <h2 className="text-2xl font-extrabold text-white sm:text-3xl">{tieuDe}</h2>
           {moTa && <p className="mt-2 text-sm text-blue-100 sm:text-base">{moTa}</p>}
 

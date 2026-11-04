@@ -7,6 +7,7 @@ const mauWeb = [
   {
     id: 'BanCayXanh',
     ten: 'Bán Cây Xanh',
+    luotBanCoSan: 74, // lượt bán có sẵn, cộng thêm lượt bán từ đơn thật
     loai: 'ban-hang',
     nganh: 'thuc-pham',
     mau: 'xanh-la',
@@ -35,6 +36,7 @@ const mauWeb = [
   {
     id: 'KhoaHocIelt',
     ten: 'Trung Tâm IELTS EduRise',
+    luotBanCoSan: 112, // lượt bán có sẵn, cộng thêm lượt bán từ đơn thật
     loai: 'landing-page',
     nganh: 'giao-duc',
     mau: 'xanh-la',
@@ -61,6 +63,7 @@ const mauWeb = [
   {
     id: 'LDBacSi',
     ten: 'Phòng Khám MedCare',
+    luotBanCoSan: 63, // lượt bán có sẵn, cộng thêm lượt bán từ đơn thật
     loai: 'landing-page',
     nganh: 'y-te',
     mau: 'xanh-duong',
@@ -87,6 +90,7 @@ const mauWeb = [
   {
     id: 'LDBacSi1',
     ten: 'Phòng Khám VitaCare',
+    luotBanCoSan: 41, // lượt bán có sẵn, cộng thêm lượt bán từ đơn thật
     loai: 'landing-page',
     nganh: 'y-te',
     mau: 'xanh-duong',
@@ -112,6 +116,7 @@ const mauWeb = [
   {
     id: 'LDFashion',
     ten: 'Thời Trang ASHA',
+    luotBanCoSan: 49, // lượt bán có sẵn, cộng thêm lượt bán từ đơn thật
     loai: 'landing-page',
     nganh: 'thoi-trang',
     mau: 'cam',
@@ -138,6 +143,7 @@ const mauWeb = [
   {
     id: 'LDNoiThat',
     ten: 'Nội Thất Cam Home',
+    luotBanCoSan: 27, // lượt bán có sẵn, cộng thêm lượt bán từ đơn thật
     loai: 'landing-page',
     nganh: 'noi-that',
     mau: 'cam',
@@ -163,6 +169,7 @@ const mauWeb = [
   {
     id: 'LDNuocNgot',
     ten: 'Nước Trái Cây Zest Citrus',
+    luotBanCoSan: 86, // lượt bán có sẵn, cộng thêm lượt bán từ đơn thật
     loai: 'landing-page',
     nganh: 'thuc-pham',
     mau: 'xanh-la',
@@ -189,6 +196,7 @@ const mauWeb = [
   {
     id: 'PL001',
     ten: 'Portfolio UI/UX NOVA',
+    luotBanCoSan: 36, // lượt bán có sẵn, cộng thêm lượt bán từ đơn thật
     loai: 'portfolio',
     nganh: 'cong-nghe',
     mau: 'xanh-dam',
@@ -215,6 +223,7 @@ const mauWeb = [
   {
     id: 'TT001',
     ten: 'Báo Điện Tử Bản Tin 24H',
+    luotBanCoSan: 32, // lượt bán có sẵn, cộng thêm lượt bán từ đơn thật
     loai: 'tin-tuc',
     nganh: 'khac',
     mau: 'xanh-dam',
@@ -244,6 +253,7 @@ const mauWeb = [
   {
     id: 'VanPhongPham',
     ten: 'Văn Phòng Phẩm',
+    luotBanCoSan: 58, // lượt bán có sẵn, cộng thêm lượt bán từ đơn thật
     loai: 'ban-hang',
     nganh: 'khac',
     mau: 'xanh-duong',
@@ -270,6 +280,7 @@ const mauWeb = [
   {
     id: 'WSVanHoa',
     ten: 'Tinh Hoa Nghệ Nhân Việt',
+    luotBanCoSan: 97, // lượt bán có sẵn, cộng thêm lượt bán từ đơn thật
     loai: 'gioi-thieu',
     nganh: 'du-lich',
     mau: 'xanh-dam',
@@ -299,6 +310,7 @@ const mauWeb = [
   {
     id: 'DBclb',
     ten: 'TVU CLUB – Quản lý CLB Sinh viên',
+    luotBanCoSan: 21, // lượt bán có sẵn, cộng thêm lượt bán từ đơn thật
     loai: 'admin-dashboard',
     nganh: 'giao-duc',
     mau: 'xanh-duong',
@@ -333,6 +345,7 @@ const mauWeb = [
   {
     id: 'GTcar',
     ten: 'AutoVela – Showroom Ô tô',
+    luotBanCoSan: 128, // lượt bán có sẵn, cộng thêm lượt bán từ đơn thật
     loai: 'gioi-thieu',
     nganh: 'doanh-nghiep',
     mau: 'toi',

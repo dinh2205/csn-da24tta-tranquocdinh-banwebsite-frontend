@@ -65,14 +65,14 @@ function MauDaMua({ dsMau }) {
                 </div>
             </div>
 
-            {/* Dải thẻ: snap để dừng đúng mép thẻ; ẩn thanh cuộn. Điện thoại 2 thẻ, sm 3, lg 4, xl 5 thẻ / khung */}
+            {/* Dải thẻ: snap để dừng đúng mép thẻ; ẩn thanh cuộn. Điện thoại 1 thẻ, sm 2, lg 3, xl 4 thẻ / khung (thẻ gần vuông) */}
             <div
                 ref={dai}
                 onScroll={kiemTra}
                 className="-mx-1 flex snap-x snap-mandatory gap-3 overflow-x-auto scroll-smooth px-1 pb-2 pt-1 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
             >
                 {dsMau.map((m) => (
-                    <div key={m.id} className="flex w-[calc((100%-0.75rem)/2)] flex-none snap-start [&>*]:w-full sm:w-[calc((100%-1.5rem)/3)] lg:w-[calc((100%-2.25rem)/4)] xl:w-[calc((100%-3rem)/5)]">
+                    <div key={m.id} className="flex w-full flex-none snap-start [&>*]:w-full sm:w-[calc((100%-0.75rem)/2)] lg:w-[calc((100%-1.5rem)/3)] xl:w-[calc((100%-2.25rem)/4)]">
                         <TheMau mau={m} nho />
                     </div>
                 ))}

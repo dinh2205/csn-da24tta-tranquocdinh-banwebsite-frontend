@@ -21,8 +21,18 @@ function HopDanhGia({ mau, saoBanDau, nhanXetBanDau = '', onGui, onHuy }) {
         return () => document.removeEventListener('keydown', nhanPhim);
     }, [onHuy]);
 
+    // Bấm gợi ý: chưa có thì thêm vào nhận xét, có rồi thì gỡ ra (không phân biệt hoa / thường)
     const themGoiY = (c) => {
-        if (nhanXet.includes(c)) return;
+        const viTri = nhanXet.toLowerCase().indexOf(c.toLowerCase());
+        if (viTri >= 0) {
+            const conLai = (nhanXet.slice(0, viTri) + nhanXet.slice(viTri + c.length))
+                .split(',')
+                .map((x) => x.trim())
+                .filter(Boolean)
+                .join(', ');
+            setNhanXet(conLai.charAt(0).toUpperCase() + conLai.slice(1));
+            return;
+        }
         setNhanXet((nhanXet.trim() ? `${nhanXet.trim()}, ${c.toLowerCase()}` : c).slice(0, TOI_DA));
     };
 
@@ -70,8 +80,9 @@ function HopDanhGia({ mau, saoBanDau, nhanXetBanDau = '', onGui, onHuy }) {
                     <p className="mt-1 h-5 text-sm font-semibold text-amber-600">{NHAN_SAO[hien]}</p>
                 </div>
 
-                {/* Gợi ý nhanh */}
-                <div className="mt-4 flex flex-wrap gap-2">
+                {/* Gợi ý nhanh: lưới 2 cột đều nhau, chọn rồi thì nền xanh + dấu tích, bấm lại để bỏ */}
+                <p className="mt-4 text-xs font-semibold uppercase tracking-wide text-slate-400">Gợi ý nhanh</p>
+                <div className="mt-2 grid grid-cols-2 gap-2">
                     {GOI_Y.map((c) => {
                         const daChon = nhanXet.toLowerCase().includes(c.toLowerCase());
                         return (
@@ -79,12 +90,22 @@ function HopDanhGia({ mau, saoBanDau, nhanXetBanDau = '', onGui, onHuy }) {
                                 key={c}
                                 type="button"
                                 onClick={() => themGoiY(c)}
-                                className={`rounded-full px-3 py-1 text-xs font-medium ring-1 transition ${
-                                    daChon ? 'bg-blue-50 text-blue-700 ring-blue-200' : 'bg-white text-slate-600 ring-slate-200 hover:bg-slate-50'
+                                aria-pressed={daChon}
+                                className={`flex items-center gap-2 rounded-lg border px-3 py-2 text-left text-sm font-medium transition ${
+                                    daChon
+                                        ? 'border-blue-600 bg-blue-600 text-white shadow-sm shadow-blue-600/30'
+                                        : 'border-slate-200 bg-slate-50 text-slate-700 hover:border-blue-300 hover:bg-blue-50 hover:text-blue-700'
                                 }`}
                             >
-                                {daChon ? '✓ ' : '+ '}
-                                {c}
+                                <span
+                                    className={`flex h-4 w-4 flex-none items-center justify-center rounded-full text-[10px] font-bold ${
+                                        daChon ? 'bg-white text-blue-600' : 'border border-slate-300 bg-white text-transparent'
+                                    }`}
+                                    aria-hidden="true"
+                                >
+                                    ✓
+                                </span>
+                                <span className="truncate">{c}</span>
                             </button>
                         );
                     })}

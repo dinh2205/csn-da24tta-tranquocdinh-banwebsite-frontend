@@ -14,6 +14,8 @@ const TaiKhoanContext = createContext(null);
 
 // Email viết hoa / thường hay có khoảng trắng thừa vẫn tính là 1
 const chuanEmail = (email) => email.trim().toLowerCase();
+// Số điện thoại chỉ giữ chữ số (bỏ khoảng trắng, dấu chấm...) để so trùng chính xác
+const chuanSdt = (sdt) => (sdt ?? '').replace(/\D/g, '');
 
 export function TaiKhoanProvider({ children }) {
     const [dsTaiKhoan, setDsTaiKhoan] = useState(() => doc(KHOA_TAI_KHOAN, []));
@@ -32,7 +34,8 @@ export function TaiKhoanProvider({ children }) {
 
     const dangKy = ({ hoTen, email, sdt, matKhau }) => {
         const e = chuanEmail(email);
-        if (dsTaiKhoan.some((t) => t.email === e)) return { ok: false, loi: 'Email này đã được đăng ký' };
+        if (dsTaiKhoan.some((t) => t.email === e)) return { ok: false, truong: 'email', loi: 'Email này đã được đăng ký' };
+        if (dsTaiKhoan.some((t) => chuanSdt(t.sdt) === chuanSdt(sdt))) return { ok: false, truong: 'sdt', loi: 'Số điện thoại này đã được đăng ký' };
         luuDs([...dsTaiKhoan, { hoTen: hoTen.trim(), email: e, sdt, matKhau, ngaySinh: '', gioiTinh: '', anh: '' }]);
         return { ok: true };
     };
@@ -57,6 +60,10 @@ export function TaiKhoanProvider({ children }) {
 
     // Sửa hồ sơ người đang đăng nhập (không cho đổi email vì email dùng làm mã tài khoản)
     const capNhatHoSo = (thayDoi) => {
+        // Số điện thoại không được trùng tài khoản khác
+        if (thayDoi.sdt && dsTaiKhoan.some((t) => t.email !== emailDangNhap && chuanSdt(t.sdt) === chuanSdt(thayDoi.sdt))) {
+            return { ok: false, truong: 'sdt', loi: 'Số điện thoại này đã được tài khoản khác sử dụng' };
+        }
         const ok = luuDs(dsTaiKhoan.map((t) => (t.email === emailDangNhap ? { ...t, ...thayDoi, email: t.email } : t)));
         return ok ? { ok: true } : { ok: false, loi: 'Không lưu được, ảnh đại diện có thể quá lớn' };
     };

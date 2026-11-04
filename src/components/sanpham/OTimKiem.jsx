@@ -6,7 +6,8 @@ const CHO_GO = 300;
 
 // Ô tìm kiếm dùng chung. Trang Mẫu website: gõ tới đâu lọc tới đó; trang khác: bấm Tìm kiếm để chuyển trang
 // className: thêm lớp cho khung ngoài (vd khoảng cách, vị trí)
-function OTimKiem({ placeholder = 'Tìm mẫu website...', className = '' }) {
+// mauNut: lớp màu nút Tìm kiếm, mauVien: viền ô khi rê chuột / bấm vào (vd theo banner danh mục); bỏ trống = xanh ngọc mặc định
+function OTimKiem({ placeholder = 'Tìm mẫu website...', className = '', mauNut = '', mauVien = '' }) {
   const { pathname } = useLocation();
   const [searchParams, setSearchParams] = useSearchParams();
   const navigate = useNavigate();
@@ -58,7 +59,7 @@ function OTimKiem({ placeholder = 'Tìm mẫu website...', className = '' }) {
         value={dangGo}
         onChange={(e) => setDangGo(e.target.value)}
         placeholder={placeholder}
-        className="w-full rounded-2xl border-0 bg-white py-[1.1rem] pl-14 pr-40 text-base text-slate-800 shadow-xl shadow-blue-950/30 outline-none ring-1 ring-white/60 transition placeholder:text-slate-400 focus:ring-4 focus:ring-cyan-300/60"
+        className={`w-full rounded-2xl border-0 bg-white py-[1.1rem] pl-14 pr-40 text-base text-slate-800 shadow-xl shadow-blue-950/30 outline-none ring-1 ring-white/60 transition placeholder:text-slate-400 ${mauVien || 'hover:ring-2 hover:ring-cyan-300 focus:ring-4 focus:ring-cyan-300/60'}`}
       />
       {/* Nút ✕ xóa chữ */}
       {dangGo && (
@@ -73,7 +74,7 @@ function OTimKiem({ placeholder = 'Tìm mẫu website...', className = '' }) {
       )}
       <button
         type="submit"
-        className="absolute right-2 top-2 rounded-xl bg-cyan-400 px-5 py-2.5 text-sm font-bold text-blue-950 shadow-md transition hover:bg-cyan-300 active:scale-95"
+        className={`absolute right-2 top-2 rounded-xl px-5 py-2.5 text-sm font-bold shadow-md transition active:scale-95 ${mauNut || 'bg-cyan-400 text-blue-950 hover:bg-cyan-300'}`}
       >
         Tìm kiếm
       </button>

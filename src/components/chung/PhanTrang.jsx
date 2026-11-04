@@ -11,11 +11,12 @@ function soCanHien(trang, soTrang) {
     return [1, ...(dau > 2 ? ['…'] : []), ...giua, ...(cuoi < soTrang - 1 ? ['…'] : []), soTrang];
 }
 
-// PHÂN TRANG (1 trang thì ẩn nút), dùng ở Đơn hàng và Mẫu website
-function PhanTrang({ trang, soTrang, onDoiTrang, moTa }) {
+// PHÂN TRANG (1 trang thì ẩn nút), dùng ở Đơn hàng và Mẫu website.
+// khung: màu viền + nền (vd 'border-blue-200 bg-blue-50') thì bọc trong khung ngang mỏng, bỏ trống = không khung
+function PhanTrang({ trang, soTrang, onDoiTrang, moTa, khung = '' }) {
     return (
-        <div className="mt-5 flex flex-wrap items-center justify-between gap-3">
-            <p className="text-sm text-slate-500">{moTa}</p>
+        <div className={`mt-5 flex flex-wrap items-center justify-between gap-3 ${khung ? `rounded-xl border px-3 py-2 ${khung}` : ''}`}>
+            <p className={`text-sm ${khung ? 'text-blue-900/70' : 'text-slate-500'}`}>{moTa}</p>
 
             {soTrang > 1 && (
                 <div className="flex items-center gap-1.5">
@@ -24,7 +25,7 @@ function PhanTrang({ trang, soTrang, onDoiTrang, moTa }) {
                         onClick={() => onDoiTrang(trang - 1)}
                         disabled={trang === 1}
                         aria-label="Trang trước"
-                        className={`${kieuNut} border-blue-100 bg-blue-50 text-blue-700 hover:bg-blue-100`}
+                        className={`${kieuNut} border-blue-200 bg-white text-blue-700 hover:border-blue-400 hover:bg-blue-50`}
                     >
                         ‹
                     </button>
@@ -38,7 +39,7 @@ function PhanTrang({ trang, soTrang, onDoiTrang, moTa }) {
                             onClick={() => onDoiTrang(so)}
                             className={`${kieuNut} ${so === trang
                                 ? 'border-cyan-400 bg-cyan-400 text-blue-950 shadow-md shadow-cyan-500/30'
-                                : 'border-blue-100 bg-blue-50 text-blue-700 hover:bg-blue-100'
+                                : 'border-blue-200 bg-white text-blue-700 hover:border-blue-400 hover:bg-blue-50'
                                 }`}
                         >
                             {so}
@@ -50,7 +51,7 @@ function PhanTrang({ trang, soTrang, onDoiTrang, moTa }) {
                         onClick={() => onDoiTrang(trang + 1)}
                         disabled={trang === soTrang}
                         aria-label="Trang sau"
-                        className={`${kieuNut} border-blue-100 bg-blue-50 text-blue-700 hover:bg-blue-100`}
+                        className={`${kieuNut} border-blue-200 bg-white text-blue-700 hover:border-blue-400 hover:bg-blue-50`}
                     >
                         ›
                     </button>

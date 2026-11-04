@@ -2,6 +2,7 @@ import { Link } from 'react-router-dom';
 import { loaiList } from '../../data/danhmuc';
 import mauWeb from '../../data/mauWeb';
 import { moTaDanhMuc } from '../../data/trangChu';
+import { mauChuTheoLoai } from '../MauWeb/bannerDanhMuc';
 
 // Số mẫu từng loại + loại nhiều mẫu nhất (gắn nhãn "Phổ biến")
 const soMau = Object.fromEntries(loaiList.map((l) => [l.id, mauWeb.filter((m) => m.loai === l.id).length]));
@@ -58,8 +59,8 @@ function DanhMucChinh() {
                                         <span className="h-2.5 w-2.5 rounded-full bg-amber-400" />
                                         <span className="h-2.5 w-2.5 rounded-full bg-emerald-400" />
                                     </div>
-                                    {/* Tên danh mục căn giữa thanh, chữ đậm tô màu */}
-                                    <span className="truncate bg-gradient-to-r from-[#0b3393] via-blue-700 to-cyan-500 bg-clip-text text-center text-base font-extrabold text-transparent">
+                                    {/* Tên danh mục căn giữa thanh, chữ đậm tô màu theo tông banner của danh mục */}
+                                    <span className={`truncate bg-gradient-to-r ${mauChuTheoLoai[l.id] ?? 'from-[#0b3393] via-blue-700 to-cyan-500'} bg-clip-text text-center text-base font-extrabold text-transparent`}>
                                         {l.ten}
                                     </span>
                                     <span className="justify-self-end rounded-full bg-blue-50 px-2 py-0.5 text-[11px] font-semibold text-blue-700 ring-1 ring-blue-100">

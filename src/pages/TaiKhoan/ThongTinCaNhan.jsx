@@ -14,6 +14,14 @@ const ICON_MAY_ANH = 'M4 8h3l2-3h6l2 3h3v11H4V8ZM12 16a3 3 0 1 0 0-6 3 3 0 0 0 0
 const CANH_TOI_DA = 400;
 const matKhauBanDau = { cu: '', moi: '', xacNhan: '' };
 
+// Điều kiện mật khẩu mới: [nội dung, đã đạt chưa]
+const dieuKienMatKhau = ({ cu, moi }) => [
+    ['Ít nhất 8 ký tự', moi.length >= 8],
+    ['Có chữ hoa và chữ thường', /[a-z]/.test(moi) && /[A-Z]/.test(moi)],
+    ['Có số và ký tự đặc biệt', /\d/.test(moi) && /[^A-Za-z0-9]/.test(moi)],
+    ['Không trùng mật khẩu hiện tại', moi !== '' && moi !== cu],
+];
+
 // Hai khung Hồ sơ và Đổi mật khẩu: nền trắng
 const KHUNG = 'rounded-2xl border border-slate-200 bg-white p-5 shadow-sm sm:p-6';
 
@@ -96,7 +104,7 @@ function ThongTinCaNhan() {
         if (Object.keys(l).length > 0) return;
         const kq = capNhatHoSo({ ...hoSo, hoTen: hoSo.hoTen.trim(), anh });
         if (kq.ok) setBaoHoSo('Đã lưu thông tin cá nhân.');
-        else setLoiHoSo({ anh: kq.loi });
+        else setLoiHoSo({ [kq.truong ?? 'anh']: kq.loi });
     };
 
     const luuMatKhau = (e) => {
@@ -120,7 +128,7 @@ function ThongTinCaNhan() {
 
     return (
         <div className="space-y-6">
-            <TieuDeTrang ten="Thông tin cá nhân" moTa="Cập nhật hồ sơ và mật khẩu để bảo vệ tài khoản của bạn." />
+            <TieuDeTrang mau="blue" ten="Thông tin cá nhân" />
 
             {/* 1. HỒ SƠ: máy tính chia 2 cột (ảnh đại diện | form), điện thoại xếp dọc */}
             <form onSubmit={luuHoSo} noValidate className={`grid gap-6 md:grid-cols-[12rem_minmax(0,1fr)] ${KHUNG}`}>
@@ -179,11 +187,18 @@ function ThongTinCaNhan() {
                     <div>
                         <h2 className="text-lg font-bold text-slate-900">Đổi mật khẩu</h2>
                         <p className="mt-1 text-sm text-slate-500">Mật khẩu mạnh giúp bảo vệ tài khoản của bạn.</p>
-                        <ul className="mt-4 space-y-1.5 text-sm text-slate-600">
-                            <li>• Ít nhất 8 ký tự</li>
-                            <li>• Có chữ hoa và chữ thường</li>
-                            <li>• Có số và ký tự đặc biệt</li>
-                            <li>• Không trùng mật khẩu hiện tại</li>
+                        {/* Điều kiện mật khẩu: mỗi dòng 1 vòng tròn, đạt thì chuyển dấu tích xanh */}
+                        <ul className="mt-5 space-y-3 rounded-xl border border-slate-200 bg-slate-50 p-4 text-sm">
+                            {dieuKienMatKhau(matKhau).map(([chu, dat]) => (
+                                <li key={chu} className={`flex items-center gap-3 font-medium ${dat ? 'text-emerald-700' : 'text-slate-600'}`}>
+                                    <span
+                                        className={`flex h-5 w-5 flex-none items-center justify-center rounded-full border-2 transition ${dat ? 'border-emerald-500 bg-emerald-500 text-white' : 'border-slate-300 bg-white'}`}
+                                    >
+                                        {dat && <Icon d="M5 12.5l4.5 4.5L19 7.5" className="h-3 w-3" strokeWidth={3} />}
+                                    </span>
+                                    {chu}
+                                </li>
+                            ))}
                         </ul>
                     </div>
 

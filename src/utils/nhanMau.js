@@ -14,3 +14,7 @@ export const laKhuyenMaiThuong = (mau) => laKhuyenMai(mau) && !laDacBiet(mau);
 
 // Mới: có cờ moi: true (không tính theo ngày)
 export const laMoi = (mau) => mau.moi === true;
+
+// Xếp hạng bán chạy dùng chung (Mẫu bán chạy + Mẫu nổi bật): nhiều lượt bán trước,
+// bằng lượt thì điểm đánh giá cao trước, rồi nhiều lượt đánh giá trước
+export const soSanhBanChay = (a, b) => b.luotBan - a.luotBan || b.danhGia.diem - a.danhGia.diem || b.danhGia.luot - a.danhGia.luot;

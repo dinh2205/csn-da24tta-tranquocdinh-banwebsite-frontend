@@ -3,12 +3,14 @@ import { Link } from 'react-router-dom';
 import PhanTrang from '../../components/chung/PhanTrang';
 import TheMau from '../../components/sanpham/TheMau';
 import { sapXepList } from '../../data/danhmuc';
+import { mauToiTheoLoai } from './bannerDanhMuc';
 
 const SO_MAU_MOI_TRANG = 9;
 
 // 5. DANH SÁCH MẪU
 // dsMau: mẫu chưa mua (đã bỏ mẫu tài khoản đã mua), soDaMua: số mẫu bị ẩn vì đã mua
-function DanhSachMau({ ketQua, tuKhoa, onXoaTuKhoa, sapXep, setSapXep, soLocDangBat, onBatTatBoLoc, onXoaTatCa, dsMau, soDaMua, trang, setTrang }) {
+// loai: danh mục đang chọn, nút "Xóa tất cả bộ lọc" tô màu theo banner danh mục đó
+function DanhSachMau({ loai, ketQua, tuKhoa, onXoaTuKhoa, sapXep, setSapXep, soLocDangBat, onBatTatBoLoc, onXoaTatCa, dsMau, soDaMua, trang, setTrang }) {
     const dauDanhSach = useRef(null);
     // Không có kết quả thì gợi ý 3 mẫu bán chạy (trong số mẫu chưa mua)
     const goiY = [...dsMau].sort((a, b) => b.luotBan - a.luotBan).slice(0, 3);
@@ -28,7 +30,7 @@ function DanhSachMau({ ketQua, tuKhoa, onXoaTuKhoa, sapXep, setSapXep, soLocDang
     return (
         <div ref={dauDanhSach} className="min-w-0 scroll-mt-24">
             {/* 5.1 Thanh trên: khung ngang mỏng viền xanh, số kết quả bên trái, sắp xếp bên phải */}
-            <div className="mb-4 flex flex-wrap items-center justify-between gap-x-3 gap-y-2 rounded-xl border border-blue-200 bg-blue-50/70 px-3 py-2">
+            <div className="mb-4 flex flex-wrap items-center justify-between gap-x-3 gap-y-2 rounded-xl border border-blue-200 bg-blue-50 px-3 py-2">
                 <div className="flex flex-wrap items-center gap-2 text-sm text-slate-500">
                     <span>
                         Tìm thấy <strong className="text-blue-700">{ketQua.length}</strong> mẫu website
@@ -95,14 +97,14 @@ function DanhSachMau({ ketQua, tuKhoa, onXoaTuKhoa, sapXep, setSapXep, soLocDang
                         <button
                             type="button"
                             onClick={onXoaTatCa}
-                            className="mt-4 rounded-lg bg-cyan-400 px-4 py-2 text-sm font-bold text-blue-950 transition hover:bg-cyan-300"
+                            className={`mt-4 rounded-lg px-4 py-2 text-sm font-bold shadow-md transition hover:brightness-110 active:scale-95 ${mauToiTheoLoai[loai ?? ''] ?? mauToiTheoLoai['']}`}
                         >
                             Xóa tất cả bộ lọc
                         </button>
                     </div>
 
                     <h3 className="mb-3 mt-8 text-base font-bold text-slate-900">Có thể bạn quan tâm</h3>
-                    <div className="grid gap-5 sm:grid-cols-2 xl:grid-cols-3">
+                    <div className="grid gap-x-8 gap-y-10 sm:grid-cols-2 xl:grid-cols-3">
                         {goiY.map((m) => (
                             <TheMau key={m.id} mau={m} />
                         ))}
@@ -110,7 +112,7 @@ function DanhSachMau({ ketQua, tuKhoa, onXoaTuKhoa, sapXep, setSapXep, soLocDang
                 </div>
             ) : (
                 <>
-                    <div className="grid gap-5 sm:grid-cols-2 xl:grid-cols-3">
+                    <div className="grid gap-x-8 gap-y-10 sm:grid-cols-2 xl:grid-cols-3">
                         {mauHienThi.map((m) => (
                             <TheMau key={m.id} mau={m} />
                         ))}
@@ -118,6 +120,7 @@ function DanhSachMau({ ketQua, tuKhoa, onXoaTuKhoa, sapXep, setSapXep, soLocDang
 
                     {/* 5.3 Phân trang */}
                     <PhanTrang
+                        khung="border-blue-200 bg-blue-50"
                         trang={trangHienTai}
                         soTrang={soTrang}
                         onDoiTrang={doiTrang}

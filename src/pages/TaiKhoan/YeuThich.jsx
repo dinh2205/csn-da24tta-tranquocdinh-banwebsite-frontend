@@ -27,17 +27,17 @@ function YeuThich() {
 
     return (
         <div className="space-y-6">
-            <TieuDeTrang ten="Mẫu yêu thích" moTa="Các mẫu bạn bấm ♡ Yêu thích sẽ được lưu ở đây để xem lại và mua sau." />
+            <TieuDeTrang mau="hong" ten="Mẫu yêu thích" />
 
             {dsYeuThich.length === 0 ? (
                 // Chưa thích mẫu nào
-                <section className="rounded-3xl bg-gradient-to-br from-[#0b1f4d] via-[#14317a] to-blue-700 p-6 text-center shadow-lg shadow-blue-950/20 sm:p-12">
-                    <span className="mx-auto flex h-16 w-16 items-center justify-center rounded-2xl bg-rose-500/20 text-rose-300">
+                <section className="rounded-3xl border border-slate-200 bg-white p-6 text-center shadow-sm sm:p-12">
+                    <span className="mx-auto flex h-16 w-16 items-center justify-center rounded-2xl bg-rose-100 text-rose-500">
                         <Icon d={ICON_TIM} className="h-8 w-8" strokeWidth={1.8} />
                     </span>
-                    <h2 className="mt-5 text-2xl font-extrabold text-white">Chưa có mẫu yêu thích</h2>
-                    <p className="mx-auto mt-3 max-w-md text-sm leading-relaxed text-blue-200">
-                        Bấm nút <span className="font-semibold text-white">♡ Yêu thích</span> ở trang chi tiết mẫu để lưu lại những mẫu bạn ưng ý.
+                    <h2 className="mt-5 text-2xl font-extrabold text-slate-900">Chưa có mẫu yêu thích</h2>
+                    <p className="mx-auto mt-3 max-w-md text-sm leading-relaxed text-slate-500">
+                        Bấm nút <span className="font-semibold text-rose-600">♡ Yêu thích</span> ở trang chi tiết mẫu để lưu lại những mẫu bạn ưng ý.
                     </p>
                     <Link
                         to="/mau-website"
@@ -49,39 +49,39 @@ function YeuThich() {
             ) : (
                 <>
                 {/* Tìm kiếm + lọc danh mục (dùng lại khung của trang Lịch sử mua hàng) */}
-                <TimLocDon tuKhoa={tuKhoa} onDoiTuKhoa={setTuKhoa} loaiLoc={loaiLoc} onDoiLoai={setLoaiLoc} goiY="Tìm theo tên mẫu, danh mục hoặc lĩnh vực..." />
+                <TimLocDon tuKhoa={tuKhoa} onDoiTuKhoa={setTuKhoa} loaiLoc={loaiLoc} onDoiLoai={setLoaiLoc} goiY="Tìm theo tên mẫu, danh mục hoặc lĩnh vực..." hong />
 
-                {/* Khung nền navy bọc lưới thẻ (giống các khung khác trong khu Tài khoản) */}
-                <section className="rounded-2xl bg-gradient-to-r from-[#0b1f4d] to-[#14317a] p-5 shadow-lg shadow-blue-950/20 sm:p-6">
+                {/* Khung nền đỏ nhạt bọc lưới thẻ (cùng tông trái tim Yêu thích) */}
+                <section className="rounded-2xl border border-rose-200 bg-rose-50 p-5 shadow-sm sm:p-6">
                     <div className="mb-5 flex flex-wrap items-center justify-between gap-3">
-                        <h2 className="flex items-center gap-2 text-lg font-bold text-white">
-                            <Icon d={ICON_TIM} className="h-5 w-5 text-rose-400" strokeWidth={1.8} />
+                        <h2 className="flex items-center gap-2 text-lg font-bold text-slate-900">
+                            <Icon d={ICON_TIM} className="h-5 w-5 text-rose-500" strokeWidth={1.8} />
                             Đang lưu
-                            <span className="rounded-full bg-cyan-400/15 px-2.5 py-0.5 text-sm font-semibold text-cyan-300">
+                            <span className="rounded-full bg-rose-100 px-2.5 py-0.5 text-sm font-semibold text-rose-700">
                                 {dsHien.length < dsYeuThich.length ? `${dsHien.length}/${dsYeuThich.length}` : dsYeuThich.length} mẫu
                             </span>
                         </h2>
-                        <Link to="/mau-website" className="text-sm font-semibold text-cyan-300 hover:underline">
+                        <Link to="/mau-website" className="text-sm font-semibold text-rose-600 hover:underline">
                             Khám phá thêm mẫu →
                         </Link>
                     </div>
                     {dsHien.length === 0 ? (
-                        <div className="rounded-xl border border-dashed border-white/20 py-10 text-center">
-                            <p className="font-medium text-white">Không tìm thấy mẫu phù hợp</p>
+                        <div className="rounded-xl border border-dashed border-rose-300 bg-white py-10 text-center">
+                            <p className="font-medium text-slate-700">Không tìm thấy mẫu phù hợp</p>
                             <button
                                 type="button"
                                 onClick={() => {
                                     setTuKhoa('');
                                     setLoaiLoc('');
                                 }}
-                                className="mt-2 text-sm font-semibold text-cyan-300 hover:underline"
+                                className="mt-2 text-sm font-semibold text-rose-600 hover:underline"
                             >
                                 Xóa bộ lọc
                             </button>
                         </div>
                     ) : (
-                        <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
-                            {/* Thẻ nhỏ, máy tính 5 mẫu / hàng. Bỏ thích bằng trái tim ngay trên thẻ (TheMau.jsx) */}
+                        <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+                            {/* Máy tính 4 mẫu / hàng (thẻ gần vuông). Bỏ thích bằng trái tim ngay trên thẻ (TheMau.jsx) */}
                             {dsHien.map((m) => (
                                 <TheMau key={m.id} mau={m} nho />
                             ))}

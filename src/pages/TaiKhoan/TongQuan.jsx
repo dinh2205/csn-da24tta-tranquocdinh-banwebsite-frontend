@@ -9,8 +9,9 @@ import mauWeb from '../../data/mauWeb';
 import { tinhTienDon } from '../../data/donHang';
 import { dinhDangGia, dinhDangNgay } from '../../utils/chuyenDoi';
 import MauDaMua from './MauDaMua';
-import nenBien from '../../assets/nen-mau-noi-bat.webp';
-import bannerUuDai from '../../assets/banner-uu-dai.webp';
+import TheDiemThuong from './TheDiemThuong';
+import PosterLienHe from './PosterLienHe';
+import bannerUuDaiNgang from '../../assets/banner-mau-website.webp';
 
 const ICON = {
     muiTen: 'M5 12h14M13 6l6 6-6 6',
@@ -25,6 +26,8 @@ const ICON = {
 };
 
 const SO_DON_GAN_DAY = 5;
+// 6 mẫu website trang trí bên phải khung Lời chào: lưới 3 x 2 cửa sổ trình duyệt đều nhau, cả nhóm nghiêng nhẹ
+const MAU_TRANG_TRI = ['WSVanHoa', 'KhoaHocIelt', 'LDNuocNgot', 'LDBacSi', 'GTcar', 'PL001'].map((id) => mauWeb.find((m) => m.id === id)).filter(Boolean);
 // Độ rộng 5 cột của bảng đơn gần đây (dùng chung cho hàng tiêu đề và các hàng đơn để thẳng cột):
 // mã đơn | ngày | sản phẩm (co giãn) | tổng tiền | trạng thái
 const COT_BANG = 'sm:grid-cols-[8.5rem_5.5rem_minmax(0,1fr)_6.5rem_7.5rem]';
@@ -63,29 +66,57 @@ function TongQuan() {
     const tenSanPham = (don) => don.items.map((it) => mauWeb.find((m) => m.id === it.id)?.ten ?? it.id).join(', ');
 
     return (
-        // Máy tính (xl): cột trái = nội dung chính (chiếm 2 hàng), cột phải = hồ sơ (hàng 1) + banner (hàng 2).
+        // Máy tính (xl): cột trái = nội dung chính (chiếm 3 hàng), cột phải = hồ sơ + điểm thưởng (giãn cao lấp chỗ trống) + poster liên hệ.
         // Màn nhỏ: xếp 1 cột, thẻ hồ sơ lên đầu (order-first), banner xuống cuối
-        <div className="grid gap-6 xl:grid-cols-[minmax(0,1fr)_17rem] xl:grid-rows-[auto_1fr]">
-            <div className="min-w-0 space-y-6 xl:row-span-2">
-                {/* 1. LỜI CHÀO: nền xanh đậm có hình minh họa (tai nghe bên phải) → chữ trắng.
-                    bg-[#0a2a86]: màu nền tạm trong lúc ảnh đang tải */}
-                <section
-                    className="relative overflow-hidden rounded-2xl bg-[#0a2a86] bg-cover bg-bottom bg-no-repeat p-6 shadow-lg shadow-blue-900/20 sm:p-10"
-                    style={{ backgroundImage: `url(${nenBien})` }}
-                >
-                    {/* Phủ tối dần từ trái sang để chữ nổi trên các đường sáng của ảnh (điện thoại phủ đậm hơn) */}
-                    <div className="pointer-events-none absolute inset-0 bg-gradient-to-r from-[#061a5c]/80 via-[#061a5c]/50 to-transparent sm:from-[#061a5c]/60 sm:via-[#061a5c]/20" aria-hidden="true" />
-                    <div className="relative max-w-xl">
-                        <p className="inline-flex items-center gap-2 rounded-full bg-white/10 px-3 py-1 text-xs font-semibold uppercase tracking-wider text-cyan-200 ring-1 ring-white/20 backdrop-blur-sm">
-                            <span className="h-1.5 w-1.5 rounded-full bg-cyan-300" aria-hidden="true" />
+        <div className="grid gap-6 xl:grid-cols-[minmax(0,1fr)_17rem] xl:grid-rows-[auto_1fr_auto]">
+            <div className="min-w-0 space-y-6 xl:row-span-3 xl:flex xl:flex-col xl:gap-6 xl:space-y-0">
+                {/* 1. LỜI CHÀO: nền vẽ bằng CSS (không dùng ảnh): navy → xanh dương, quầng sáng xanh ngọc, lưới chấm,
+                    bên phải là 6 cửa sổ trình duyệt hiển thị mẫu website xếp nghiêng (ẩn trên điện thoại) */}
+                <section className="relative overflow-hidden rounded-2xl bg-gradient-to-br from-[#0b1f4d] via-[#123a9c] to-[#1d6fe0] p-6 shadow-lg shadow-blue-900/20 sm:p-10">
+                    <div className="pointer-events-none absolute inset-0" aria-hidden="true">
+                        {/* Lưới chấm mờ dần sang phải */}
+                        <div className="absolute inset-0 bg-[radial-gradient(rgba(255,255,255,0.14)_1px,transparent_1px)] [background-size:20px_20px] [mask-image:linear-gradient(to_right,black,transparent_70%)]" />
+                        {/* Quầng sáng */}
+                        <div className="absolute -right-10 -top-16 h-72 w-72 rounded-full bg-cyan-400/40 blur-3xl" />
+                        <div className="absolute -bottom-24 right-1/3 h-64 w-64 rounded-full bg-sky-400/25 blur-3xl" />
+                        <div className="absolute -left-20 -top-20 h-56 w-56 rounded-full bg-indigo-500/30 blur-3xl" />
+                        {/* Vòng tròn mảnh trang trí */}
+                        <div className="absolute -right-24 bottom-[-40%] h-96 w-96 rounded-full border border-white/10" />
+                        <div className="absolute -right-10 bottom-[-25%] h-72 w-72 rounded-full border border-white/10" />
+                        {/* Cửa sổ trình duyệt hiển thị mẫu: lưới 3 x 2 đều nhau trong nửa bên phải (không đè lên chữ), cả nhóm nghiêng nhẹ */}
+                        <div className="absolute inset-y-0 right-0 hidden w-[48%] items-center justify-center md:flex">
+                            <div className="grid w-[112%] shrink-0 rotate-[-8deg] grid-cols-3 gap-3 lg:gap-4">
+                                {MAU_TRANG_TRI.map((m, i) => (
+                                    <div
+                                        key={m.id}
+                                        className={`overflow-hidden rounded-lg bg-white shadow-2xl shadow-black/40 ring-1 ring-white/30 ${i % 3 === 1 ? 'translate-y-4' : ''}`}
+                                    >
+                                        <div className="flex gap-1 bg-slate-100 px-2 py-1.5">
+                                            <span className="h-1.5 w-1.5 rounded-full bg-red-400" />
+                                            <span className="h-1.5 w-1.5 rounded-full bg-amber-400" />
+                                            <span className="h-1.5 w-1.5 rounded-full bg-emerald-400" />
+                                        </div>
+                                        <img src={m.anh[0]} alt="" className="block aspect-16/10 w-full object-cover object-top" />
+                                    </div>
+                                ))}
+                            </div>
+                        </div>
+                    </div>
+                    {/* Chữ chiếm tối đa nửa trái (máy tính) để không đè lên lưới mẫu */}
+                    <div className="relative max-w-xl md:max-w-[50%]">
+                        <p className="inline-flex items-center gap-2 rounded-full bg-[#061a4a] px-3 py-1 text-[11px] font-bold uppercase tracking-[0.18em] text-cyan-300 shadow-md shadow-black/30 ring-1 ring-cyan-400/60">
+                            <span className="h-1.5 w-1.5 animate-pulse rounded-full bg-cyan-300" aria-hidden="true" />
                             Tài khoản của tôi
                         </p>
-                        <h1 className="mt-4 text-2xl font-extrabold leading-tight text-white sm:text-4xl">
-                            Chào mừng trở lại,
-                            <br />
-                            <span className="bg-gradient-to-r from-cyan-300 to-sky-200 bg-clip-text text-transparent">{user.hoTen}</span>
+                        {/* Lời chào nhỏ ở trên, tên người dùng to + vạch xanh bên dưới */}
+                        <h1 className="mt-4 drop-shadow-[0_2px_10px_rgba(3,10,40,0.6)]">
+                            <span className="block text-lg font-semibold text-blue-100 sm:text-xl">Chào mừng trở lại 👋</span>
+                            <span className="mt-1 block text-3xl font-black leading-tight tracking-tight text-white sm:text-5xl">{user.hoTen}</span>
                         </h1>
-                        <p className="mt-3 text-sm text-blue-100/90 sm:text-base">Hôm nay bạn muốn tìm mẫu website nào?</p>
+                        <span className="mt-3 block h-1 w-16 rounded-full bg-gradient-to-r from-cyan-400 to-sky-300" aria-hidden="true" />
+                        <p className="mt-3 max-w-md text-sm leading-relaxed text-blue-100/90 drop-shadow sm:text-base">
+                            Hôm nay bạn muốn tìm <span className="font-semibold text-cyan-300">mẫu website</span> nào? Hàng chục mẫu mới đang chờ bạn khám phá.
+                        </p>
                         <div className="mt-6 flex flex-wrap gap-3">
                             <Link
                                 to="/mau-website"
@@ -130,16 +161,21 @@ function TongQuan() {
                     ))}
                 </section>
 
-                {/* 3. ĐƠN HÀNG GẦN ĐÂY: 5 đơn mới nhất */}
-                <section className="overflow-hidden rounded-2xl border border-blue-100 bg-gradient-to-br from-sky-50 to-blue-50 shadow-sm">
+                {/* 3. ĐƠN HÀNG GẦN ĐÂY: 5 đơn mới nhất. Máy tính lớn: giãn cao lấp chỗ trống (ít đơn vẫn có khoảng trắng)
+                    để banner khuyến mãi bên dưới luôn thẳng đáy với poster bên phải */}
+                <section className="overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm xl:flex-1">
                     {/* Dải đầu bảng nền navy (giống thẻ đơn ở trang Lịch sử mua hàng) */}
                     <div className="flex items-center justify-between gap-3 bg-gradient-to-r from-[#0b1f4d] to-[#14317a] px-5 py-4">
                         <h2 className="flex items-center gap-2 text-lg font-bold text-white">
                             <Icon d={ICON.donHang} className="h-5 w-5 text-cyan-300" strokeWidth={1.8} />
                             Đơn hàng gần đây
+                            {/* Tổng số đơn cạnh tiêu đề */}
+                            {donCuaToi.length > 0 && (
+                                <span className="rounded-full bg-cyan-400/20 px-2.5 py-0.5 text-xs font-semibold text-cyan-200">{donCuaToi.length} đơn</span>
+                            )}
                         </h2>
                         <Link to="/tai-khoan/don-hang" className="flex items-center gap-1 text-sm font-semibold text-cyan-300 hover:underline">
-                            Xem tất cả
+                            Xem tất cả{donCuaToi.length > SO_DON_GAN_DAY && ` (${donCuaToi.length})`}
                             <Icon d={ICON.muiTen} />
                         </Link>
                     </div>
@@ -160,25 +196,45 @@ function TongQuan() {
                             </Link>
                         </div>
                     ) : (
-                        <ul className="divide-y divide-blue-100">
-                            {donCuaToi.slice(0, SO_DON_GAN_DAY).map((d) => (
-                                // Điện thoại: 2 cột gọn (mã + tiền trên, sản phẩm dưới). Từ sm: 5 cột như tiêu đề
-                                <li key={d.ma} className={`grid grid-cols-2 gap-x-3 gap-y-1 px-5 py-3.5 text-sm sm:items-center ${COT_BANG}`}>
-                                    <span className="whitespace-nowrap font-bold text-slate-900">#{d.ma}</span>
-                                    <span className="text-right text-slate-500 sm:text-left">{dinhDangNgay(d.ngay)}</span>
-                                    <span className="col-span-2 truncate text-slate-700 sm:col-span-1">{tenSanPham(d)}</span>
-                                    <span className="font-semibold text-slate-900 sm:text-right">{dinhDangGia(tinhTienDon(d).tong)}</span>
-                                    <span className="text-right">
-                                        <span className="whitespace-nowrap rounded-full bg-emerald-50 px-2.5 py-1 text-xs font-semibold text-emerald-700">Đã thanh toán</span>
-                                    </span>
-                                </li>
-                            ))}
-                        </ul>
+                        <>
+                            <ul className="divide-y divide-blue-100">
+                                {donCuaToi.slice(0, SO_DON_GAN_DAY).map((d) => (
+                                    // Điện thoại: 2 cột gọn (mã + tiền trên, sản phẩm dưới). Từ sm: 5 cột như tiêu đề
+                                    <li key={d.ma} className={`grid grid-cols-2 gap-x-3 gap-y-1 px-5 py-3.5 text-sm sm:items-center ${COT_BANG}`}>
+                                        <span className="whitespace-nowrap font-bold text-slate-900">#{d.ma}</span>
+                                        <span className="text-right text-slate-500 sm:text-left">{dinhDangNgay(d.ngay)}</span>
+                                        <span className="col-span-2 truncate text-slate-700 sm:col-span-1">{tenSanPham(d)}</span>
+                                        <span className="font-bold text-red-600 sm:text-right">{dinhDangGia(tinhTienDon(d).tong)}</span>
+                                        <span className="text-right">
+                                            <span className="whitespace-nowrap rounded-full bg-emerald-50 px-2.5 py-1 text-xs font-semibold text-emerald-700">Đã thanh toán</span>
+                                        </span>
+                                    </li>
+                                ))}
+                            </ul>
+                            {/* Còn đơn cũ hơn 5 đơn đang hiện: dòng nhắc + link sang Lịch sử mua hàng */}
+                            {donCuaToi.length > SO_DON_GAN_DAY && (
+                                <Link
+                                    to="/tai-khoan/don-hang"
+                                    className="flex items-center justify-center gap-1.5 border-t border-blue-100 bg-blue-50/60 px-5 py-3 text-sm font-semibold text-blue-700 transition hover:bg-blue-100"
+                                >
+                                    Bạn còn {donCuaToi.length - SO_DON_GAN_DAY} đơn hàng khác · Xem tất cả {donCuaToi.length} đơn
+                                    <Icon d={ICON.muiTen} />
+                                </Link>
+                            )}
+                        </>
                     )}
                 </section>
+
+                {/* 3. BANNER ƯU ĐÃI NGANG: bấm vào sang trang Mẫu website, chọn sẵn ưu đãi Siêu sale */}
+                <Link
+                    to="/mau-website?uudai=dacBiet"
+                    className="block overflow-hidden rounded-2xl shadow-sm transition hover:-translate-y-0.5 hover:shadow-lg"
+                >
+                    <img src={bannerUuDaiNgang} alt="Siêu giảm giá mẫu website, xem các mẫu Siêu sale" width={2560} height={801} loading="lazy" className="block h-auto w-full" />
+                </Link>
             </div>
 
-            {/* 4. CỘT PHẢI: thẻ hồ sơ + banner ưu đãi */}
+            {/* 4. CỘT PHẢI: thẻ hồ sơ + điểm thưởng + poster liên hệ */}
             {/* 4.1 Hồ sơ */}
             <section className="order-first rounded-2xl bg-gradient-to-br from-[#0b1f4d] to-[#14317a] p-5 text-white shadow-lg shadow-blue-950/20 xl:order-none">
                 <div className="flex items-start gap-3">
@@ -201,21 +257,11 @@ function TongQuan() {
                 </ul>
             </section>
 
-            {/* 4.2 Banner ưu đãi: sang trang Mẫu website, chọn sẵn ưu đãi Siêu sale.
-                Giữ đúng tỉ lệ ảnh (960 x 1358), không kéo giãn theo cột bên trái */}
-            <Link
-                to="/mau-website?uudai=dacBiet"
-                className="block self-start overflow-hidden rounded-2xl shadow-sm transition hover:-translate-y-0.5 hover:shadow-lg sm:mx-auto sm:w-80 xl:w-auto"
-            >
-                <img
-                    src={bannerUuDai}
-                    alt="Siêu giảm giá mẫu website, ưu đãi đến 50%"
-                    width={960}
-                    height={1358}
-                    loading="lazy"
-                    className="block h-auto w-full"
-                />
-            </Link>
+            {/* 4.2 Điểm thưởng (nền hộp quà xanh, đổi voucher) */}
+            <TheDiemThuong />
+
+            {/* 4.3 Poster Kho mẫu + thanh liên hệ ở đáy */}
+            <PosterLienHe />
 
             {/* 5. MẪU WEB ĐÃ MUA: gửi sang ô trải hết bề ngang của TaiKhoanLayout (dưới cả menu bên trái) */}
             {mauDaMua.length > 0 && khuRong && createPortal(<MauDaMua dsMau={mauDaMua} />, khuRong)}

@@ -28,7 +28,8 @@ export function DonHangProvider({ children }) {
     // Lượt bán thật của từng mẫu = số đơn (mọi tài khoản) có mẫu đó; mauCoLuotBan: mauWeb kèm luotBan đã đếm
     const demLuotBan = {};
     tatCa.forEach((d) => d.items.forEach((it) => (demLuotBan[it.id] = (demLuotBan[it.id] ?? 0) + 1)));
-    const mauCoLuotBan = mauWeb.map((m) => ({ ...m, luotBan: demLuotBan[m.id] ?? 0 }));
+    // luotBanCoSan (mauWeb.js): lượt bán có sẵn cố định của mỗi mẫu, cộng thêm lượt bán đếm từ đơn thật
+    const mauCoLuotBan = mauWeb.map((m) => ({ ...m, luotBan: (m.luotBanCoSan ?? 0) + (demLuotBan[m.id] ?? 0) }));
 
     // Tạo đơn mới sau khi "thanh toán", trả về mã đơn để trang Thành công hiện ra.
     // Mã đơn: DH + số thứ tự 3 chữ số, tăng dần trên toàn hệ thống, vd DH001, DH002...

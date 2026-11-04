@@ -17,7 +17,7 @@ function TomTatDon({ soMau, tamTinh, giamGia, tongCong, maDung, kqMa, baoMa, onA
     };
 
     return (
-        <section className="h-fit rounded-2xl border border-slate-200 bg-white p-5 shadow-sm lg:sticky lg:top-24">
+        <section className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
             <h2 className="text-lg font-bold text-slate-900">Tóm tắt đơn hàng</h2>
 
             {/* 4.1 Tạm tính */}
@@ -106,7 +106,7 @@ function TomTatDon({ soMau, tamTinh, giamGia, tongCong, maDung, kqMa, baoMa, onA
                     type="button"
                     onClick={onThanhToan}
                     disabled={soMau === 0}
-                    className="mt-5 w-full rounded-xl bg-blue-600 py-3 text-sm font-semibold text-white shadow-sm transition hover:bg-blue-700 disabled:cursor-not-allowed disabled:bg-slate-200 disabled:text-slate-400 disabled:shadow-none"
+                    className="mt-5 w-full rounded-xl bg-cyan-400 py-3 text-sm font-bold text-blue-950 shadow-md transition hover:bg-cyan-300 active:scale-[0.98] disabled:cursor-not-allowed disabled:bg-slate-200 disabled:text-slate-400 disabled:shadow-none"
                 >
                     {soMau === 0 ? 'Chọn mẫu để thanh toán' : 'Thanh toán mô phỏng'}
                 </button>

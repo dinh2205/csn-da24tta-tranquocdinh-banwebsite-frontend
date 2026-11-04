@@ -1,4 +1,4 @@
-import { useRef, useState } from 'react';
+import { useState } from 'react';
 import { useDonHang } from '../../context/DonHangContext';
 import mauWeb from '../../data/mauWeb';
 import { loaiList, nganhList } from '../../data/danhmuc';
@@ -20,12 +20,11 @@ function DonHang() {
     const [tuKhoa, setTuKhoa] = useState('');
     const [loaiLoc, setLoaiLoc] = useState(''); // '' = tất cả danh mục
     const [trang, setTrang] = useState(1);
-    const dauDanhSach = useRef(null);
 
-    // Đổi trang: cuộn mượt lên đầu danh sách đơn (đơn đầu tiên của trang mới), không phải kéo tay lên
+    // Đổi trang: cuộn mượt lên đầu trang (thấy tiêu đề, khung tìm kiếm và các đơn của trang mới)
     const doiTrang = (so) => {
         setTrang(so);
-        dauDanhSach.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        window.scrollTo({ top: 0, behavior: 'smooth' });
     };
 
     // Đổi bộ lọc thì về trang 1
@@ -70,7 +69,7 @@ function DonHang() {
         <div>
             <div>
                 {/* 1. TIÊU ĐỀ */}
-                <TieuDeTrang ten="Lịch sử mua hàng" moTa="Các mẫu website bạn đã mua: xem trực tuyến và tải mã nguồn về để sử dụng." />
+                <TieuDeTrang mau="ngoc" ten="Lịch sử mua hàng" />
 
                 {tatCaDon.length === 0 ? (
                     <div className="mt-6">
@@ -82,8 +81,7 @@ function DonHang() {
                         <TimLocDon tuKhoa={tuKhoa} onDoiTuKhoa={doiTuKhoa} loaiLoc={loaiLoc} onDoiLoai={doiLoai} />
 
                         {/* 3. DANH SÁCH ĐƠN */}
-                        {/* scroll-mt: chừa chỗ cho thanh menu dính trên cùng khi cuộn tới */}
-                        <div ref={dauDanhSach} className="mt-4 scroll-mt-28 space-y-4">
+                        <div className="mt-4 space-y-4">
                             {donLoc.length === 0 ? (
                                 <div className="rounded-2xl border border-dashed border-blue-200 bg-blue-50 py-12 text-center">
                                     <p className="font-medium text-slate-700">Không tìm thấy mẫu phù hợp</p>
@@ -106,6 +104,7 @@ function DonHang() {
                         {/* 4. PHÂN TRANG */}
                         {donLoc.length > 0 && (
                             <PhanTrang
+                                khung="border-2 border-cyan-300 bg-cyan-50"
                                 trang={trangHienTai}
                                 soTrang={soTrang}
                                 onDoiTrang={doiTrang}

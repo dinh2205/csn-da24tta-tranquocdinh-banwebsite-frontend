@@ -66,7 +66,7 @@ function TomTatDon({ soMau, tamTinh, giamGia, tongCong, maDung, kqMa, baoMa, onA
                         />
                         <button
                             type="submit"
-                            className="flex-none rounded-lg border border-blue-600 px-3.5 py-2 text-sm font-semibold text-blue-600 transition hover:bg-blue-50"
+                            className="flex-none rounded-lg border border-cyan-400 px-3.5 py-2 text-sm font-bold text-cyan-700 transition hover:bg-cyan-50"
                         >
                             Áp dụng
                         </button>
@@ -96,7 +96,7 @@ function TomTatDon({ soMau, tamTinh, giamGia, tongCong, maDung, kqMa, baoMa, onA
                 <span className="text-lg font-bold text-slate-900">Tổng cộng</span>
                 <span className="text-right">
                     {giamGia > 0 && <span className="block text-sm text-slate-400 line-through">{dinhDangGia(tamTinh)}</span>}
-                    <span className="text-2xl font-extrabold text-blue-600">{dinhDangGia(tongCong)}</span>
+                    <span className="text-2xl font-extrabold text-red-600">{dinhDangGia(tongCong)}</span>
                 </span>
             </div>
 
@@ -115,7 +115,7 @@ function TomTatDon({ soMau, tamTinh, giamGia, tongCong, maDung, kqMa, baoMa, onA
                     <Link
                         to="/dang-nhap"
                         state={{ from: '/gio-hang', thongBao: 'Vui lòng đăng nhập để thanh toán đơn hàng.' }}
-                        className="block w-full rounded-xl bg-blue-600 py-3 text-center text-sm font-semibold text-white shadow-sm transition hover:bg-blue-700"
+                        className="block w-full rounded-xl bg-cyan-400 py-3.5 text-center text-base font-bold text-blue-950 shadow-md shadow-cyan-500/30 transition hover:bg-cyan-300"
                     >
                         Đăng nhập để thanh toán
                     </Link>

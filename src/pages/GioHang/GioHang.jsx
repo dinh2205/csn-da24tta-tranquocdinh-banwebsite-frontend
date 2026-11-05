@@ -111,15 +111,27 @@ function GioHang() {
 
     if (donDaTao) return <ThanhCong don={donDaTao} />;
 
-    // Giỏ trống
+    // Giỏ trống: cùng nền ảnh xanh với giỏ có hàng, thẻ trắng ở giữa
     if (items.length === 0) {
         return (
-            <div className="mx-auto max-w-trang px-4 py-16 text-center sm:px-6">
-                <h1 className="text-2xl font-bold text-slate-900">Giỏ hàng trống</h1>
-                <p className="mt-2 text-slate-500">Bạn chưa chọn mẫu website nào.</p>
-                <Link to="/mau-website" className="mt-6 inline-block rounded-lg bg-blue-600 px-5 py-2.5 text-sm font-semibold text-white hover:bg-blue-700">
-                    Chọn mẫu website
-                </Link>
+            <div className="flex min-h-[65vh] items-center justify-center bg-[#1c7fe8] bg-cover bg-center px-4 py-16 sm:px-6" style={{ backgroundImage: `url(${nenGioHang})` }}>
+                <div className="w-full max-w-md rounded-3xl bg-white p-8 text-center shadow-2xl shadow-blue-950/30 sm:p-10">
+                    <span className="mx-auto flex h-16 w-16 items-center justify-center rounded-2xl bg-cyan-50 text-cyan-600 ring-1 ring-cyan-100" aria-hidden="true">
+                        <svg viewBox="0 0 24 24" className="h-8 w-8" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+                            <circle cx="9" cy="21" r="1" />
+                            <circle cx="20" cy="21" r="1" />
+                            <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6" />
+                        </svg>
+                    </span>
+                    <h1 className="mt-5 text-2xl font-extrabold text-slate-900">Giỏ hàng trống</h1>
+                    <p className="mt-2 text-slate-500">Bạn chưa chọn mẫu website nào.</p>
+                    <Link
+                        to="/mau-website"
+                        className="mt-6 inline-block rounded-xl bg-cyan-400 px-6 py-3 text-sm font-bold text-blue-950 shadow-md shadow-cyan-500/30 transition hover:bg-cyan-300"
+                    >
+                        Chọn mẫu website
+                    </Link>
+                </div>
             </div>
         );
     }
@@ -285,8 +297,15 @@ function GioHang() {
                 {canXacNhan?.loai === 'thanhToan' && (
                     <HopXacNhan
                         tieuDe="Xác nhận thanh toán"
-                        noiDung={`Thanh toán ${daChon.length} sản phẩm với tổng cộng ${dinhDangGia(tongCong)}${giamGia > 0 ? ` (đã giảm ${dinhDangGia(giamGia)} với mã ${maDung})` : ''}? Đây là thanh toán mô phỏng, không trừ tiền thật.`}
-                        nutXacNhan="Xác nhận thanh toán"
+                        noiDung={
+                            <>
+                                Thanh toán {daChon.length} sản phẩm với tổng cộng{' '}
+                                <strong className="font-extrabold text-red-600">{dinhDangGia(tongCong)}</strong>
+                                {giamGia > 0 && ` (đã giảm ${dinhDangGia(giamGia)} với mã ${maDung})`}? Đây là thanh toán mô phỏng, không trừ tiền thật.
+                            </>
+                        }
+                        nutXacNhan="Thanh toán"
+                        icon="M3 7a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V7ZM3 10h18M7 15h4"
                         onXacNhan={hoanTatThanhToan}
                         onHuy={() => setCanXacNhan(null)}
                     />

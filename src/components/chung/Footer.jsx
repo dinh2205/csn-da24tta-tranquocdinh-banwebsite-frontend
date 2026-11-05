@@ -2,33 +2,34 @@ import { Link } from 'react-router-dom';
 import logo from '../../assets/logo-website-design.webp';
 
 
+// Link footer: trang#id phần / câu hỏi (CuonTrang.jsx cuộn tới đúng chỗ)
 const cot = [
   {
     tieuDe: 'Về chúng tôi',
     muc: [
       ['Giới thiệu', '/gioi-thieu'],
-      ['Đội ngũ thiết kế', '/gioi-thieu#ve-chung-toi'],
-      ['Tuyển dụng', '/ho-tro#tuyen-dung'],
-      ['Liên hệ', '/gioi-thieu#lien-he'],
+      ['Đội ngũ', '/gioi-thieu#ve-chung-toi'],
+      ['Văn phòng', '/gioi-thieu#van-phong'],
+      ['Liên hệ', '/ho-tro#lien-he'],
     ],
   },
   {
     tieuDe: 'Hỗ trợ khách hàng',
     muc: [
       ['Hướng dẫn mua mẫu', '/gioi-thieu#quy-trinh'],
-      ['Thanh toán & hóa đơn', '/ho-tro#thanh-toan'],
-      ['Tải xuống & cài đặt', '/ho-tro#tai-xuong'],
-      ['Yêu cầu chỉnh sửa mẫu', '/ho-tro#chinh-sua'],
+      ['Thanh toán & hóa đơn', '/ho-tro#hoi-thanh-toan'],
+      ['Tải xuống & cài đặt', '/ho-tro#video-huong-dan'],
+      ['Yêu cầu chỉnh sửa mẫu', '/ho-tro#dich-vu'],
       ['Câu hỏi thường gặp', '/ho-tro#cau-hoi'],
     ],
   },
   {
     tieuDe: 'Chính sách',
     muc: [
-      ['Chính sách bảo mật', '/ho-tro#bao-mat'],
-      ['Điều khoản sử dụng', '/ho-tro#dieu-khoan'],
-      ['Bản quyền & giấy phép', '/ho-tro#ban-quyen'],
-      ['Chính sách hoàn tiền', '/ho-tro#hoan-tien'],
+      ['Chính sách bảo mật', '/ho-tro#hoi-bao-mat'],
+      ['Điều khoản sử dụng', '/ho-tro#hoi-dieu-khoan'],
+      ['Bản quyền & giấy phép', '/ho-tro#hoi-ban-quyen'],
+      ['Chính sách hoàn tiền', '/ho-tro#hoi-hoan-tien'],
     ],
   },
 ];
@@ -57,7 +58,7 @@ const Footer = () => {
                 <span className="font-semibold text-white">1900 6868</span> (8:00 – 22:00)
               </li>
               <li>hotro@websitedesign.vn</li>
-              <li>Số 126 Nguyễn Thiện Thành, P.5, TP. Trà Vinh</li>
+              <li>126 Nguyễn Thiện Thành, Hòa Thuận, Vĩnh Long</li>
             </ul>
           </div>
 

@@ -4,7 +4,7 @@ import Icon from '../../components/chung/Icon';
 // 5. QUY TRÌNH MUA MẪU
 function QuyTrinh() {
     return (
-        <section className="bg-white">
+        <section id="quy-trinh" className="scroll-mt-24 bg-white">
             <div className="mx-auto max-w-trang px-4 py-16 sm:px-6">
                 <div className="text-center">
                     <h2 className="text-3xl font-extrabold tracking-tight text-[#0b1f4d] sm:text-4xl">

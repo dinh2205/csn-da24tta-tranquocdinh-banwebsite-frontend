@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
 import Icon from '../../components/chung/Icon';
 import { loaiList } from '../../data/danhmuc';
@@ -21,24 +21,53 @@ const ICON = {
     moRa: 'M14 4h6v6M20 4l-9 9M18 14v5a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h5',
     taiXuong: 'M12 4v11M7 10l5 5 5-5M5 20h14',
     dauTich: 'M6 12.5l4 4L18 8.5',
+    xuong: 'M6 9l6 6 6-6',
 };
 
-// 3. THẺ 1 ĐƠN HÀNG: đầu thẻ nền navy + từng mẫu trong đơn trên nền xanh nhạt
+// 3. THẺ 1 ĐƠN HÀNG: thanh đầu thẻ (mã, ngày, tổng tiền); bấm vào thanh thì mới mở / đóng danh sách mẫu trong đơn
+// (kể cả khi đang tìm / lọc: chỉ hiện thanh các đơn khớp, mở ra thì thấy các mẫu khớp)
 // itemsHien: mẫu còn lại sau khi lọc, tổng tiền vẫn tính cả đơn
 function TheDonHang({ don }) {
     const tien = tinhTienDon(don);
+    const [mo, setMo] = useState(false);
+    // Menu "…" của từng mẫu (id mẫu đang mở menu, '' = đóng)
+    const [menuMau, setMenuMau] = useState('');
+    const hienMau = mo;
+    // Đang tìm / lọc làm ẩn bớt mẫu: có nút "Xem cả đơn" để hiện đủ mọi mẫu trong đơn (bỏ mẫu đã bị xóa)
+    const [xemCaDon, setXemCaDon] = useState(false);
+    const caDon = don.items.filter((it) => it.mau);
+    const biAn = don.itemsHien.length < caDon.length;
+    const dsMau = xemCaDon ? caDon : don.itemsHien;
 
     // Phân trang mẫu trong đơn (lọc làm ít mẫu đi thì tự lùi về trang cuối còn mẫu)
     const [trangMau, setTrangMau] = useState(1);
-    const soTrang = Math.ceil(don.itemsHien.length / SO_MAU_HIEN);
+    // Đổi trang mẫu trong đơn: cuộn mượt về đầu thẻ đơn này để thấy ngay các mẫu của trang mới
+    // (cuộn sau khi trang mới đã vẽ xong, để trang nào, kể cả quay về trang 1, cũng lên đúng đầu thẻ)
+    const theDon = useRef(null);
+    const canCuon = useRef(false);
+    const doiTrangMau = (so) => {
+        canCuon.current = true;
+        setTrangMau(so);
+    };
+    useEffect(() => {
+        if (!canCuon.current) return;
+        canCuon.current = false;
+        theDon.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }, [trangMau]);
+    const soTrang = Math.ceil(dsMau.length / SO_MAU_HIEN);
     const trangHienTai = Math.min(trangMau, soTrang);
     const batDau = (trangHienTai - 1) * SO_MAU_HIEN;
-    const mauTrangNay = don.itemsHien.slice(batDau, batDau + SO_MAU_HIEN);
+    const mauTrangNay = dsMau.slice(batDau, batDau + SO_MAU_HIEN);
 
     return (
-        <section className="overflow-hidden rounded-2xl border-2 border-cyan-300 bg-white shadow-sm">
-            {/* 3.1 Đầu thẻ */}
-            <div className="flex flex-wrap items-center justify-between gap-x-6 gap-y-2 border-b border-cyan-200 bg-cyan-100 px-4 py-3">
+        <section ref={theDon} className="scroll-mt-24 overflow-hidden rounded-2xl bg-white shadow-md shadow-blue-900/10">
+            {/* 3.1 Thanh đầu thẻ: bấm để mở / đóng */}
+            <button
+                type="button"
+                onClick={() => setMo(!hienMau)}
+                aria-expanded={hienMau}
+                className={`flex w-full flex-wrap items-center justify-between gap-x-6 gap-y-2 px-4 py-3 text-left transition ${hienMau ? 'bg-cyan-50 hover:bg-cyan-100' : 'bg-white hover:bg-cyan-50'}`}
+            >
                 <div className="flex flex-wrap items-center gap-x-5 gap-y-1 text-sm font-medium text-slate-500">
                     <span className="flex items-center gap-1.5 font-bold text-[#0b1f4d]">
                         <Icon d={ICON.gio} />
@@ -65,14 +94,36 @@ function TheDonHang({ don }) {
                     <span className="whitespace-nowrap text-sm font-medium text-slate-500">
                         Tổng: <span className="text-lg font-extrabold text-red-600">{dinhDangGia(tien.tong)}</span>
                     </span>
+                    <Icon d={ICON.xuong} className={`h-5 w-5 flex-none text-[#0b1f4d] transition-transform ${hienMau ? 'rotate-180' : ''}`} strokeWidth={2.2} />
                 </div>
-            </div>
+            </button>
 
-            {/* 3.2 Từng mẫu trong đơn */}
+            {/* 3.2 Từng mẫu trong đơn (chỉ hiện khi mở) */}
+            {hienMau && (
+            <>
+            {/* Đang lọc: dòng báo + nút xem cả đơn / chỉ mẫu khớp */}
+            {(biAn || xemCaDon) && (
+                <div className="flex flex-wrap items-center justify-between gap-2 border-b border-cyan-100 px-4 py-2 text-sm text-slate-600">
+                    <span>
+                        {xemCaDon ? `Đang xem cả ${caDon.length} mẫu trong đơn` : `Đang hiện ${don.itemsHien.length}/${caDon.length} mẫu khớp tìm kiếm`}
+                    </span>
+                    <button
+                        type="button"
+                        onClick={() => {
+                            setXemCaDon(!xemCaDon);
+                            setTrangMau(1);
+                        }}
+                        className="font-semibold text-blue-700 hover:underline"
+                    >
+                        {xemCaDon ? 'Chỉ xem mẫu khớp' : `Xem cả đơn (${caDon.length} mẫu) →`}
+                    </button>
+                </div>
+            )}
+            {/* Từng mẫu trong đơn, ngăn nhau bằng vạch xanh nhạt */}
             <div className="divide-y divide-cyan-100">
                 {mauTrangNay.map(({ id, gia, mau }) => (
                     // Máy tính: nút nằm bên phải cùng hàng
-                    <div key={id} className="flex flex-col gap-4 p-4 md:flex-row md:items-center">
+                    <div key={id} className="relative flex flex-col gap-4 p-4 md:flex-row md:items-center">
                         <div className="flex min-w-0 flex-1 flex-col gap-4 sm:flex-row sm:items-center">
                             <Link
                                 to={`/mau-website/${id}`}
@@ -105,8 +156,10 @@ function TheDonHang({ don }) {
                             </div>
                         </div>
 
-                        {/* 3.3 Nút xem demo + tải mã nguồn */}
-                        <div className="flex gap-2 border-t border-cyan-100 pt-4 md:w-40 md:flex-none md:flex-col md:border-0 md:pt-0">
+                        {/* 3.3 Nút xem demo + tải mã nguồn; video hướng dẫn nằm trong menu "…" góc phải trên */}
+                        <div className="flex flex-col gap-2 md:w-56 md:flex-none md:justify-center">
+                            {/* Hàng 1: Mở website + nút "…" ngang hàng */}
+                            <div className="flex gap-2">
                             <Link
                                 to={`/mau-website/${id}/demo`}
                                 state={TU_DON_HANG}
@@ -115,6 +168,39 @@ function TheDonHang({ don }) {
                                 <Icon d={ICON.moRa} />
                                 Mở website
                             </Link>
+                            {/* Menu "…": bấm ra ngoài thì đóng */}
+                            <div
+                                className="relative flex-none"
+                                onBlur={(e) => !e.currentTarget.contains(e.relatedTarget) && setMenuMau('')}
+                            >
+                                <button
+                                    type="button"
+                                    onClick={() => setMenuMau(menuMau === id ? '' : id)}
+                                    aria-label="Thêm"
+                                    aria-expanded={menuMau === id}
+                                    className="flex h-10 w-10 items-center justify-center rounded-xl border border-slate-200 bg-white text-slate-600 transition hover:bg-slate-50"
+                                >
+                                    <svg viewBox="0 0 24 24" className="h-5 w-5 fill-current" aria-hidden="true">
+                                        <circle cx="5.5" cy="12" r="1.8" />
+                                        <circle cx="12" cy="12" r="1.8" />
+                                        <circle cx="18.5" cy="12" r="1.8" />
+                                    </svg>
+                                </button>
+                                {menuMau === id && (
+                                    <div className="absolute right-0 top-full z-20 mt-2 w-52 overflow-hidden rounded-xl bg-white py-1 shadow-xl shadow-slate-900/15 ring-1 ring-slate-200">
+                                        <Link
+                                            to="/ho-tro#video-huong-dan"
+                                            className="flex items-center gap-2.5 px-4 py-2.5 text-sm font-semibold text-slate-700 transition hover:bg-blue-50 hover:text-blue-700"
+                                        >
+                                            <svg viewBox="0 0 24 24" className="h-4 w-4 flex-none fill-blue-600" aria-hidden="true">
+                                                <path d="M7 4.5v15l12-7.5-12-7.5Z" />
+                                            </svg>
+                                            Video hướng dẫn
+                                        </Link>
+                                    </div>
+                                )}
+                            </div>
+                            </div>
                             {/* download: tải file về thay vì mở tab */}
                             <a
                                 href={mau.nguonZip}
@@ -130,11 +216,11 @@ function TheDonHang({ don }) {
             </div>
             {/* Chuyển trang mẫu: góc dưới phải thẻ (chỉ hiện khi đơn quá 3 mẫu) */}
             {soTrang > 1 && (
-                <div className="flex items-center justify-end border-t border-cyan-200 bg-white px-4 py-2">
+                <div className="flex items-center justify-end border-t border-cyan-100 bg-white px-4 py-2">
                     <div className="flex items-center gap-1">
                         <button
                             type="button"
-                            onClick={() => setTrangMau(trangHienTai - 1)}
+                            onClick={() => doiTrangMau(trangHienTai - 1)}
                             disabled={trangHienTai === 1}
                             aria-label="Mẫu trước"
                             className="flex h-7 w-7 items-center justify-center rounded-lg border border-cyan-300 bg-white text-sm font-bold text-[#0b1f4d] transition hover:bg-cyan-50 disabled:cursor-not-allowed disabled:opacity-40"
@@ -145,7 +231,7 @@ function TheDonHang({ don }) {
                             <button
                                 key={so}
                                 type="button"
-                                onClick={() => setTrangMau(so)}
+                                onClick={() => doiTrangMau(so)}
                                 className={`flex h-7 min-w-7 items-center justify-center rounded-lg px-2 text-xs font-bold transition ${
                                     so === trangHienTai ? 'bg-cyan-400 text-blue-950 shadow-sm' : 'border border-cyan-300 bg-white text-[#0b1f4d] hover:bg-cyan-50'
                                 }`}
@@ -155,7 +241,7 @@ function TheDonHang({ don }) {
                         ))}
                         <button
                             type="button"
-                            onClick={() => setTrangMau(trangHienTai + 1)}
+                            onClick={() => doiTrangMau(trangHienTai + 1)}
                             disabled={trangHienTai === soTrang}
                             aria-label="Mẫu sau"
                             className="flex h-7 w-7 items-center justify-center rounded-lg border border-cyan-300 bg-white text-sm font-bold text-[#0b1f4d] transition hover:bg-cyan-50 disabled:cursor-not-allowed disabled:opacity-40"
@@ -164,6 +250,8 @@ function TheDonHang({ don }) {
                         </button>
                     </div>
                 </div>
+            )}
+            </>
             )}
         </section>
     );

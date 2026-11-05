@@ -9,6 +9,7 @@ const MENU = [
   { to: '/', ten: 'Trang chủ', end: true },
   { to: '/mau-website', ten: 'Mẫu website' },
   { to: '/gioi-thieu', ten: 'Giới thiệu' },
+  { to: '/ho-tro', ten: 'Hỗ trợ' },
   { to: '/tai-khoan/don-hang', ten: 'Đơn hàng' },
 ];
 

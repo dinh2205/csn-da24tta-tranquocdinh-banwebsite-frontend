@@ -1,6 +1,6 @@
 import { GIA_TOI_DA, mauList, loaiList } from '../../data/danhmuc';
 import { dinhDangGia } from '../../utils/chuyenDoi';
-import { GIAM_DAC_BIET, laDacBiet, laKhuyenMaiThuong, laMoi } from '../../utils/nhanMau';
+import { GIAM_DAC_BIET, laDacBiet, laKhuyenMaiThuong } from '../../utils/nhanMau';
 import { MAU_CHON } from './bannerDanhMuc';
 
 // Bước kéo giá: 50.000 đ
@@ -10,7 +10,6 @@ const BUOC_GIA = 50000;
 const uuDaiList = [
     { id: 'dacBiet', nhan: `-${GIAM_DAC_BIET}%`, mau: 'bg-cyan-400 text-[#0b1f4d]', ten: 'Siêu sale', kiemTra: laDacBiet },
     { id: 'khuyenMai', nhan: '%', mau: 'bg-red-500 text-white', ten: 'Khuyến mãi', kiemTra: laKhuyenMaiThuong },
-    { id: 'moi', nhan: 'MỚI', mau: 'bg-emerald-500 text-white', ten: 'Mẫu mới', kiemTra: laMoi },
 ];
 
 // 4. BỘ LỌC: bấm là lọc ngay. Điện thoại chỉ hiện khi bấm nút "Bộ lọc"

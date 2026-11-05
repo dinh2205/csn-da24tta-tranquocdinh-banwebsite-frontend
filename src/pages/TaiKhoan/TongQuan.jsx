@@ -12,6 +12,10 @@ import MauDaMua from './MauDaMua';
 import TheDiemThuong from './TheDiemThuong';
 import PosterLienHe from './PosterLienHe';
 import bannerUuDaiNgang from '../../assets/banner-mau-website.webp';
+import anhDonHang from '../../assets/tai-khoan/don-hang.svg';
+import anhMauDaMua from '../../assets/tai-khoan/mau-da-mua.svg';
+import anhYeuThich from '../../assets/tai-khoan/yeu-thich.svg';
+import anhChiTieu from '../../assets/tai-khoan/chi-tieu.svg';
 
 const ICON = {
     muiTen: 'M5 12h14M13 6l6 6-6 6',
@@ -20,9 +24,7 @@ const ICON = {
     thu: 'M4 6h16v12H4V6Zm0 0 8 6 8-6',
     dienThoai: 'M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a1 1 0 0 1-1 1A16 16 0 0 1 4 5a1 1 0 0 1 1-1Z',
     lich: 'M7 3v3M17 3v3M4 9h16M5 5h14a1 1 0 0 1 1 1v13a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V6a1 1 0 0 1 1-1Z',
-    ma: 'M8 8l-4 4 4 4M16 8l4 4-4 4M14 5l-4 14',
     tim: 'M12 20s-7-4.4-7-10a4 4 0 0 1 7-2.6A4 4 0 0 1 19 10c0 5.6-7 10-7 10Z',
-    vi: 'M4 7h15a1 1 0 0 1 1 1v11a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V7Zm0 0V6a2 2 0 0 1 2-2h11M16 13.5h.01',
 };
 
 const SO_DON_GAN_DAY = 5;
@@ -44,10 +46,10 @@ function TongQuan() {
     const tongChi = donCuaToi.reduce((tong, d) => tong + tinhTienDon(d).tong, 0);
     // Mỗi thẻ 1 màu: o = ô icon + vạch màu trên đầu thẻ, chu = màu con số, vien = viền khi rê chuột
     const soLieu = [
-        { nhan: 'Đơn hàng', giaTri: donCuaToi.length, phu: 'đã thanh toán', to: '/tai-khoan/don-hang', icon: ICON.donHang, o: 'from-blue-500 to-indigo-500 shadow-blue-500/30', chu: 'text-blue-700', vien: 'hover:border-blue-200' },
-        { nhan: 'Mẫu đã mua', giaTri: soMauDaMua, phu: 'xem & tải mã nguồn', to: '/tai-khoan/don-hang', icon: ICON.ma, o: 'from-emerald-400 to-teal-500 shadow-emerald-500/30', chu: 'text-emerald-700', vien: 'hover:border-emerald-200' },
-        { nhan: 'Mẫu yêu thích', giaTri: dsYeuThich.length, phu: 'đang lưu', to: '/tai-khoan/yeu-thich', icon: ICON.tim, o: 'from-rose-400 to-pink-500 shadow-rose-500/30', chu: 'text-rose-600', vien: 'hover:border-rose-200' },
-        { nhan: 'Tổng chi tiêu', giaTri: dinhDangGia(tongChi), phu: 'từ trước đến nay', to: '/tai-khoan/don-hang', icon: ICON.vi, o: 'from-amber-400 to-orange-500 shadow-amber-500/30', chu: 'text-amber-600', vien: 'hover:border-amber-200' },
+        { nhan: 'Đơn hàng', giaTri: donCuaToi.length, phu: 'đã thanh toán', to: '/tai-khoan/don-hang', anh: anhDonHang, o: 'from-blue-500 to-indigo-500 shadow-blue-500/30', chu: 'text-blue-700', vien: 'hover:border-blue-200' },
+        { nhan: 'Mẫu đã mua', giaTri: soMauDaMua, phu: 'xem & tải mã nguồn', to: '/tai-khoan/don-hang', anh: anhMauDaMua, o: 'from-emerald-400 to-teal-500 shadow-emerald-500/30', chu: 'text-emerald-700', vien: 'hover:border-emerald-200' },
+        { nhan: 'Mẫu yêu thích', giaTri: dsYeuThich.length, phu: 'đang lưu', to: '/tai-khoan/yeu-thich', anh: anhYeuThich, o: 'from-rose-400 to-pink-500 shadow-rose-500/30', chu: 'text-rose-600', vien: 'hover:border-rose-200' },
+        { nhan: 'Tổng chi tiêu', giaTri: dinhDangGia(tongChi), phu: 'từ trước đến nay', to: '/tai-khoan/don-hang', anh: anhChiTieu, o: 'from-amber-400 to-orange-500 shadow-amber-500/30', chu: 'text-amber-600', vien: 'hover:border-amber-200' },
     ];
 
     // Thẻ hồ sơ: ô nào chưa có thì ghi "Chưa cập nhật..." màu nhạt
@@ -146,9 +148,8 @@ function TongQuan() {
                             {/* Vạch màu trên đầu thẻ làm điểm nhấn */}
                             <span className={`absolute inset-x-0 top-0 h-1 bg-gradient-to-r ${s.o}`} aria-hidden="true" />
                             <span className="flex items-center gap-2.5">
-                                <span className={`flex h-10 w-10 flex-none items-center justify-center rounded-xl bg-gradient-to-br text-white shadow-md ${s.o}`}>
-                                    <Icon d={s.icon} className="h-5 w-5" strokeWidth={1.9} />
-                                </span>
+                                {/* Icon màu thật (assets/tai-khoan/*.svg) */}
+                                <img src={s.anh} alt="" aria-hidden="true" className="h-11 w-11 flex-none drop-shadow-sm" />
                                 <span className="text-sm font-semibold text-slate-600">{s.nhan}</span>
                             </span>
                             {/* Số tiền dài (vd 1.250.000 đ) cho xuống dòng thay vì cắt "..." */}

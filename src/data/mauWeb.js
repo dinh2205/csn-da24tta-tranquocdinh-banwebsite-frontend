@@ -226,7 +226,7 @@ export const mauGoc = [
     luotBanCoSan: 32, // lượt bán có sẵn, cộng thêm lượt bán từ đơn thật
     loai: 'tin-tuc',
     nganh: 'khac',
-    mau: 'xanh-dam',
+    mau: 'do',
     gia: 100000,
     moTa: 'Website báo điện tử tin tức: trang chủ tin nổi bật, 11 chuyên mục (thời sự, công nghệ, giáo dục, thể thao, kinh tế, sức khỏe, du lịch...), xem chi tiết bài viết và bình luận, tìm kiếm, lưu bài viết.',
     danhGia: { diem: 4.6, luot: 9 }, // sao trung bình, số lượt đánh giá

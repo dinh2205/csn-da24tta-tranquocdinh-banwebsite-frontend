@@ -9,6 +9,13 @@ export const phanTramGiam = (mau) => (laKhuyenMai(mau) ? Math.round((1 - mau.gia
 // Giảm nhiều hơn hay ít hơn mức này đều là Khuyến mãi thường (thẻ nền trắng, lọc ở "Khuyến mãi")
 export const GIAM_DAC_BIET = 50;
 export const laDacBiet = (mau) => phanTramGiam(mau) === GIAM_DAC_BIET;
+// Thời gian sự kiện Siêu sale (ghi trên banner), dạng YYYY-MM-DD
+export const SIEU_SALE = { batDau: '2026-11-01', ketThuc: '2026-11-20' };
+// Số ngày còn lại của sự kiện, tính cả hôm nay (0 = đã kết thúc)
+export const soNgayConSale = (homNay = new Date()) => {
+    const het = new Date(`${SIEU_SALE.ketThuc}T23:59:59`);
+    return Math.max(0, Math.ceil((het - homNay) / 86400000));
+};
 
 // Khuyến mãi thường (không gồm Siêu sale)
 export const laKhuyenMaiThuong = (mau) => laKhuyenMai(mau) && !laDacBiet(mau);

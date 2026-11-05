@@ -7,7 +7,7 @@ import { dinhDangGia } from '../utils/chuyenDoi';
 //   donToiThieu   : (tùy chọn) tạm tính tối thiểu
 //   soMauToiThieu : (tùy chọn) số mẫu tối thiểu trong giỏ
 //   hetHan        : (tùy chọn) ngày hết hạn 'YYYY-MM-DD', sau ngày này mã không dùng được
-export const maGiamList = [
+const maGiamList = [
     { ma: 'WELCOME10', moTa: 'Giảm 10%, tối đa 100.000 đ', kieu: 'phan-tram', giaTri: 10, giamToiDa: 100000 },
     { ma: 'GIAM50K', moTa: 'Giảm 50.000 đ cho đơn từ 300.000 đ', kieu: 'tien', giaTri: 50000, donToiThieu: 300000 },
     { ma: 'COMBO20', moTa: 'Giảm 20% khi mua từ 2 mẫu', kieu: 'phan-tram', giaTri: 20, soMauToiThieu: 2 },

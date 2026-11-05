@@ -2,6 +2,7 @@ import { Routes, Route, Navigate } from 'react-router-dom'
 import MainLayout from './layout/MainLayout'
 import TrangChu from './pages/TrangChu/TrangChu'
 import GioiThieu from './pages/GioiThieu/GioiThieu'
+import HoTro from './pages/HoTro/HoTro'
 import MauWeb from './pages/MauWeb/MauWeb'
 import ChiTietMau from './pages/ChiTietMau/ChiTietMau'
 import DangNhap from './pages/DangNhap/DangNhap'
@@ -38,6 +39,7 @@ function App() {
       <Route element={<MainLayout />}>
         <Route index element={<TrangChu />} />
         <Route path="gioi-thieu" element={<GioiThieu />} />
+        <Route path="ho-tro" element={<HoTro />} />
         <Route path="mau-website" element={<MauWeb />} />
         <Route path="mau-website/:id" element={<ChiTietMau />} />
         {/* Giỏ hàng + thanh toán chung 1 trang (3 bước). Chưa đăng nhập vẫn xem giỏ được, bấm thanh toán mới cần đăng nhập */}

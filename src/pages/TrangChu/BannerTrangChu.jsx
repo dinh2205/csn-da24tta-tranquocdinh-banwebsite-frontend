@@ -8,7 +8,7 @@ import banner3 from '../../assets/banner-mau-website2.webp';
 
 const bannerList = [
     { src: bannerChinh, alt: 'Website Design - khám phá mẫu website đẹp, sẵn sàng sử dụng' },
-    { src: banner3, alt: 'Hỗ trợ tận tâm, đồng hành cùng bạn', nut: { chu: 'Liên hệ ngay', den: '/gioi-thieu#lien-he', viTri: 'left-[7.4%] top-[66%]' } },
+    { src: banner3, alt: 'Hỗ trợ tận tâm, đồng hành cùng bạn', nut: { chu: 'Liên hệ ngay', den: '/ho-tro', viTri: 'left-[7.4%] top-[66%]' } },
     // den: bấm vào cả ảnh thì sang trang Mẫu website, chọn sẵn ưu đãi Siêu sale trong bộ lọc
     { src: banner1, alt: 'Siêu giảm giá mẫu website, xem các mẫu Siêu sale', den: '/mau-website?uudai=dacBiet', nut: { chu: 'Săn sale ngay', den: '/mau-website?uudai=dacBiet', viTri: 'left-1/2 top-[76%] -translate-x-1/2 max-sm:hidden', mau: 'bg-gradient-to-r from-orange-500 to-amber-400 text-white shadow-orange-600/40 hover:from-orange-400 hover:to-amber-300' } },
     { src: banner2, alt: 'Mẫu website tương thích trên mọi thiết bị' },

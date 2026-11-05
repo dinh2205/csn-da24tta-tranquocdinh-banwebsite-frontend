@@ -3,7 +3,7 @@ import ChungToiLaAi from './ChungToiLaAi';
 import SoLieu from './SoLieu';
 import LyDo from './LyDo';
 import QuyTrinh from './QuyTrinh';
-import LienHe from './LienHe';
+import BanDo from './BanDo';
 import BatDau from './BatDau';
 
 // Trang Giới thiệu: mỗi phần 1 file, dữ liệu ở data/gioiThieu.js
@@ -15,7 +15,7 @@ function GioiThieu() {
             <SoLieu />
             <LyDo />
             <QuyTrinh />
-            <LienHe />
+            <BanDo />
             <BatDau />
         </div>
     );

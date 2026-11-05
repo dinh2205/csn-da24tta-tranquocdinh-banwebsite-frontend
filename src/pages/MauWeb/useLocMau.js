@@ -3,14 +3,14 @@ import { useSearchParams } from 'react-router-dom';
 import { useDonHang } from '../../context/DonHangContext';
 import { GIA_TOI_DA } from '../../data/danhmuc';
 import { locTheoTuKhoa } from './timKiemMau';
-import { laDacBiet, laKhuyenMaiThuong, laMoi } from '../../utils/nhanMau';
+import { laDacBiet, laKhuyenMaiThuong } from '../../utils/nhanMau';
 import { docDanhSach, luuDanhSach, useLaQuayLai } from './nhoDanhSach';
 
 // uuDai: ưu đãi đang chọn, rỗng = Tất cả
 const boLocBanDau = { nganh: '', mau: '', giaToiThieu: 0, giaToiDa: GIA_TOI_DA, uuDai: '' };
 
 // Điều kiện từng loại ưu đãi; "Khuyến mãi" không gồm Siêu sale
-const kiemTraUuDai = { dacBiet: laDacBiet, khuyenMai: laKhuyenMaiThuong, moi: laMoi };
+const kiemTraUuDai = { dacBiet: laDacBiet, khuyenMai: laKhuyenMaiThuong };
 
 // Cách sắp xếp ("phu-hop" giữ thứ tự điểm khớp)
 const cachSapXep = {

@@ -43,7 +43,7 @@ function ThongTinMua({ mau }) {
             <h1 className="mt-3 text-3xl font-extrabold tracking-tight text-slate-900">{mau.ten}</h1>
             <p className="mt-2 text-slate-500">{mau.moTa}</p>
             <div className="mt-4 flex flex-wrap items-baseline gap-x-3 gap-y-1">
-                <p className="text-3xl font-bold text-blue-600">{dinhDangGia(mau.gia)}</p>
+                <p className="text-3xl font-bold text-red-600">{dinhDangGia(mau.gia)}</p>
                 {laKhuyenMai(mau) && (
                     <>
                         <p className="text-lg text-slate-400 line-through">{dinhDangGia(mau.giaGoc)}</p>

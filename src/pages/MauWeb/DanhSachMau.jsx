@@ -3,7 +3,13 @@ import { Link } from 'react-router-dom';
 import PhanTrang from '../../components/chung/PhanTrang';
 import TheMau from '../../components/sanpham/TheMau';
 import { sapXepList } from '../../data/danhmuc';
+import nenSieuSale from '../../assets/nen-sieu-sale.svg';
 import { MAU_CHON, MAU_THANH } from './bannerDanhMuc';
+import { dinhDangNgay } from '../../utils/chuyenDoi';
+import { GIAM_DAC_BIET, SIEU_SALE, soNgayConSale } from '../../utils/nhanMau';
+
+// Tên ưu đãi hiện trên nhãn ở thanh kết quả (Siêu sale có dải sự kiện riêng)
+const TEN_UU_DAI = { khuyenMai: 'Khuyến mãi' };
 
 const SO_MAU_MOI_TRANG = 9;
 
@@ -13,7 +19,8 @@ const THANH_TRAN = "relative isolate rounded-none lg:border-transparent lg:bg-tr
 
 // 5. DANH SÁCH MẪU
 // dsMau: mẫu chưa mua (đã bỏ mẫu tài khoản đã mua), soDaMua: số mẫu bị ẩn vì đã mua
-function DanhSachMau({ ketQua, tuKhoa, onXoaTuKhoa, sapXep, setSapXep, soLocDangBat, onBatTatBoLoc, onXoaTatCa, dsMau, soDaMua, trang, setTrang }) {
+// uuDai: ưu đãi đang lọc ('' = không), onBoUuDai: bỏ lọc ưu đãi, onXemTatCa: xóa hết bộ lọc (nút ở dải Siêu sale)
+function DanhSachMau({ ketQua, uuDai, onBoUuDai, onXemTatCa, tuKhoa, onXoaTuKhoa, sapXep, setSapXep, soLocDangBat, onBatTatBoLoc, onXoaTatCa, dsMau, soDaMua, trang, setTrang }) {
     const dauDanhSach = useRef(null);
     // Không có kết quả thì gợi ý 3 mẫu bán chạy (trong số mẫu chưa mua)
     const goiY = [...dsMau].sort((a, b) => b.luotBan - a.luotBan).slice(0, 3);
@@ -40,6 +47,16 @@ function DanhSachMau({ ketQua, tuKhoa, onXoaTuKhoa, sapXep, setSapXep, soLocDang
                     <span>
                         Tìm thấy <strong className="font-extrabold">{ketQua.length}</strong> mẫu website
                     </span>
+                    {/* Nhãn ưu đãi đang lọc (Khuyến mãi, Mẫu mới), bấm để bỏ */}
+                    {TEN_UU_DAI[uuDai] && (
+                        <button
+                            type="button"
+                            onClick={onBoUuDai}
+                            className="rounded-full border border-slate-300 bg-white px-3 py-1 text-xs font-medium text-slate-600 transition hover:border-red-300 hover:text-red-600"
+                        >
+                            Ưu đãi: {TEN_UU_DAI[uuDai]} ✕
+                        </button>
+                    )}
                     {/* Nhãn từ khóa, bấm để bỏ */}
                     {tuKhoa && (
                         <button
@@ -78,20 +95,61 @@ function DanhSachMau({ ketQua, tuKhoa, onXoaTuKhoa, sapXep, setSapXep, soLocDang
 
                     <label className="ml-auto flex items-center gap-2 text-sm text-blue-950">
                         <span className="hidden sm:inline">Sắp xếp:</span>
-                        <select
-                            value={sapXep}
-                            onChange={(e) => setSapXep(e.target.value)}
-                            className="cursor-pointer rounded-lg border border-blue-200 bg-white px-3 py-1.5 text-sm font-semibold text-blue-700 outline-none transition hover:border-blue-400 focus:border-blue-500 focus:ring-2 focus:ring-blue-200"
-                        >
-                            {sapXepList.filter((s) => tuKhoa || s.id !== 'phu-hop').map((s) => (
-                                <option key={s.id} value={s.id}>
-                                    {s.ten}
-                                </option>
-                            ))}
-                        </select>
+                        {/* Ô chọn: bỏ mũi tên mặc định của trình duyệt, thay bằng mũi tên tròn nhỏ bên phải cho gọn đẹp */}
+                        <span className="relative">
+                            <select
+                                value={sapXep}
+                                onChange={(e) => setSapXep(e.target.value)}
+                                className="min-w-44 cursor-pointer appearance-none rounded-full bg-white py-1.5 pl-4 pr-10 text-sm font-semibold text-slate-800 shadow-sm shadow-blue-950/15 outline-none ring-1 ring-black/5 transition hover:shadow-md focus:ring-2 focus:ring-blue-950/30"
+                            >
+                                {sapXepList.filter((s) => tuKhoa || s.id !== 'phu-hop').map((s) => (
+                                    <option key={s.id} value={s.id}>
+                                        {s.ten}
+                                    </option>
+                                ))}
+                            </select>
+                            <span className="pointer-events-none absolute right-1.5 top-1/2 flex h-6 w-6 -translate-y-1/2 items-center justify-center rounded-full bg-cyan-100 text-cyan-800" aria-hidden="true">
+                                <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" className="h-3.5 w-3.5">
+                                    <path d="m5.5 8 4.5 4.5L14.5 8" />
+                                </svg>
+                            </span>
+                        </span>
                     </label>
                 </div>
             </div>
+
+            {/* 5.1.1 Đang xem sự kiện Siêu sale: dải nền họa tiết xanh nói rõ đây chỉ là mẫu trong sự kiện,
+                kèm nút quay lại xem mọi mẫu, để người xem không tưởng cửa hàng chỉ có vài mẫu */}
+            {uuDai === 'dacBiet' && (
+                <div className="relative mb-6 overflow-hidden rounded-2xl bg-blue-700 text-white shadow-md shadow-blue-900/20">
+                    {/* Ảnh nền họa tiết xanh (assets/nen-sieu-sale.svg) + phủ tối nhẹ bên trái cho chữ rõ */}
+                    <img src={nenSieuSale} alt="" aria-hidden="true" className="absolute inset-0 h-full w-full object-cover" />
+                    <div className="pointer-events-none absolute inset-0 bg-gradient-to-r from-[#0b1f4d]/45 via-[#0b1f4d]/10 to-transparent" aria-hidden="true" />
+                    <div className="relative flex flex-col gap-3 p-4 sm:flex-row sm:items-center sm:justify-between sm:px-5">
+                    <div className="flex items-center gap-3">
+                        <span className="flex h-11 w-11 flex-none items-center justify-center rounded-xl bg-white/15 text-cyan-300 ring-1 ring-white/20" aria-hidden="true">
+                            <svg viewBox="0 0 24 24" className="h-6 w-6" fill="currentColor"><path d="M13 2 3 14h9l-1 8 10-12h-9l1-8Z" /></svg>
+                        </span>
+                        <div>
+                            <p className="font-extrabold text-white">
+                                Bạn đang xem sự kiện <span className="text-cyan-300">Siêu sale -{GIAM_DAC_BIET}%</span>
+                            </p>
+                            <p className="text-sm text-blue-100">
+                                {dinhDangNgay(SIEU_SALE.batDau)} – {dinhDangNgay(SIEU_SALE.ketThuc)}
+                                {soNgayConSale() > 0 ? ` · Còn ${soNgayConSale()} ngày` : ' · Đã kết thúc'} · Chỉ hiện {ketQua.length} mẫu đang giảm {GIAM_DAC_BIET}%
+                            </p>
+                        </div>
+                    </div>
+                    <button
+                        type="button"
+                        onClick={onXemTatCa}
+                        className="flex-none rounded-xl bg-white px-4 py-2.5 text-sm font-bold text-blue-700 shadow-sm transition hover:bg-blue-50 active:scale-95"
+                    >
+                        Xem tất cả mẫu →
+                    </button>
+                    </div>
+                </div>
+            )}
 
             {/* 5.2 Lưới mẫu, rỗng thì báo + gợi ý */}
             {ketQua.length === 0 ? (

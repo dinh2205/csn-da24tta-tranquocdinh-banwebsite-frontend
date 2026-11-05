@@ -1,6 +1,7 @@
 import KhungTimKiem from '../../components/sanpham/KhungTimKiem';
 import KhungBanChay from '../../components/sanpham/KhungBanChay';
 import BannerTrangChu from './BannerTrangChu';
+import DaiTuVan from './DaiTuVan';
 import DanhMucChinh from './DanhMucChinh';
 import MauNoiBat from './MauNoiBat';
 
@@ -14,6 +15,7 @@ function TrangChu() {
             </KhungTimKiem>
             <DanhMucChinh />
             <MauNoiBat />
+            <DaiTuVan />
         </div>
     );
 }

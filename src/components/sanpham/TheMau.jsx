@@ -59,16 +59,15 @@ function TheMau({ mau, nho = false }) {
             </div>
           )}
 
-          {/* Nhãn "Siêu sale" góc phải (hình thẻ treo giá) */}
+          {/* Nhãn "Đặc biệt" (mẫu Siêu sale) góc phải: chữ in hoa trên nền xanh ngọc cùng màu thân thẻ */}
           {dacBiet && (
-            <div className={`pointer-events-none absolute drop-shadow-[0_4px_10px_rgba(8,20,60,0.45)] ${nho ? 'right-2 top-2 origin-top-right scale-75' : 'right-3 top-3'}`}>
-              <div className="flex items-center gap-1.5 bg-gradient-to-r from-cyan-300 to-cyan-400 py-1.5 pl-5 pr-3 [clip-path:polygon(12px_0,100%_0,100%_100%,12px_100%,0_50%)]">
-                <svg viewBox="0 0 24 24" className="h-3.5 w-3.5 fill-[#0b1f4d]" aria-hidden="true">
-                  <path d="M13 2 3 14h9l-1 8 10-12h-9l1-8Z" />
-                </svg>
-                <span className="text-[11px] font-extrabold uppercase leading-none tracking-[0.18em] text-[#0b1f4d]">Siêu sale</span>
-              </div>
-            </div>
+            <span
+              className={`pointer-events-none absolute rounded-md bg-gradient-to-br from-cyan-300 to-cyan-400 font-extrabold uppercase tracking-wide text-[#0b1f4d] shadow-md shadow-blue-950/30 ${
+                nho ? 'right-2 top-2 px-2 py-0.5 text-[10px]' : 'right-3 top-3 px-3 py-1 text-xs'
+              }`}
+            >
+              Đặc biệt
+            </span>
           )}
         </Link>
 

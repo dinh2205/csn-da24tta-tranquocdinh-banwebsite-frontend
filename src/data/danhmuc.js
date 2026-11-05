@@ -35,7 +35,6 @@ export const mauList = [
   { id: 'xanh-la', ten: 'Xanh lá', swatch: 'bg-emerald-600' },
   { id: 'hong', ten: 'Hồng', swatch: 'bg-pink-500' },
   { id: 'tim', ten: 'Tím', swatch: 'bg-violet-600' },
-  { id: 'trang', ten: 'Trắng', swatch: 'bg-white shadow-[inset_0_0_0_1px_#cbd5e1]' }, // viền xám mảnh để thấy trên nền trắng
   { id: 'toi', ten: 'Tối', swatch: 'bg-slate-900' },
 ];
 

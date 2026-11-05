@@ -8,7 +8,7 @@ function ThanhMuaDienThoai({ mau }) {
             <div className="mx-auto flex max-w-trang items-center gap-3 sm:px-6">
                 <div className="min-w-0 flex-1">
                     <p className="truncate text-xs text-slate-500">{mau.ten}</p>
-                    <p className="text-lg font-bold text-blue-600">{dinhDangGia(mau.gia)}</p>
+                    <p className="text-lg font-bold text-red-600">{dinhDangGia(mau.gia)}</p>
                 </div>
                 <NutThemGio mau={mau} kieu="flex-none px-5 py-3" />
             </div>

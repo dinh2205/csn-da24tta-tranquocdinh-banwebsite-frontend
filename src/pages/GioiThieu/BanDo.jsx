@@ -1,6 +1,5 @@
 import { useState } from 'react';
 import Icon from '../../components/chung/Icon';
-import nenDai from '../../assets/gioi-thieu/nen-dai-ban-do.svg';
 import iconBanDo from '../../assets/gioi-thieu/icon-ban-do.svg';
 import iconDongHo from '../../assets/gioi-thieu/icon-dong-ho.svg';
 import iconDienThoai from '../../assets/gioi-thieu/icon-dien-thoai.svg';
@@ -35,25 +34,6 @@ function BanDo() {
     return (
         <section id="van-phong" aria-label="Bản đồ văn phòng" className="scroll-mt-16 sm:scroll-mt-[68px]">
             {/* Tràn hết bề ngang: thông tin bên trái (canh theo lề nội dung trang), bản đồ chiếm phần còn lại bên phải tới mép màn hình */}
-            {/* Dải khẩu hiệu phía trên bản đồ: tràn hết bề ngang, nền navy (assets/gioi-thieu/nen-dai-ban-do.svg), chữ ở giữa */}
-            <div className="relative overflow-hidden bg-[#0b1f4d]">
-                <img src={nenDai} alt="" aria-hidden="true" className="absolute inset-0 h-full w-full object-cover" />
-
-                <div className="relative mx-auto max-w-trang px-4 py-12 text-center sm:px-6 lg:py-16">
-                    <p className="text-xs font-bold uppercase tracking-[0.3em] text-cyan-300/90 sm:text-sm">Website Design</p>
-                    <h2 className="mt-3 text-3xl font-black tracking-tight sm:text-5xl">
-                        <span className="text-white">Uy tín</span>
-                        <span className="mx-3 text-cyan-400" aria-hidden="true">·</span>
-                        <span className="bg-gradient-to-r from-cyan-300 to-sky-400 bg-clip-text text-transparent">Tận tâm</span>
-                        <span className="mx-3 text-cyan-400" aria-hidden="true">·</span>
-                        <span className="text-white">Chuyên nghiệp</span>
-                    </h2>
-                    <span className="mx-auto mt-5 block h-1 w-20 rounded-full bg-gradient-to-r from-cyan-300 to-sky-500" aria-hidden="true" />
-                    <p className="mx-auto mt-5 max-w-2xl text-blue-100/85 sm:text-lg">
-                        Đồng hành cùng bạn từ lúc chọn mẫu đến khi website hoạt động ổn định.
-                    </p>
-                </div>
-            </div>
             <div className="bg-white lg:flex lg:h-[40rem]">
                 {/* Cột thông tin: điện thoại nằm trên bản đồ */}
                 <div className="flex flex-col p-6 sm:p-8 lg:w-[calc(24rem+max(1.5rem,(100vw-92rem)/2+1.5rem))] lg:flex-none lg:justify-center lg:py-10 lg:pl-[max(1.5rem,calc((100vw-92rem)/2+1.5rem))] lg:pr-10">

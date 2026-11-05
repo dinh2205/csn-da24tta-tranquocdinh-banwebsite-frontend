@@ -4,8 +4,12 @@ import Icon from '../../components/chung/Icon';
 // 5. QUY TRÌNH MUA MẪU
 function QuyTrinh() {
     return (
-        <section id="quy-trinh" className="scroll-mt-24 bg-white">
-            <div className="mx-auto max-w-trang px-4 py-16 sm:px-6">
+        // Nền giống phần "Vì sao chọn": xanh rất nhạt chuyển trắng, lưới chấm mờ dần, 2 quầng sáng xanh hai bên
+        <section id="quy-trinh" className="relative scroll-mt-24 overflow-hidden bg-gradient-to-b from-blue-50/80 via-white to-white">
+            <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(#c7d7fe_1px,transparent_1px)] [background-size:22px_22px] [mask-image:linear-gradient(to_bottom,black,transparent_75%)]" />
+            <div className="pointer-events-none absolute -left-24 top-10 h-72 w-72 rounded-full bg-cyan-200/40 blur-3xl" />
+            <div className="pointer-events-none absolute -right-24 top-40 h-80 w-80 rounded-full bg-blue-300/30 blur-3xl" />
+            <div className="relative mx-auto max-w-trang px-4 py-16 sm:px-6">
                 <div className="text-center">
                     <h2 className="text-3xl font-extrabold tracking-tight text-[#0b1f4d] sm:text-4xl">
                         Quy trình <span className="text-blue-600">mua mẫu</span>

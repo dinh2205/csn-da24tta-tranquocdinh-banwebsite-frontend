@@ -3,7 +3,7 @@ import bannerSieuSale from '../../assets/banner-mau-website.webp';
 import TabLinhVuc from './TabLinhVuc';
 import BoLoc from './BoLoc';
 import DanhSachMau from './DanhSachMau';
-import { layBannerDanhMuc, mauToiTheoLoai, mauVienTimTheoLoai, tatCaBannerDanhMuc } from './bannerDanhMuc';
+import { layBannerDanhMuc, tatCaBannerDanhMuc } from './bannerDanhMuc';
 import OTimKiem from '../../components/sanpham/OTimKiem';
 import SliderBannerDanhMuc from './SliderBannerDanhMuc';
 
@@ -15,9 +15,6 @@ function KhuLocMau({ loc }) {
     const laSieuSale = loc.boLoc.uuDai === 'dacBiet';
     const bannerLoai = laSieuSale ? bannerSieuSale : loc.loai ? layBannerDanhMuc(loc.loai) : null;
     const coBanner = laSieuSale || (loc.loai ? Boolean(bannerLoai) : tatCaBannerDanhMuc.length > 0);
-    // Nút Tìm kiếm + viền ô tìm kiếm theo màu banner danh mục đang chọn; Tất cả giữ xanh ngọc
-    const nutTim = loc.loai ? `${mauToiTheoLoai[loc.loai] ?? ''} hover:brightness-110` : '';
-    const vienTim = mauVienTimTheoLoai[loc.loai];
 
     // Chọn bộ lọc thì trang đứng yên, không bị kéo lên đầu.
     // Đổi danh mục / bật tắt Siêu sale làm banner phía trên đổi chiều cao → bù lại độ cuộn để khung lọc giữ nguyên chỗ trên màn hình
@@ -61,14 +58,14 @@ function KhuLocMau({ loc }) {
                 <div className="relative">
                     {bannerLoai ? <img src={bannerLoai} alt={laSieuSale ? 'Siêu giảm giá mẫu website' : ''} className="block h-auto w-full" /> : <SliderBannerDanhMuc />}
                     <div className="absolute inset-x-0 bottom-0 z-10 translate-y-1/2 px-4">
-                        <OTimKiem mauNut={nutTim} mauVien={vienTim} />
+                        <OTimKiem />
                     </div>
                 </div>
             )}
 
             <div className={`mx-auto max-w-trang px-4 pb-8 sm:px-6 lg:pb-0 ${coBanner ? 'pt-16' : 'pt-8'}`}>
                 {/* Chưa có banner thì ô tìm kiếm nằm trên cùng */}
-                {!coBanner && <OTimKiem className="mb-6" mauNut={nutTim} mauVien={vienTim} />}
+                {!coBanner && <OTimKiem className="mb-6" />}
 
                 {/* 3. TAB LĨNH VỰC */}
                 <TabLinhVuc nganh={loc.boLoc.nganh} onChon={(id) => loc.setBoLoc({ ...loc.boLoc, nganh: id })} />

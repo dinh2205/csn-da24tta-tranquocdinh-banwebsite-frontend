@@ -9,27 +9,6 @@ export const layBannerDanhMuc = (loai) => bannerTheoLoai[`../../assets/banner-da
 // Màu cố định (xanh ngọc chữ navy, màu "Tất cả") cho mọi danh mục: dòng đang chọn ở Bộ lọc, nút Xóa tất cả bộ lọc
 export const MAU_CHON = 'bg-cyan-400 text-blue-950';
 
-// Màu nền + chữ theo tông banner từng danh mục: nút lĩnh vực đang chọn, nút Tìm kiếm; '' = Tất cả: xanh ngọc chữ navy
-export const mauToiTheoLoai = {
-    '': 'bg-cyan-400 text-blue-950',
-    'landing-page': 'bg-gradient-to-r from-[#6d28d9] to-[#a855f7] text-white',
-    'gioi-thieu': 'bg-gradient-to-r from-[#1e5ae6] to-[#3b8bff] text-white',
-    'ban-hang': 'bg-gradient-to-r from-[#c2410c] to-[#f97316] text-white',
-    'tin-tuc': 'bg-gradient-to-r from-[#8c0817] to-[#c8102e] text-white',
-    portfolio: 'bg-gradient-to-r from-[#15803d] to-[#22c55e] text-white',
-    'admin-dashboard': 'bg-gradient-to-r from-[#06184a] to-[#1e3a8a] text-white',
-};
-
-// Viền ô tìm kiếm khi rê chuột / bấm vào, theo tông banner danh mục (Tất cả: để trống = xanh ngọc mặc định)
-export const mauVienTimTheoLoai = {
-    'landing-page': 'hover:ring-2 hover:ring-violet-400 focus:ring-4 focus:ring-violet-400/60',
-    'gioi-thieu': 'hover:ring-2 hover:ring-blue-400 focus:ring-4 focus:ring-blue-400/60',
-    'ban-hang': 'hover:ring-2 hover:ring-orange-400 focus:ring-4 focus:ring-orange-400/60',
-    'tin-tuc': 'hover:ring-2 hover:ring-red-400 focus:ring-4 focus:ring-red-400/60',
-    portfolio: 'hover:ring-2 hover:ring-green-400 focus:ring-4 focus:ring-green-400/60',
-    'admin-dashboard': 'hover:ring-2 hover:ring-indigo-500 focus:ring-4 focus:ring-indigo-500/60',
-};
-
 // Chữ tên danh mục (chuyển màu) theo tông banner, dùng ở thẻ Danh mục chính trang chủ
 export const mauChuTheoLoai = {
     'landing-page': 'from-violet-700 via-purple-600 to-fuchsia-500',

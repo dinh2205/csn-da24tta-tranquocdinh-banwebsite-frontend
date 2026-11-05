@@ -54,9 +54,9 @@ function BanDo() {
                     </p>
                 </div>
             </div>
-            <div className="bg-white lg:flex lg:h-[34rem]">
+            <div className="bg-white lg:flex lg:h-[40rem]">
                 {/* Cột thông tin: điện thoại nằm trên bản đồ */}
-                <div className="flex flex-col p-6 sm:p-8 lg:w-[calc(28rem+max(1.5rem,(100vw-92rem)/2+1.5rem))] lg:flex-none lg:justify-center lg:py-10 lg:pl-[max(1.5rem,calc((100vw-92rem)/2+1.5rem))] lg:pr-10">
+                <div className="flex flex-col p-6 sm:p-8 lg:w-[calc(24rem+max(1.5rem,(100vw-92rem)/2+1.5rem))] lg:flex-none lg:justify-center lg:py-10 lg:pl-[max(1.5rem,calc((100vw-92rem)/2+1.5rem))] lg:pr-10">
                     <p className="text-xs font-bold uppercase tracking-wider text-blue-600">Website Design</p>
                     <h3 className="mt-1 text-xl font-extrabold text-slate-900">Văn phòng Vĩnh Long</h3>
 
@@ -83,7 +83,7 @@ function BanDo() {
                     </ul>
 
                     {/* Nút: chỉ đường (mở Google Maps tab mới) + gọi, chia đều bề ngang */}
-                    <div className="mt-6 grid grid-cols-2 gap-3">
+                    <div className="mt-6 grid gap-3 sm:grid-cols-2 lg:grid-cols-1 xl:grid-cols-2">
                         <a
                             href={`https://www.google.com/maps/dir/?api=1&destination=${MA_VI_TRI}`}
                             target="_blank"
@@ -104,7 +104,7 @@ function BanDo() {
                 </div>
 
                 {/* Bản đồ nhúng Google Maps (không cần khóa API), phủ kín cột phải */}
-                <div className="relative h-80 sm:h-96 lg:h-full lg:min-w-0 lg:flex-1">
+                <div className="relative h-96 sm:h-[28rem] lg:h-full lg:min-w-0 lg:flex-1">
                     <iframe
                         key={lanTai}
                         title={`Bản đồ: ${DIA_CHI}`}

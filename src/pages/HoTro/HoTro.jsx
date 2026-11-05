@@ -1,6 +1,7 @@
 import { Link } from 'react-router-dom';
 import banner from '../../assets/ho-tro/banner.webp';
 import Icon from '../../components/chung/Icon';
+import KhungChat from '../../components/chung/KhungChat';
 import nenChuaTimDuoc from '../../assets/ho-tro/nen-chua-tim-duoc.svg';
 import { kenhNhanh } from '../../data/hoTro';
 import CauHoiThuongGap from './CauHoiThuongGap';
@@ -78,6 +79,9 @@ function HoTro() {
                 </div>
                 </div>
             </section>
+
+            {/* Bong bóng + khung chat hỗ trợ (góc phải dưới) */}
+            <KhungChat />
         </div>
     );
 }

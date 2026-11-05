@@ -30,6 +30,9 @@ const thongTin = [
 function BanDo() {
     // Đổi số này thì khung bản đồ tải lại → về đúng vị trí văn phòng (khi lỡ kéo / phóng to lệch chỗ)
     const [lanTai, setLanTai] = useState(0);
+    // Lớp phủ trong suốt chặn cuộn chuột vào bản đồ → Google không hiện cảnh báo "Sử dụng ctrl + cuộn".
+    // Bấm vào bản đồ thì gỡ lớp phủ để kéo / phóng to bình thường; rê chuột ra ngoài thì phủ lại
+    const [dungBanDo, setDungBanDo] = useState(false);
 
     return (
         <section id="van-phong" aria-label="Bản đồ văn phòng" className="scroll-mt-16 sm:scroll-mt-[68px]">
@@ -84,7 +87,7 @@ function BanDo() {
                 </div>
 
                 {/* Bản đồ nhúng Google Maps (không cần khóa API), phủ kín cột phải */}
-                <div className="relative h-96 sm:h-[28rem] lg:h-full lg:min-w-0 lg:flex-1">
+                <div className="relative h-96 sm:h-[28rem] lg:h-full lg:min-w-0 lg:flex-1" onMouseLeave={() => setDungBanDo(false)}>
                     <iframe
                         key={lanTai}
                         title={`Bản đồ: ${DIA_CHI}`}
@@ -93,6 +96,7 @@ function BanDo() {
                         referrerPolicy="no-referrer-when-downgrade"
                         className="block h-full w-full border-0"
                     />
+                    {!dungBanDo && <div className="absolute inset-0 cursor-pointer" onClick={() => setDungBanDo(true)} aria-hidden="true" />}
                     {/* Nút về lại vị trí văn phòng (góc phải trên, tránh khung thông tin của Google ở góc trái) */}
                     <button
                         type="button"

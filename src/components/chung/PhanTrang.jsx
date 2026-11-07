@@ -13,7 +13,7 @@ function soCanHien(trang, soTrang) {
 
 // PHÂN TRANG (1 trang thì ẩn nút), dùng ở Đơn hàng và Mẫu website.
 // khung: màu viền + nền (vd 'border-blue-200 bg-blue-50') thì bọc trong khung ngang mỏng, bỏ trống = không khung
-// nutChon: màu nút trang đang chọn (đổi khi khung cùng màu xanh ngọc để nút không bị chìm)
+// nutChon: màu nút trang đang chọn (đổi khi khung đã có màu để nút không bị chìm)
 function PhanTrang({ trang, soTrang, onDoiTrang, moTa, khung = '', nutChon = 'border-cyan-400 bg-cyan-400 text-blue-950 shadow-md shadow-cyan-500/30' }) {
     return (
         <div className={`mt-5 flex flex-wrap items-center justify-between gap-3 ${khung ? `border px-3 py-2 ${khung}` : ''}`}>

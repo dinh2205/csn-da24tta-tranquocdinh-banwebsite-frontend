@@ -6,7 +6,7 @@ const bannerTheoLoai = import.meta.glob('../../assets/banner-danh-muc/*.webp', {
 
 export const layBannerDanhMuc = (loai) => bannerTheoLoai[`../../assets/banner-danh-muc/${loai}.webp`];
 
-// Màu cố định (xanh ngọc chữ navy, màu "Tất cả") cho mọi danh mục: dòng đang chọn ở Bộ lọc, nút Xóa tất cả bộ lọc
+// Màu cố định (xanh ngọc chữ navy) cho mọi danh mục: nút lĩnh vực, dòng danh mục đang chọn, nút Xóa tất cả bộ lọc
 export const MAU_CHON = 'bg-cyan-400 text-blue-950';
 
 // Chữ tên danh mục (chuyển màu) theo tông banner, dùng ở thẻ Danh mục chính trang chủ

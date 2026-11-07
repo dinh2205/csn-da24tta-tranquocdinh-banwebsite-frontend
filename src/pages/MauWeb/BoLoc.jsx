@@ -16,7 +16,7 @@ const uuDaiList = [
 // dsMau: mẫu chưa mua, dùng để đếm số mẫu cạnh mỗi lựa chọn (khớp với số mẫu hiện ra khi chọn)
 function BoLoc({ boLoc, setBoLoc, loai, onChonLoai, onXoa, hien, dsMau }) {
     return (
-        <aside className={`${hien ? 'block' : 'hidden'} h-fit rounded-2xl border border-slate-200 bg-white p-5 shadow-sm lg:relative lg:z-10 lg:block lg:h-auto lg:rounded-none lg:border-b-0`}>
+        <aside className={`${hien ? 'block' : 'hidden'} h-fit rounded-2xl border border-slate-200 bg-white p-5 shadow-sm lg:relative lg:z-10 lg:block lg:h-auto lg:rounded-none lg:border-0 lg:shadow-none lg:before:absolute lg:before:inset-y-0 lg:before:right-full lg:before:w-[100vw] lg:before:bg-white lg:before:content-['']`}>
             <div className="mb-5 flex items-center justify-between">
                 <h2 className="text-lg font-bold text-slate-900">Bộ lọc</h2>
                 <button type="button" onClick={onXoa} className="text-xs text-slate-500 transition hover:text-red-600">

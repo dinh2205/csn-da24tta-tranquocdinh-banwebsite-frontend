@@ -299,9 +299,11 @@ function GioHang() {
                         tieuDe="Xác nhận thanh toán"
                         noiDung={
                             <>
-                                Thanh toán {daChon.length} sản phẩm với tổng cộng{' '}
-                                <strong className="font-extrabold text-red-600">{dinhDangGia(tongCong)}</strong>
-                                {giamGia > 0 && ` (đã giảm ${dinhDangGia(giamGia)} với mã ${maDung})`}? Đây là thanh toán mô phỏng, không trừ tiền thật.
+                                Thanh toán {daChon.length} sản phẩm với tổng cộng
+                                {/* Giá nằm riêng 1 dòng, không bị ngắt giữa số và chữ đ */}
+                                <strong className="my-1 block whitespace-nowrap text-3xl font-extrabold text-red-600">{dinhDangGia(tongCong)}</strong>
+                                {giamGia > 0 && <span className="block">Đã giảm {dinhDangGia(giamGia)} với mã {maDung}</span>}
+                                Đây là thanh toán mô phỏng, không trừ tiền thật.
                             </>
                         }
                         nutXacNhan="Thanh toán"

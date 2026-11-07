@@ -4,9 +4,9 @@ import PhanTrang from '../../components/chung/PhanTrang';
 import TheMau from '../../components/sanpham/TheMau';
 import { sapXepList } from '../../data/danhmuc';
 import nenSieuSale from '../../assets/nen-sieu-sale.svg';
-import { MAU_CHON, MAU_THANH } from './bannerDanhMuc';
 import { dinhDangNgay } from '../../utils/chuyenDoi';
 import { GIAM_DAC_BIET, SIEU_SALE, soNgayConSale } from '../../utils/nhanMau';
+import { MAU_CHON, MAU_THANH } from './bannerDanhMuc';
 
 // Tên ưu đãi hiện trên nhãn ở thanh kết quả (Siêu sale có dải sự kiện riêng)
 const TEN_UU_DAI = { khuyenMai: 'Khuyến mãi' };
@@ -14,8 +14,8 @@ const TEN_UU_DAI = { khuyenMai: 'Khuyến mãi' };
 const SO_MAU_MOI_TRANG = 9;
 
 // Thanh trên + thanh phân trang: không bo góc. Máy tính: nền kéo tràn sang phải hết màn hình,
-// bên trái luồn xuống dưới khung Bộ lọc (250px + khe 32px)
-const THANH_TRAN = "relative isolate rounded-none lg:border-transparent lg:bg-transparent lg:before:absolute lg:before:-inset-y-px lg:before:-left-[282px] lg:before:-right-[100vw] lg:before:-z-10 lg:before:border-y lg:before:content-['']";
+// bên trái kéo qua khe 32px cho sát khung Bộ lọc
+const THANH_TRAN = "relative isolate rounded-none lg:border-transparent lg:bg-transparent lg:before:absolute lg:before:-inset-y-px lg:before:-left-8 lg:before:-right-[100vw] lg:before:-z-10 lg:before:border-y lg:before:content-['']";
 
 // 5. DANH SÁCH MẪU
 // dsMau: mẫu chưa mua (đã bỏ mẫu tài khoản đã mua), soDaMua: số mẫu bị ẩn vì đã mua
@@ -69,9 +69,9 @@ function DanhSachMau({ ketQua, uuDai, onBoUuDai, onXemTatCa, tuKhoa, onXoaTuKhoa
                     )}
                     {/* Có mẫu bị ẩn vì đã mua thì nói rõ, kèm link tới nơi xem lại các mẫu đó */}
                     {soDaMua > 0 && (
-                        <span className="text-xs text-blue-950/75">
+                        <span className="text-xs opacity-80">
                             · Đã ẩn {soDaMua} mẫu bạn đã mua{' '}
-                            <Link to="/tai-khoan/don-hang" className="font-semibold text-blue-800 underline-offset-2 hover:underline">
+                            <Link to="/tai-khoan/don-hang" className="font-semibold underline underline-offset-2 hover:no-underline">
                                 Xem đơn hàng
                             </Link>
                         </span>
@@ -93,7 +93,7 @@ function DanhSachMau({ ketQua, uuDai, onBoUuDai, onXemTatCa, tuKhoa, onXoaTuKhoa
                         )}
                     </button>
 
-                    <label className="ml-auto flex items-center gap-2 text-sm text-blue-950">
+                    <label className="ml-auto flex items-center gap-2 text-sm">
                         <span className="hidden sm:inline">Sắp xếp:</span>
                         {/* Ô chọn: bỏ mũi tên mặc định của trình duyệt, thay bằng mũi tên tròn nhỏ bên phải cho gọn đẹp */}
                         <span className="relative">
@@ -185,7 +185,7 @@ function DanhSachMau({ ketQua, uuDai, onBoUuDai, onXemTatCa, tuKhoa, onXoaTuKhoa
                     {coPhanTrang && (
                     <PhanTrang
                         khung={`${MAU_THANH} ${THANH_TRAN}`}
-                        nutChon="border-cyan-700 bg-cyan-700 text-white shadow-md"
+                        nutChon="border-white bg-blue-950 text-white shadow-md"
                         trang={trangHienTai}
                         soTrang={soTrang}
                         onDoiTrang={doiTrang}
